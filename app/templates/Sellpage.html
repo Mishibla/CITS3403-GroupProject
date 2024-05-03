@@ -4,26 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="Sellpage.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
     <title>Sell Page</title>
-    <style>
-        .radio-container {
-            margin-bottom: 10px; /* Adds space below each radio button */
-            padding: 5px;       /* Padding around the content */
-            padding-left: 50px;
-            background-color: #f8f9fa; /* Light background for visibility */
-        }
-
-        .game-container {
-            margin-top: 50px;
-            margin-left: 50px;
-        }
-        
-        input[type="radio"] {
-            margin-right: 5px; /* Space between the radio button and the label */
-        }
-    </style>
     <script>
         function filtergames(){
             let radiogames = document.getElementsByName("game-type");
@@ -35,13 +19,22 @@
                 }
             }
         }
+
     </script>
 </head>
 <body>
     <div class="container-fluid" style="background-color: #2A0134; color: white; padding-top: 10px; padding-bottom: 10px;">
-        <div class="col-sm-2"><img src='https://i.postimg.cc/tZwWgkxg/Logo.webp' alt='Logo'/></div>
-        <h1>Buy Accounts</h1>
-        <p>Some Words here</p>
+        <div class="row">
+            <div class="col-sm-2">
+                <a href="Homepage.html">
+                    <img src='https://i.postimg.cc/tZwWgkxg/Logo.webp' alt='Logo' style="max-width: 100%;"/>
+                </a>
+            </div>
+            <div class="col-sm-10">
+                <h1>Buy Accounts</h1>
+                <p>Some Words here</p>
+            </div>
+        </div>
     </div>
     <div class="container-fluid">
         <div class="row">
@@ -62,8 +55,12 @@
                     <input type="radio" id="VAL" name="game-type" value="VAL" onclick="filtergames()">
                     <label for="VAL">Valorant</label>
                 </div>
+                <div class="checkbox-wrapper-1" style="padding-top: 50px; padding-left: 50px">
+                    <input type="checkbox" id="ELO" name="filters" value="ELO" class="substituted" onclick="filtergames()">
+                    <label for="ELO">Elo</label>
+                </div>
             </div>
-            <div class="cols-sm-9">
+            <div class="col-sm-9">
                 <div class="game-container">
                     <p id="games">test</p>
                 </div>
