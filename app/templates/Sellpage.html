@@ -8,32 +8,67 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
     <title>Sell Page</title>
     <style>
-
-        .container-fluid {
-            padding-top: 10px;
-            padding-bottom: 10px;
+        .radio-container {
+            margin-bottom: 10px; /* Adds space below each radio button */
+            padding: 5px;       /* Padding around the content */
+            padding-left: 50px;
+            background-color: #f8f9fa; /* Light background for visibility */
         }
 
+        .game-container {
+            margin-top: 50px;
+            margin-left: 50px;
+        }
+        
+        input[type="radio"] {
+            margin-right: 5px; /* Space between the radio button and the label */
+        }
     </style>
+    <script>
+        function filtergames(){
+            let radiogames = document.getElementsByName("game-type");
+            for (let i = 0; i < radiogames.length ; i++){
+                if (radiogames[i].checked){
+                    let selectedGame = radiogames[i].value;
+                    document.getElementById("games").innerHTML = selectedGame;
+                    break;
+                }
+            }
+        }
+    </script>
 </head>
 <body>
-    <div class="container-fluid" style="background-color: #2A0134; color: white;">
-        <h1>Sell Games</h1>
+    <div class="container-fluid" style="background-color: #2A0134; color: white; padding-top: 10px; padding-bottom: 10px;">
+        <div class="col-sm-2"><img src='https://i.postimg.cc/tZwWgkxg/Logo.webp' alt='Logo'/></div>
+        <h1>Buy Accounts</h1>
         <p>Some Words here</p>
     </div>
     <div class="container-fluid">
-        <div class="col-sm-2" style="padding-top: 50px">
-            <input type="radio" id="CS" name="Game Type" value="CS">
-            <label for="CS">CSGO 2</label><br>
-            <input type="radio" id="OW2" name="Game Type" value="OW2">
-            <label for="OW2">Overwatch 2</label><br>
-            <input type="radio" id="LOL" name="Game Type" value="LOL">
-            <label for="LOL">League of Legends</label><br>
-            <input type="radio" id="VAL" name="Game Type" value="VAL">
-            <label for="VAL">Valorant</label><br>
+        <div class="row">
+            <div class="col-sm-3" style="padding-top: 60px">
+                <div class="radio-container">
+                    <input type="radio" id="CS" name="game-type" value="CS" onclick="filtergames()">
+                    <label for="CS">CSGO 2</label>
+                </div>
+                <div class="radio-container">
+                    <input type="radio" id="OW2" name="game-type" value="OW2" onclick="filtergames()">
+                    <label for="OW2">Overwatch 2</label>
+                </div>
+                <div class="radio-container">
+                    <input type="radio" id="LOL" name="game-type" value="LOL" onclick="filtergames()">
+                    <label for="LOL">League of Legends</label>
+                </div>
+                <div class="radio-container">
+                    <input type="radio" id="VAL" name="game-type" value="VAL" onclick="filtergames()">
+                    <label for="VAL">Valorant</label>
+                </div>
+            </div>
+            <div class="cols-sm-9">
+                <div class="game-container">
+                    <p id="games">test</p>
+                </div>
+            </div>
         </div>
-        <div class="col-sm-8">accounts</div>
     </div>
 </body>
-<!--Does this Work?-->
 </html>
