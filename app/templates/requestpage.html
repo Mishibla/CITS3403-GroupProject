@@ -10,8 +10,35 @@
     <form id="sendrequests">
         <label for="titlerequest">Title of ad</label>
         <input class="title" name="titlerequest" type="text">
-        <label for="game">Game</label>
-        <input class="gametype" name="game" type="text">
+        <br>
+        <label for="game">Choose a Game:</label>
+        <select name="game" id="games">
+          <option value="CS">CSGO</option>
+          <option value="League">League of Legends</option>
+          <option value="OW">Overwatch</option>
+          <option value="Val">Valorant</option>
+        </select>
+        <br>
+        <label for="price">Price(AUD)</label>
+        <input class="pricetag" name="price" type="text">
+        <br>
+        <label for="skin">Skins</label>
+        <select name="skin" id="skins">
+          <option value="yes">yes</option>
+          <option value="no">no</option>
+        </select>
+        <br>
+        <label for="exclusive">Exclusive Skins?</label>
+        <!-- Change input here later -->
+        <input type="text" name="exclusive">
+        <label for="elo">Rank</label>
+        <select name="elo" id="rank">
+          <option value="iron">iron</option>
+          <option value="silver">silver</option>
+          <option value="gold">gold</option>
+        </select>
+        <label for="description">Extra Description (specifiy your skins and exact elo)</label>
+        <input type="text" name="description" class="additionaldescrip">
     </form>
     <button type="submit" id="submitad">submit ad</button>
     <h1>REQUESTS!!!</h1>
