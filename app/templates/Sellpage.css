@@ -10,6 +10,16 @@ h1 {
     color: white;
     font-weight: bold;
     font-family: Delicious, sans-serif;
+    text-decoration: none;
+}
+
+a {
+    color: white;
+}
+
+a:hover {
+    color: white;
+    text-decoration: none;
 }
 
 h2 {
