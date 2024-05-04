@@ -12,17 +12,42 @@ h1 {
     font-family: Delicious, sans-serif;
 }
 
-.parent {
+h2 {
+    background-color: #201f31;
+    color: white;
+    font-weight: 500;
+    font-family: Delicious, sans-serif;
+}
+
+.parent1 {
     display: flex;
     justify-content: center; /* Center horizontally */
     align-items: center;     /* Center vertically */
-    height: 20vh;           /* Full height of the viewport */
+    height: 25vh;           /* Full height of the viewport */
+    padding-bottom: 20px;
 }
+
+.parent2 {
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center;     /* Center vertically */
+    height: 5vh;           /* Full height of the viewport */
+    padding-bottom: 20px;
+}
+
 .container {
     width: 95%; /* or any specific width */
     padding: 20px;
     border-radius: 20px;
     background-color: #2b2a3c;
+
+}
+
+.container2 {
+    width: 95%; /* or any specific width */
+    padding: 20px;
+    justify-content: center; /* Center horizontally */
+    align-items: center;     /* Center vertically */
 }
 
 .game-container {
