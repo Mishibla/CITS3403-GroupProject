@@ -8,22 +8,20 @@
   </head>
   <body>
   </select>
-  <!-- First Dropdown -->
-
     <form id="sendrequests" action="/submit">
         <label for="titlerequest">Title of ad</label>
         <input class="title" name="titlerequest" type="text">
         <br>
         <label for="game">Game Selling?</label>
-        <select id="firstDropdown" name="games">
-          <option value="CS">CSGO</option>
+        <select id="games" name="games">
+          <option>Select an option</option>
+          <option value="CSGO">CSGO</option>
           <option value="League">League of Legends</option>
-          <option value="OW">Overwatch</option>
-          <option value="Val">Valorant</option>
+          <option value="Overwatch">Overwatch</option>
+          <option value="Valorant">Valorant</option>
         </select>
-        <!-- Second Dropdown (Initially hidden) -->
         <label for="rank">rank?</label>
-        <select id="secondDropdown" name="rank" style="display:none;">
+        <select id="ranks" name="rank" style="display:none;">
           <option value="">Select an option</option>
         </select>
         <br>
@@ -32,63 +30,78 @@
         <br>
         <label for="skin">Skins</label>
         <select name="skin" id="skins">
+          <option value="">Select an option</option>
           <option value="yes">yes</option>
           <option value="no">no</option>
         </select>
+        <label for="exclusive_skin" style="display:none;" id="exclu">Exclusive Skins?</label>
+        <input type="checkbox" id="exclusive" name="exclusive_skin"  style="display:none;">
         <br>
-        <label for="exclusive">Exclusive Skins?</label>
-        <!-- Change input here later -->
-        <input type="text" name="exclusive">
-
         <label for="description">Extra Description (specifiy your skins and exact elo)</label>
         <input type="text" name="description" class="additionaldescrip">
+        <br>
+        <label for="image">Upload images(max 4)</label>
+        <input type="file" id="images" name="images[]" accept="image/*" multiple>
     </form>
     <button type="submit" id="submited">submit ad</button>
-    <h1>REQUESTS!!!</h1>
-    <p id="demo"></p>
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha384-vtXRMe3mGCbOeY7l30aIg8H9p3GdeSe4IFlP6G8JMa7o7lXvnz3GFKzPxzJdPfGK" crossorigin="anonymous"></script>
+    <!-- Below script does not link for some reason an does not link to static page??? -->
     <script src="/app/static/requestpage.js"></script>
     <script>
-      document.getElementById("submited").addEventListener("click", function() {
-    alert("Hello World!");
-  });
+      $(document).ready(function() {
+  //linking the games dropdown with its corresponding rank
+  const firstDropdown = $('#games');
+  const secondDropdown = $('#ranks');
+  const csranks=['SILVER','GOLD NOVA','MASTER GUARDIAN','LEGENDARY']
+  const owranks=['BRONZE','SILVER','GOLD','PLATNIUM','DIAMOND','MASTER','GRANDMASTER','CHAMPIONS','TOP500']
+  const leagueranks=['IRON','BRONZE','SILVER','GOLD','PLATINUM','EMERALD','DIAMOND','MASTER','GRANDMASTER','CHALLENGER']
+  const valranks=['IRON','BRONZE','SILVER','GOLD','PLATINUM','DIAMOND','ASCENDANT','IMMORTAL','RADIANT']
+  const gamesapp={
+      'CSGO':csranks,'Overwatch':owranks,'League':leagueranks,'Valorant':valranks};
+  //linking skins with exclusive skins
+  const skin = $("#skins");
+  const exclusivity = $('#exclusive');
+  const label_exclu = $('#exclu')
+  //counting number of files
+
+  function updateSecondDropdown() {
+    const category = firstDropdown.val();
+    // Clear existing options
+    secondDropdown.html('<option value="">Select an option</option>');
+    // Add options based on the selected category
+    gamesapp[category].forEach(option => {
+      const optionElement = $('<option>').text(option).val(option);
+      secondDropdown.append(optionElement);
+    });
+    // Show the second dropdown
+    secondDropdown.css('display', 'inline');
+  }
+  //function to handle the exclusive checkbox
+  function exclusives() {
+    if (skin.val() === 'yes') {
+      label_exclu.show();
+      exclusivity.show();
+    } else {
+      exclusivity.hide();
+      label_exclu.hide();
+    }
+  }
 
 
-// Get references to the dropdowns
-const firstDropdown = document.getElementById('firstDropdown');
-const secondDropdown = document.getElementById('secondDropdown');
-
-const csranks=['SILVER','GOLD NOVA','MASTER GUARDIAN','LEGENDARY']
-const owranks=['BRONZE','SILVER','GOLD','PLATNIUM','DIAMOND','MASTER','GRANDMASTER','CHAMPIONS','TOP500']
-const leagueranks=['IRON','BRONZE','SILVER','GOLD','PLATINUM','EMERALD','DIAMOND','MASTER','GRANDMASTER','CHALLENGER']
-const valranks=['IRON','BRONZE','SILVER','GOLD','PLATINUM','DIAMOND','ASCENDANT','IMMORTAL','RADIANT']
-const gamesapp={
-    'CSGO':csranks,'Overwatch':owranks,'League':leagueranks,'Valorant':valranks};
-// Define options for the second dropdown based on the selection in the first dropdown
-const optionsByCategory = {
-  '1': ['Option 1.1', 'Option 1.2', 'Option 1.3'],
-  '2': ['Option 2.1', 'Option 2.2', 'Option 2.3']
-};
-
-// Function to update options of the second dropdown based on the selection in the first dropdown
-function updateSecondDropdown() {
-  const category = firstDropdown.value;
-  // Clear existing options
-  secondDropdown.innerHTML = '<option value="">Select an option</option>';
-  // Add options based on the selected category
-  gamesapp[category].forEach(option => {
-    const optionElement = document.createElement('option');
-    optionElement.textContent = option;
-    optionElement.value = option;
-    secondDropdown.appendChild(optionElement);
-  });
-  // Show the second dropdown
-  secondDropdown.style.display = 'inline';
-}
-
-// Event listener to trigger update of the second dropdown when the first dropdown selection changes
-firstDropdown.addEventListener('change', updateSecondDropdown);
+  // Event listener to trigger update of the second dropdown when the first dropdown selection changes
+  firstDropdown.change(updateSecondDropdown);
+  skin.change(exclusives);
+  //only allows max 4 images
+  $('#images').on('change', function(event) {
+    const selectedFilesCount = $(this)[0].files.length;
+    if (selectedFilesCount > 4) {
+      alert('You can only select up to 4 files.');
+      $(this).val(null); // Clear the file input
+    }
+  })
+});
     </script>
   </body>
+
 </html> 
