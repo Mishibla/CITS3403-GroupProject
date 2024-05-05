@@ -12,8 +12,6 @@ $(document).ready(function() {
   const skin = $("#skins");
   const exclusivity = $('#exclusive');
   const label_exclu = $('#exclu')
-  //counting number of files
-
   function updateSecondDropdown() {
     const category = firstDropdown.val();
     // Clear existing options
@@ -36,8 +34,6 @@ $(document).ready(function() {
       label_exclu.hide();
     }
   }
-
-
   // Event listener to trigger update of the second dropdown when the first dropdown selection changes
   firstDropdown.change(updateSecondDropdown);
   skin.change(exclusives);
