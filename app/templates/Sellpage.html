@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="Sellpage.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <title>Sell Page</title>
+    <script>
+        $(document).ready(function() {
+            // Event handler for radio buttons
+            $("input[name='game-type']").change(function() {
+                var selectedGame = $(this).val();
+                $("#games").text(selectedGame);
+            });
+    
+            // If you want to use the checkboxes as well
+            $("input[name='filters']").change(function() {
+                // You can add logic here if you want to filter based on checkboxes
+                // Example: update a display or filter data
+                console.log($(this).val() + " checkbox changed");
+            });
+        });
+    </script>
+    
+</head>
+<body>
+    <div class="parent1">
+        <div class="container">
+            <div class="container-fluid">
+                <div class="row", style="background-color: #2b2a3c">
+                    <div class="col-sm-3" style="background-color: #2b2a3c;">
+                        <h1 style="margin-left: 30px"><a href=Homepage.html>Website Name</a></h1>
+                    </div>
+                    <div class="col-sm-3" style="background-color: #2b2a3c"></div>
+                    <div class="col-sm-2" style="background-color: #2b2a3c">
+                        <button role="button" class="custom_button2">Buy Accounts</button>
+                    </div>
+                    <div class="col-sm-2" style="background-color: #2b2a3c">
+                        <button role="button" class="custom_button2">Sell Accounts</button>
+                    </div>
+                    <div class="col-sm-2" style="background-color: #2b2a3c">
+                        <button role="button" class="custom_button2">Sign in / Register</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="parent2">
+        <div class="container2">
+            <div class="col-sm-2"></div>
+            <div class="col-sm-2"><button role="button" class="custom_button">CSGO 2</button></div>
+            <div class="col-sm-2"><button role="button" class="custom_button">Valorant</button></div>
+            <div class="col-sm-2"><button role="button" class="custom_button">League</button></div>
+            <div class="col-sm-2"><button role="button" class="custom_button">OW 2</button></div>
+            <div class="col-sm-2"></div>
+        </div>
+    </div>    
+    <div class="container-fluid" style="color: white; padding-top: 10px; padding-bottom: 10px;">
+        <div class="row">
+            <div class="col-sm-2">
+                <a href="Homepage.html">
+                    <img src='https://i.postimg.cc/tZwWgkxg/Logo.webp' alt='Logo' style="max-width: 100%;"/>
+                </a>
+            </div>
+            <div class="col-sm-10">
+                <h2>Buy Accounts</h1>
+                <p>Select a game to browse</p>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-3" style="padding-top: 60px">
+                <div class="checkbox-wrapper-1">
+                    <input type="radio" id="CS" name="game-type" value="CS" class="substituted">
+                    <label for="CS">CSGO 2</label>
+                </div>
+                <div class="checkbox-wrapper-1">
+                    <input type="radio" id="OW2" name="game-type" value="OW2" class="substituted">
+                    <label for="OW2">Overwatch 2</label>
+                </div>
+                <div class="checkbox-wrapper-1">
+                    <input type="radio" id="LOL" name="game-type" value="LOL" class="substituted">
+                    <label for="LOL">League of Legends</label>
+                </div>
+                <div class="checkbox-wrapper-1">
+                    <input type="radio" id="VAL" name="game-type" value="VAL" class="substituted">
+                    <label for="VAL">Valorant</label>
+                </div>
+                <div class="checkbox-wrapper-1" style="padding-top: 50px">
+                    <input type="checkbox" id="ELO" name="filters" value="ELO" class="substituted">
+                    <label for="ELO">Elo</label>
+                </div>
+                <div class="checkbox-wrapper-1">
+                    <input type="checkbox" id="Skins" name="filters" value="Skins" class="substituted">
+                    <label for="Skins">Skins</label>
+                </div>
+                <button role="button" class="custom_button">Testing</button>
+            </div>
+            <div class="col-sm-9">
+                <div class="game-container">
+                    <p id="games" style="color:white">test</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
