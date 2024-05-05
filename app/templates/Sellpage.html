@@ -9,18 +9,22 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
     <title>Sell Page</title>
     <script>
-        function filtergames(){
-            let radiogames = document.getElementsByName("game-type");
-            for (let i = 0; i < radiogames.length ; i++){
-                if (radiogames[i].checked){
-                    let selectedGame = radiogames[i].value;
-                    document.getElementById("games").innerHTML = selectedGame;
-                    break;
-                }
-            }
-        }
-
+        $(document).ready(function() {
+            // Event handler for radio buttons
+            $("input[name='game-type']").change(function() {
+                var selectedGame = $(this).val();
+                $("#games").text(selectedGame);
+            });
+    
+            // If you want to use the checkboxes as well
+            $("input[name='filters']").change(function() {
+                // You can add logic here if you want to filter based on checkboxes
+                // Example: update a display or filter data
+                console.log($(this).val() + " checkbox changed");
+            });
+        });
     </script>
+    
 </head>
 <body>
     <div class="parent1">
@@ -71,27 +75,27 @@
         <div class="row">
             <div class="col-sm-3" style="padding-top: 60px">
                 <div class="checkbox-wrapper-1">
-                    <input type="radio" id="CS" name="game-type" value="CS" class="substituted" onclick="filtergames()">
+                    <input type="radio" id="CS" name="game-type" value="CS" class="substituted">
                     <label for="CS">CSGO 2</label>
                 </div>
                 <div class="checkbox-wrapper-1">
-                    <input type="radio" id="OW2" name="game-type" value="OW2" class="substituted" onclick="filtergames()">
+                    <input type="radio" id="OW2" name="game-type" value="OW2" class="substituted">
                     <label for="OW2">Overwatch 2</label>
                 </div>
                 <div class="checkbox-wrapper-1">
-                    <input type="radio" id="LOL" name="game-type" value="LOL" class="substituted" onclick="filtergames()">
+                    <input type="radio" id="LOL" name="game-type" value="LOL" class="substituted">
                     <label for="LOL">League of Legends</label>
                 </div>
                 <div class="checkbox-wrapper-1">
-                    <input type="radio" id="VAL" name="game-type" value="VAL" class="substituted" onclick="filtergames()">
+                    <input type="radio" id="VAL" name="game-type" value="VAL" class="substituted">
                     <label for="VAL">Valorant</label>
                 </div>
                 <div class="checkbox-wrapper-1" style="padding-top: 50px">
-                    <input type="checkbox" id="ELO" name="filters" value="ELO" class="substituted" onclick="filtergames()">
+                    <input type="checkbox" id="ELO" name="filters" value="ELO" class="substituted">
                     <label for="ELO">Elo</label>
                 </div>
                 <div class="checkbox-wrapper-1">
-                    <input type="checkbox" id="Skins" name="filters" value="Skins" class="substituted" onclick="filtergames()">
+                    <input type="checkbox" id="Skins" name="filters" value="Skins" class="substituted">
                     <label for="Skins">Skins</label>
                 </div>
                 <button role="button" class="custom_button">Testing</button>
