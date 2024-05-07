@@ -1,6 +1,13 @@
 from flask import redirect, render_template,url_for
 from app import app
 @app.route('/')
+@app.route('/homepage')
+def homepage():
+    return render_template("Homepage.html")
+
+@app.route('/buyaccount')
+def buyaccount():
+    return render_template("Sellpage.html")
 @app.route('/account')
 def account():
     return render_template("accountpage.html")
