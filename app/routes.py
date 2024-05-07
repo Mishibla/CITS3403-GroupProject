@@ -1,6 +1,18 @@
 from flask import redirect, render_template,url_for
 from app import app
+
+from app.models import User,Ad
 @app.route('/')
+
+#test root to see if the database is working
+@app.route('/titleofad')
+def titleofad():
+    ads_of_chris = Ad.query.all() 
+    print("Hello World")
+    print(ads_of_chris)
+    #tests=ads_of_chris)
+    return render_template("adtemplate.html",ad=ads_of_chris)
+
 @app.route('/homepage')
 def homepage():
     return render_template("Homepage.html")
@@ -19,3 +31,7 @@ def create():
 @app.route('/submit', methods=['POST', 'GET'])
 def submit():
     return redirect(url_for('account'))
+
+
+
+
