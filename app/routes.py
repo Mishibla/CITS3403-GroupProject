@@ -1,4 +1,4 @@
-from flask import redirect, render_template,url_for
+from flask import flash,redirect, render_template,url_for
 from app import app 
 from app.forms import AdForm
 from app.models import User,Ad
@@ -30,19 +30,41 @@ def create():
     form = AdForm()
     return render_template("requestpage.html",form=form)
 
-# Use this form in your route
 @app.route('/submit', methods=['GET', 'POST'])
 def submit_ad():
     form = AdForm()
-    #if form.validate_on_submit():
-        # Process the form data, e.g., save to database
-        #return redirect(url_for('success_page'))
-    return render_template('accountpage.html', form=form)
+    type_of_game=form.games.data
+    form.rank.choices=get_rank(type_of_game)
+    form_data=[form.titlerequest.data,form.games.data,form.rank.data,form.price.data,form.skin.data,form.exclusive_skin.data,form.description.data]
+    print(form_data)
+    try:
+        float(form_data[3])==float
+    except:
+        flash('Enter price in valid format')
+    length_title=len(form_data[0])
+    length_description=len(form_data[-1])
+    if len(form_data[0]) > 49:
+        length_title = len(form_data[0])
+        flash(f'Title is too long: max 49 characters, current length {length_title} characters')
+    if len(form_data[-1]) > 499:
+        length_description = len(form_data[-1])
+        flash(f'Description is too long: max 499 characters, current length {length_description} characters')
+    if not form.validate_on_submit():
+        for field, errors in form.errors.items():
+            for error in errors:
+                print(f"Error in {field}: {error}")
+                flash(f"Error in {field}: {error}")
+        form.games.data=None
+        return render_template("requestpage.html",form=form)
+    return redirect(location=url_for("account"))
 
-'''
-@app.route('/submit', methods=['POST', 'GET'])
-def submit():
-    return redirect(url_for('account'))'''
+csranks=['SILVER','GOLD NOVA','MASTER GUARDIAN','LEGENDARY']
+owranks=['BRONZE','SILVER','GOLD','PLATNIUM','DIAMOND','MASTER','GRANDMASTER','CHAMPIONS','TOP500']
+leagueranks=['IRON','BRONZE','SILVER','GOLD','PLATINUM','EMERALD','DIAMOND','MASTER','GRANDMASTER','CHALLENGER']
+valranks=['IRON','BRONZE','SILVER','GOLD','PLATINUM','DIAMOND','ASCENDANT','IMMORTAL','RADIANT']
+gamesapp={'CSGO':csranks,'Overwatch':owranks,'League':leagueranks,'Valorant':valranks}
+def get_rank(gametype):
+    return(gamesapp.get(gametype))
 
 
 
