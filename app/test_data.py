@@ -2,7 +2,8 @@ from app import db
 from app.models import *
 
 # Create a user instance
-chris = User(username='Mishibla', name='Chris Jongue', password='securepassword')
+chris = User(username='Mishibla', name='Chris Jongue')
+chris.set_password('cat') 
 #alec = User(username='uwu', name='Alec Wu', password='yes')
 # Create ad instances and associate them with the user
 ad1 = Ad(ad_id=1, ad_title='First ad on page',game_type='Valorant', game_rank='Bronze', price=20.50,skins=True, user=chris)

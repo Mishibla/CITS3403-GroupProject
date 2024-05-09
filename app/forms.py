@@ -23,6 +23,8 @@ class AdForm(FlaskForm):
     images = FileField('Upload images (max 4)', validators=[Optional()])
     submit =SubmitField('Create Ad')
 
-
-
-
+class RegisterForm(FlaskForm):
+    username = StringField('Enter Username*', validators=[DataRequired(), Length(max=50)])
+    display_name = StringField('Enter Display Name*', validators=[DataRequired(), Length(max=50)])
+    password = StringField('Enter password*', validators=[DataRequired(), Length(max=50)])
+    submit =SubmitField('Create Ad')

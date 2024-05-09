@@ -1,7 +1,11 @@
 from flask import flash,redirect, render_template,url_for
-from app import app 
-from app.forms import AdForm
+from app import app,db 
+from app.forms import AdForm,RegisterForm
 from app.models import User,Ad
+
+#counter will be used for ad_id primary key
+
+
 @app.route('/')
 
 #test root to see if the database is working
@@ -21,6 +25,23 @@ def homepage():
 @app.route('/buyaccount')
 def buyaccount():
     return render_template("Sellpage.html")
+
+@app.route('/signin')
+def signin():
+    return render_template('loginpage.html')
+
+@app.route('/register')
+def register():
+    form=RegisterForm()
+    return render_template('registeraccount.html',form=form)
+
+@app.route('/submit_register', methods=['GET', 'POST'])
+def register_account():
+    form = RegisterForm()
+    if not form.validate_on_submit():
+        return render_template("registeraccount.html",form=form)
+    return redirect(location=url_for("signin"))
+    
 @app.route('/account')
 def account():
     return render_template("accountpage.html")
@@ -30,13 +51,17 @@ def create():
     form = AdForm()
     return render_template("requestpage.html",form=form)
 
-@app.route('/submit', methods=['GET', 'POST'])
+
+@app.route('/submit-ad', methods=['GET', 'POST'])
 def submit_ad():
     form = AdForm()
     type_of_game=form.games.data
     form.rank.choices=get_rank(type_of_game)
     form_data=[form.titlerequest.data,form.games.data,form.rank.data,form.price.data,form.skin.data,form.exclusive_skin.data,form.description.data]
     print(form_data)
+    user_count = Ad.query.count()
+    new_id=user_count+1
+    print(new_id)
     try:
         float(form_data[3])==float
     except:
@@ -50,7 +75,6 @@ def submit_ad():
         length_description = len(form_data[-1])
         flash(f'Description is too long: max 499 characters, current length {length_description} characters')
     if not form.validate_on_submit():
-
         return render_template("requestpage.html",form=form)
     return redirect(location=url_for("account"))
 
