@@ -23,6 +23,48 @@ body {
     width: 100%; /* Ensure it takes full width */
 }
 
+.container2 {
+    background-color: #2b2a3c;
+    width: 900px;
+    height: auto; /* Removed 'auto' to correct the height property */
+    margin: 50px 30px 30px 40px; /*top right bottom left */
+    border-radius: 20px;
+    display: flex;      /* Use Flexbox */
+    justify-content: flex-start; /* Align content to the start of the flex-direction row */
+    align-items: flex-start;     /* Align items at the start of the cross axis */
+    text-align: left; /* Text align left */
+    flex-direction: column;
+}
+
+.title {
+    color: white;
+    font-size: xx-large;
+    font-weight: bold;
+    margin: 50px 50px 10px 50px;
+}
+
+.user {
+    color: white;
+    font-size: medium;
+    margin: 10px 0px 10px 50px;
+}
+
+.rating {
+    color: white;
+    font-size: medium;
+    margin: 10px 0px 50px 50px
+}
+
+.database_info {
+    color: #DAA520;
+    font-weight: bold;
+}
+
+.description {
+    color: white
+
+}
+
 h1 a {
     color: white;             /* Ensures text color is white */
     text-decoration: none;    /* Removes underline */
