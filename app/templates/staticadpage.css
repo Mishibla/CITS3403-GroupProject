@@ -27,7 +27,7 @@ body {
     background-color: #2b2a3c;
     width: 900px;
     height: auto; /* Removed 'auto' to correct the height property */
-    margin: 50px 30px 30px 40px; /*top right bottom left */
+    margin: 50px 10px 10px 40px; /*top right bottom left */
     border-radius: 20px;
     display: flex;      /* Use Flexbox */
     justify-content: flex-start; /* Align content to the start of the flex-direction row */
@@ -40,7 +40,7 @@ body {
     background-color: #2b2a3c;
     width: 900px;
     height: auto; /* Removed 'auto' to correct the height property */
-    margin: 50px 30px 30px 40px; /*top right bottom left */
+    margin: 10px 10px 30px 40px; /*top right bottom left */
     border-radius: 20px;
     display: flex;      /* Use Flexbox */
     justify-content: flex-start; /* Align content to the start of the flex-direction row */
@@ -57,8 +57,39 @@ body {
     margin: 5px auto;      /* Adds space above and below */
 }
 
-.container4
+.container4 {
+    background-color: #2b2a3c;
+    width: 550px; /* Adjust this width based on the available space */
+    height: auto; /* Adjust height as content requires */
+    margin: 50px 40px 30px 30px; /* Top, right, bottom, left margins */
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    text-align: left;
+}
 
+.container4 img {
+    max-width: 100%;  /* Ensures the image is no wider than the container */
+    height: auto;     /* Maintains the aspect ratio of the image */
+    display: block;   /* Removes any extra space below the image */
+    border-top-left-radius: 20px;  /* Rounds the top-left corner */
+    border-top-right-radius: 20px; /* Rounds the top-right corner */
+}
+
+.flex-layout {
+    display: flex;
+    justify-content: space-between; /* This will place container4 to the right */
+    align-items: start; /* Aligns containers to the top */
+    width: 100%; /* Full width to use all available space */
+}
+
+.container-left {
+    flex-grow: 1; /* Takes up the remaining space left by container4 */
+    display: flex;
+    flex-direction: column;
+}
 
 .title {
     color: white;
@@ -88,6 +119,17 @@ body {
     color: white;
     font-size: medium;
     margin: 20px 50px 50px 50px;
+}
+
+.price_tag {
+    color: #DAA520;
+    font-weight: bold;
+}
+
+h3 {
+    color: white;
+    margin: 30px 0px 50px 30px;
+    font-weight: bold;
 }
 
 h2 {
