@@ -50,11 +50,7 @@ def submit_ad():
         length_description = len(form_data[-1])
         flash(f'Description is too long: max 499 characters, current length {length_description} characters')
     if not form.validate_on_submit():
-        for field, errors in form.errors.items():
-            for error in errors:
-                print(f"Error in {field}: {error}")
-                flash(f"Error in {field}: {error}")
-        form.games.data=None
+
         return render_template("requestpage.html",form=form)
     return redirect(location=url_for("account"))
 
@@ -67,6 +63,10 @@ def get_rank(gametype):
     return(gamesapp.get(gametype))
 
 
-
+'''        for field, errors in form.errors.items():
+            for error in errors:
+                print(f"Error in {field}: {error}")
+                flash(f"Error in {field}: {error}")
+        form.games.data=None'''
 
 
