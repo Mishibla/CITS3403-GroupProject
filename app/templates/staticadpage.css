@@ -59,7 +59,7 @@ body {
 
 .container4 {
     background-color: #2b2a3c;
-    width: 550px; /* Adjust this width based on the available space */
+    width: 500px; /* Adjust this width based on the available space */
     height: auto; /* Adjust height as content requires */
     margin: 50px 40px 30px 30px; /* Top, right, bottom, left margins */
     border-radius: 20px;
@@ -124,11 +124,28 @@ body {
 .price_tag {
     color: #DAA520;
     font-weight: bold;
+    padding-left: 10px;
 }
+
+.price-button-container {
+    display: flex;          /* Enables Flexbox */
+    justify-content: space-between; /* Spaces out the child elements */
+    align-items: center;   /* Aligns items vertically in the center */
+    width: 80%;
+}
+
+.price-button-container h3 {
+    margin-right: auto;  /* Push everything else to the right */
+}
+
+.button_container {
+    margin-left: auto;  /* Ensures the button stays to the right */
+}
+
 
 h3 {
     color: white;
-    margin: 30px 0px 50px 30px;
+    margin: 30px 0px 30px 30px;
     font-weight: bold;
 }
 
