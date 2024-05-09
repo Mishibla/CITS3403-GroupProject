@@ -36,6 +36,30 @@ body {
     flex-direction: column;
 }
 
+.container3 {
+    background-color: #2b2a3c;
+    width: 900px;
+    height: auto; /* Removed 'auto' to correct the height property */
+    margin: 50px 30px 30px 40px; /*top right bottom left */
+    border-radius: 20px;
+    display: flex;      /* Use Flexbox */
+    justify-content: flex-start; /* Align content to the start of the flex-direction row */
+    align-items: flex-start;     /* Align items at the start of the cross axis */
+    text-align: left; /* Text align left */
+    flex-direction: column;
+}
+
+.container3 hr {
+    border: 0;           /* Ensures no default border is applied */
+    height: 2px;         /* Makes the line slightly thicker to ensure visibility */
+    background-color: #ffffff; /* Change color as needed for visibility */
+    width: 90%;         /* Ensures the line spans the full width of the container */
+    margin: 5px auto;      /* Adds space above and below */
+}
+
+.container4
+
+
 .title {
     color: white;
     font-size: xx-large;
@@ -61,8 +85,16 @@ body {
 }
 
 .description {
-    color: white
+    color: white;
+    font-size: medium;
+    margin: 20px 50px 50px 50px;
+}
 
+h2 {
+    color: white;
+    margin: 50px 0px 20px 50px;
+    font-size: x-large;
+    font-weight: bold;
 }
 
 h1 a {
@@ -75,4 +107,6 @@ h1 a:hover {
     color: white;             /* Keeps text color white on hover */
     text-decoration: none;    /* Ensures no underline appears on hover */
 }
+
+
 
