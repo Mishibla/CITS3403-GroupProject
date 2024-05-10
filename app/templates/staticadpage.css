@@ -23,6 +23,12 @@ body {
     width: 100%; /* Ensure it takes full width */
 }
 
+.content_container {
+    width: 1400px;
+    height: auto;
+    margin: 30px auto;
+}
+
 .container2 {
     background-color: #2b2a3c;
     width: 900px;
