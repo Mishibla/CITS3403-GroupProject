@@ -57,6 +57,31 @@ body {
     margin: 5px auto;      /* Adds space above and below */
 }
 
+.horizontal-boxes {
+    display: flex; /* Enables Flexbox */
+    flex-direction: row; /* Aligns children horizontally */
+    justify-content: space-between; /* Distributes space evenly between the boxes */
+    width: 90%; /* Ensures the container takes up the full width of container3 */
+    margin: auto;
+}
+
+.horizontal-boxes .box {
+    flex: 1; /* Each box will grow equally to take available space */
+    margin: 15px; /* Adds small space between boxes */
+    background-color: #f0f0f0; /* Light grey background, adjust as needed */
+    position: relative; /* Allows absolute positioning inside the box */
+    overflow: hidden; /* Hides any overflowing parts of the image */
+    text-align: center; /* Centers the text inside the boxes */
+    border-radius: 20px;
+}
+
+.horizontal-boxes .box img {
+    width: 100%;  /* Ensures the image spans the full width of the box */
+    height: 230px; /* Sets a fixed height */
+    object-fit: cover; /* Covers the box, cropping the image as needed */
+    display: block; /* Removes extra space below the image */
+}
+
 .container4 {
     background-color: #2b2a3c;
     width: 500px; /* Adjust this width based on the available space */
@@ -165,6 +190,86 @@ h1 a {
 h1 a:hover {
     color: white;             /* Keeps text color white on hover */
     text-decoration: none;    /* Ensures no underline appears on hover */
+}
+
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
+}
+
+.modal-content {
+    position: relative; /* Ensures it's positioned relative to the modal */
+    width: 80%; /* Adjust based on your design needs */
+    max-width: 800px; /* Maximum width */
+    margin: auto; /* Vertically and horizontally center */
+    padding: 20px; /* Padding inside the modal content */
+    background-color: #201f1e; /* Background color */
+    border-radius: 20px; /* Rounded corners */
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1); /* Optional shadow for aesthetics */
+}
+
+
+.modal-content img {
+    width: 600px; /* Set to the desired width */
+    height: auto; /* Maintains aspect ratio based on the width */
+    display: block; /* Ensures the image is displayed as a block-level element */
+    margin: auto; /* Centers the image horizontally within its container */
+    object-fit: contain;
+}
+
+.mySlides {
+    display: none;
+}
+
+img.cursor {
+    cursor: pointer;
+}
+
+.close {
+    position: absolute;
+    top: 15px;
+    right: 35px;
+    color: white;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.prev, .next {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    width: auto;
+    padding: 16px;
+    margin-top: -50px;
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+    transition: 0.6s ease;
+    border-radius: 0 3px 3px 0;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.prev {
+    left: 0;
+}
+
+.next {
+    right: 0;
+}
+
+.numbertext {
+    color: white;
 }
 
 
