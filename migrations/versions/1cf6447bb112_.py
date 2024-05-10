@@ -1,8 +1,8 @@
-"""Initial migration.
+"""empty message
 
-Revision ID: e081f7409ced
+Revision ID: 1cf6447bb112
 Revises: 
-Create Date: 2024-05-07 17:27:44.873635
+Create Date: 2024-05-10 03:17:19.020209
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'e081f7409ced'
+revision = '1cf6447bb112'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -21,12 +21,18 @@ def upgrade():
     op.create_table('user',
     sa.Column('username', sa.String(length=100), nullable=False),
     sa.Column('name', sa.String(length=100), nullable=False),
-    sa.Column('password', sa.String(length=100), nullable=False),
+    sa.Column('password_hash', sa.String(length=100), nullable=False),
     sa.PrimaryKeyConstraint('username')
     )
     op.create_table('ad',
     sa.Column('ad_id', sa.Integer(), nullable=False),
     sa.Column('ad_title', sa.String(length=100), nullable=False),
+    sa.Column('game_type', sa.String(length=100), nullable=False),
+    sa.Column('game_rank', sa.String(length=100), nullable=False),
+    sa.Column('price', sa.Float(), nullable=False),
+    sa.Column('skins', sa.Boolean(), nullable=False),
+    sa.Column('exclusive', sa.Boolean(), nullable=False),
+    sa.Column('Extra_Descrip', sa.String(), nullable=True),
     sa.Column('user_username', sa.String(length=100), nullable=False),
     sa.ForeignKeyConstraint(['user_username'], ['user.username'], ),
     sa.PrimaryKeyConstraint('ad_id')

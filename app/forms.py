@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SelectField, BooleanField, FloatField, FileField, TextAreaField, SubmitField
+from wtforms import StringField, SelectField, BooleanField, FloatField, FileField, TextAreaField, SubmitField, PasswordField
 from wtforms.validators import DataRequired, Length, Optional, NumberRange
 
 class AdForm(FlaskForm):
@@ -23,8 +23,13 @@ class AdForm(FlaskForm):
     images = FileField('Upload images (max 4)', validators=[Optional()])
     submit =SubmitField('Create Ad')
 
+class LoginForm(FlaskForm):
+    log_username= StringField('Enter Username', validators=[DataRequired(), Length(max=50)])
+    log_password= PasswordField('Enter password', validators=[DataRequired(), Length(max=50)])
+    submit=SubmitField("Login")
+
 class RegisterForm(FlaskForm):
-    username = StringField('Enter Username*', validators=[DataRequired(), Length(max=50)])
-    display_name = StringField('Enter Display Name*', validators=[DataRequired(), Length(max=50)])
-    password = StringField('Enter password*', validators=[DataRequired(), Length(max=50)])
-    submit =SubmitField('Create Ad')
+    username = StringField('Enter Username*', validators=[DataRequired(), Length(max=30)])
+    display_name = StringField('Enter Display Name*', validators=[DataRequired(), Length(max=30)])
+    password = PasswordField('Enter password*', validators=[DataRequired(), Length(max=20)])
+    submit =SubmitField('Create Account')
