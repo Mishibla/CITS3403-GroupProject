@@ -44,7 +44,7 @@ def login():
         login_user(user)
         print(login_user(user))
         return redirect(url_for('homepage'))
-    return render_template('loginpage.html', form=form)
+    return render_template('loginpage.html', form=form, title='login')
 
 @app.route('/logout')
 def logout():
@@ -53,44 +53,43 @@ def logout():
 @app.route('/register')
 def register(): 
     form=RegisterForm()
-    return render_template('registeraccount.html',form=form)
+    return render_template('registeraccount.html',form=form, title='register')
 
 @app.route('/submit_register', methods=['GET', 'POST'])
 def register_account():
     form = RegisterForm()
-    form_data=[form.username.data,form.display_name.data,form.password.data]
-    unique_username = form.username.data
-    print(unique_username)
-    user = User.query.get(unique_username)
-    print(user)
-    if user:
-        flash(f'{unique_username} has already been created, please enter a unique username', 'error')
-        return render_template('registeraccount.html', form=form)
-    length_username=len(form_data[0])
-    length_displayname=len(form_data[1])
-    length_password=len(form_data[2])
-    if length_username > 29:
-        flash(f'Title is too long: max 29 characters, current length {length_username} characters')
-    if length_displayname > 29:
-        flash(f'Description is too long: max 29 characters, current length {length_displayname} characters')
-    if length_displayname > 19:
-        flash(f'Description is too long: max 19 characters, current length {length_password} characters')    
-    if not form.validate_on_submit():
-        return render_template("registeraccount.html",form=form)
-    account = User(username=form_data[0], name=form_data[1])
-    account.set_password(form_data[2]) 
-    db.session.add(account)
-    db.session.commit()
-    return redirect(location=url_for("login"))
+    if request.method == 'POST':
+        unique_username = form.username.data
+        if User.query.get(unique_username):
+            flash(f'{unique_username} has already been created, please enter a unique username', 'error')
+            return render_template('registeraccount.html', form=form)
+
+        if len(form.username.data) > 29:
+            flash(f'Username is too long: max 29 characters, current length {len(form.username.data)} characters', 'error')
+        if len(form.display_name.data) > 29:
+            flash(f'Display name is too long: max 29 characters, current length {len(form.display_name.data)} characters', 'error')
+        if len(form.password.data) > 19:
+            flash(f'Password is too long: max 19 characters, current length {len(form.password.data)} characters', 'error')
+        
+        if not form.validate_on_submit():
+            return render_template("registeraccount.html", form=form)
+        
+        account = User(username=form.username.data, name=form.display_name.data)
+        account.set_password(form.password.data)  
+        db.session.add(account)
+        db.session.commit()
+        return redirect(url_for("login"))
+
+    return render_template("registeraccount.html", form=form)
     
 @app.route('/account')
 def account():
-    return render_template("accountpage.html")
+    return render_template("accountpage.html", title='Account')
 
 @app.route('/createad')
 def create():
     form = AdForm()
-    return render_template("requestpage.html",form=form)
+    return render_template("requestpage.html",form=form, title='Create ad')
 
 @app.route('/submit-ad', methods=['GET', 'POST'])
 def submit_ad():
