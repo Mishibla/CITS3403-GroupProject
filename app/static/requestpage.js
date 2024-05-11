@@ -11,7 +11,7 @@ $(document).ready(function() {
   //linking skins with exclusive skins
   const skin = $("#skins");
   const exclusivity = $('#exclusive');
-  const label_exclu = $('#exclu')
+  const label_exclu = $('#exclusive_label')
   function updateSecondDropdown() {
     const category = firstDropdown.val();
     // Clear existing options

@@ -1,51 +1,31 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Document</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-  </head>
-  <body>
-  </select>
-    <form id="sendrequests" action="/submit">
-        <label for="titlerequest">Title of ad</label>
-        <input class="title" name="titlerequest" type="text">
-        <br>
-        <label for="game">Game Selling?</label>
-        <select id="games" name="games">
-          <option>Select an option</option>
-          <option value="CSGO">CSGO</option>
-          <option value="League">League of Legends</option>
-          <option value="Overwatch">Overwatch</option>
-          <option value="Valorant">Valorant</option>
-        </select>
-        <label for="rank">rank?</label>
-        <select id="ranks" name="rank" style="display:none;">
-          <option value="">Select an option</option>
-        </select>
-        <br>
-        <label for="price">Price(AUD)</label>
-        <input class="pricetag" name="price" type="text">
-        <br>
-        <label for="skin">Skins</label>
-        <select name="skin" id="skins">
-          <option value="">Select an option</option>
-          <option value="yes">yes</option>
-          <option value="no">no</option>
-        </select>
-        <label for="exclusive_skin" style="display:none;" id="exclu">Exclusive Skins?</label>
-        <input type="checkbox" id="exclusive" name="exclusive_skin"  style="display:none;">
-        <br>
-        <label for="description">Extra Description (specifiy your skins and exact elo)</label>
-        <input type="text" name="description" class="additionaldescrip">
-        <br>
-        <label for="image">Upload images(max 4)</label>
-        <input type="file" id="images" name="images[]" accept="image/*" multiple>
+{% extends "base.html" %}
+
+{% block content %}
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <ul>
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    {% endwith %}
+    <form id="sendrequests" action="/submit-ad" method="post">
+        {{ form.hidden_tag() }}
+
+        {{ form.titlerequest.label }} {{ form.titlerequest() }}<br>
+        {{ form.games.label }} {{ form.games(id='games') }}
+        {{ form.rank.label }} {{ form.rank(id='ranks', style="display:none;")}}<br>
+        
+        {{ form.price.label }} {{ form.price() }}<br>
+        {{ form.skin.label }} {{ form.skin(id='skins') }} 
+        {{ form.exclusive_skin.label(style="display:none;", id='exclusive_label') }} 
+        {{ form.exclusive_skin(style="display:none;", id='exclusive') }} <br>
+        {{ form.description.label }} <br> {{ form.description() }}<br>
+        {{ form.images.label }} {{ form.images(multiple=True, accept="image/*", id="images") }} <br>
+        <p>(*)required fields</p>
+        {{ form.submit() }}
     </form>
-    <button type="submit" id="submited" onclick="location.href='/submit'">submit ad</button>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha384-vtXRMe3mGCbOeY7l30aIg8H9p3GdeSe4IFlP6G8JMa7o7lXvnz3GFKzPxzJdPfGK" crossorigin="anonymous"></script>
     <script src="{{ url_for('static', filename='requestpage.js') }}"></script>
-  </body>
-</html> 
+{% endblock %}
