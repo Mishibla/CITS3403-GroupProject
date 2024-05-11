@@ -11,8 +11,6 @@
     {% endif %}
     {% endwith %}
 
-
-
   <div id="loginForm">
     <form action="/login" method="post">
       {{ form.hidden_tag() }}
@@ -22,6 +20,5 @@
     </form>
   </div>
     <a href="/register">Don't have an account?</a>
-
-  <button class="postad" onclick="location.href='/account/create'">Post an ad</button>
+    
 {% endblock %}

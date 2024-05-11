@@ -1,5 +1,5 @@
 from flask import flash,redirect, render_template,url_for,request
-from flask_login import login_user
+from flask_login import login_user, logout_user, login_required
 from app import app,db 
 from app.forms import AdForm,RegisterForm,LoginForm
 from app.models import User,Ad
@@ -43,12 +43,13 @@ def login():
             return render_template('loginpage.html', form=form)
         login_user(user)
         print(login_user(user))
-        return redirect(url_for('homepage'))
+        return redirect(url_for('account'))
     return render_template('loginpage.html', form=form, title='login')
 
 @app.route('/logout')
 def logout():
-    return None
+    logout_user()
+    return redirect(url_for("homepage"))
 
 @app.route('/register')
 def register(): 
@@ -83,10 +84,12 @@ def register_account():
     return render_template("registeraccount.html", form=form)
     
 @app.route('/account')
+@login_required
 def account():
     return render_template("accountpage.html", title='Account')
 
 @app.route('/createad')
+@login_required
 def create():
     form = AdForm()
     return render_template("requestpage.html",form=form, title='Create ad')

@@ -4,27 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="Sellpage.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-    <title>Sell Page</title>
-    <script>
-        $(document).ready(function() {
-            // Event handler for radio buttons
-            $("input[name='game-type']").change(function() {
-                var selectedGame = $(this).val();
-                $("#games").text(selectedGame);
-            });
-    
-            // If you want to use the checkboxes as well
-            $("input[name='filters']").change(function() {
-                // You can add logic here if you want to filter based on checkboxes
-                // Example: update a display or filter data
-                console.log($(this).val() + " checkbox changed");
-            });
-        });
-    </script>
-    
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='Sellpage.css') }}">
+
 </head>
 <body>
     <div class="parent1">
@@ -107,5 +88,24 @@
             </div>
         </div>
     </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <title>Sell Page</title>
+    <script>
+        $(document).ready(function() {
+            // Event handler for radio buttons
+            $("input[name='game-type']").change(function() {
+                var selectedGame = $(this).val();
+                $("#games").text(selectedGame);
+            });
+    
+            // If you want to use the checkboxes as well
+            $("input[name='filters']").change(function() {
+                // You can add logic here if you want to filter based on checkboxes
+                // Example: update a display or filter data
+                console.log($(this).val() + " checkbox changed");
+            });
+        });
+    </script>
 </body>
 </html>
