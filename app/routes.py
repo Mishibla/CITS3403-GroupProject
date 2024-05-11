@@ -120,14 +120,20 @@ def submit_ad():
     last_ad_id = Ad.query.with_entities(Ad.ad_id).order_by(Ad.ad_id.desc()).first()[0]+1
     print(last_ad_id)
     print(form_data)
-    new_ad=Ad(ad_id=last_ad_id, ad_title=form_data[0],game_type=form_data[1], game_rank=form_data[2], price=form_data[3],skins=form_data[4], exclusive=form_data[5], Extra_Descrip=form_data[6], user_username=user, created_at=datetime.now(ZoneInfo('Asia/Shanghai')))
-
+    new_ad=Ad(ad_id=last_ad_id, ad_title=form_data[0],game_type=form_data[1], game_rank=form_data[2], price=form_data[3],skins=bool(form_data[4]), exclusive=form_data[5], Extra_Descrip=form_data[6], user_username=user, created_at=datetime.now(ZoneInfo('Asia/Shanghai')))
     print(new_ad)
     print(f"Ad created at: {new_ad.created_at}")  # This will print the datetime before committing
     #db.session.add(new_ad)
     #db.session.commit()
     return redirect(location=url_for("account"))
-    
+    #return redirect(f'/ads/{last_ad_id}')
+
+@app.route('/ads/<int:ad_id>')
+def show_ad(ad_id):
+    # Fetch ad details from the database or file using ad_id
+    ad_details = Ad.query.get(ad_id)
+    return render_template('ad_template.html', ad=ad_details)
+
 
 csranks=['SILVER','GOLD NOVA','MASTER GUARDIAN','LEGENDARY']
 owranks=['BRONZE','SILVER','GOLD','PLATNIUM','DIAMOND','MASTER','GRANDMASTER','CHAMPIONS','TOP500']

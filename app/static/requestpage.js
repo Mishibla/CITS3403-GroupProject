@@ -26,7 +26,7 @@ $(document).ready(function() {
   }
   //function to handle the exclusive checkbox
   function exclusives() {
-    if (skin.val() === 'yes') {
+    if (skin.val() === 'True') {
       label_exclu.show();
       exclusivity.show();
     } else {

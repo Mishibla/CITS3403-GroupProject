@@ -34,7 +34,8 @@ class Ad(db.Model):
     exclusive=db.Column(db.Boolean,default=False,nullable=False)
     Extra_Descrip=db.Column(db.String,nullable=True)
 
-    created_at = db.Column(db.DateTime, default=lambda: datetime.now())  # GMT+8
+    created_at = db.Column(db.DateTime, default=lambda: datetime.now(ZoneInfo('Asia/Shanghai')))
+
 
     
 
