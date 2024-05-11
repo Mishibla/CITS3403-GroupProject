@@ -81,6 +81,11 @@ body {
     border-radius: 20px;
 }
 
+.horizontal-boxes .box:hover {
+    box-shadow: rgba(80, 63, 205, 0.5) 0 1px 30px;
+    cursor: pointer;
+}
+
 .horizontal-boxes .box img {
     width: 100%;  /* Ensures the image spans the full width of the box */
     height: 230px; /* Sets a fixed height */
