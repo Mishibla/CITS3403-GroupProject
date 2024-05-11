@@ -23,6 +23,175 @@ body {
     width: 100%; /* Ensure it takes full width */
 }
 
+.content_container {
+    width: 1400px;
+    height: auto;
+    margin: 30px auto;
+}
+
+.container2 {
+    background-color: #2b2a3c;
+    width: 900px;
+    height: auto; /* Removed 'auto' to correct the height property */
+    margin: 50px 10px 10px 40px; /*top right bottom left */
+    border-radius: 20px;
+    display: flex;      /* Use Flexbox */
+    justify-content: flex-start; /* Align content to the start of the flex-direction row */
+    align-items: flex-start;     /* Align items at the start of the cross axis */
+    text-align: left; /* Text align left */
+    flex-direction: column;
+}
+
+.container3 {
+    background-color: #2b2a3c;
+    width: 900px;
+    height: auto; /* Removed 'auto' to correct the height property */
+    margin: 10px 10px 30px 40px; /*top right bottom left */
+    border-radius: 20px;
+    display: flex;      /* Use Flexbox */
+    justify-content: flex-start; /* Align content to the start of the flex-direction row */
+    align-items: flex-start;     /* Align items at the start of the cross axis */
+    text-align: left; /* Text align left */
+    flex-direction: column;
+}
+
+.container3 hr {
+    border: 0;           /* Ensures no default border is applied */
+    height: 2px;         /* Makes the line slightly thicker to ensure visibility */
+    background-color: #ffffff; /* Change color as needed for visibility */
+    width: 90%;         /* Ensures the line spans the full width of the container */
+    margin: 5px auto;      /* Adds space above and below */
+}
+
+.horizontal-boxes {
+    display: flex; /* Enables Flexbox */
+    flex-direction: row; /* Aligns children horizontally */
+    justify-content: space-between; /* Distributes space evenly between the boxes */
+    width: 90%; /* Ensures the container takes up the full width of container3 */
+    margin: auto;
+}
+
+.horizontal-boxes .box {
+    flex: 1; /* Each box will grow equally to take available space */
+    margin: 15px; /* Adds small space between boxes */
+    background-color: #f0f0f0; /* Light grey background, adjust as needed */
+    position: relative; /* Allows absolute positioning inside the box */
+    overflow: hidden; /* Hides any overflowing parts of the image */
+    text-align: center; /* Centers the text inside the boxes */
+    border-radius: 20px;
+}
+
+.horizontal-boxes .box:hover {
+    box-shadow: rgba(80, 63, 205, 0.5) 0 1px 30px;
+    cursor: pointer;
+}
+
+.horizontal-boxes .box img {
+    width: 100%;  /* Ensures the image spans the full width of the box */
+    height: 230px; /* Sets a fixed height */
+    object-fit: cover; /* Covers the box, cropping the image as needed */
+    display: block; /* Removes extra space below the image */
+}
+
+.container4 {
+    background-color: #2b2a3c;
+    width: 500px; /* Adjust this width based on the available space */
+    height: auto; /* Adjust height as content requires */
+    margin: 50px 40px 30px 30px; /* Top, right, bottom, left margins */
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    text-align: left;
+}
+
+.container4 img {
+    max-width: 100%;  /* Ensures the image is no wider than the container */
+    height: auto;     /* Maintains the aspect ratio of the image */
+    display: block;   /* Removes any extra space below the image */
+    border-top-left-radius: 20px;  /* Rounds the top-left corner */
+    border-top-right-radius: 20px; /* Rounds the top-right corner */
+}
+
+.flex-layout {
+    display: flex;
+    justify-content: space-between; /* This will place container4 to the right */
+    align-items: start; /* Aligns containers to the top */
+    width: 100%; /* Full width to use all available space */
+}
+
+.container-left {
+    flex-grow: 1; /* Takes up the remaining space left by container4 */
+    display: flex;
+    flex-direction: column;
+}
+
+.title {
+    color: white;
+    font-size: xx-large;
+    font-weight: bold;
+    margin: 50px 50px 10px 50px;
+}
+
+.user {
+    color: white;
+    font-size: medium;
+    margin: 10px 0px 10px 50px;
+}
+
+.rating {
+    color: white;
+    font-size: medium;
+    margin: 10px 0px 50px 50px
+}
+
+.database_info {
+    color: #DAA520;
+    font-weight: bold;
+}
+
+.description {
+    color: white;
+    font-size: medium;
+    margin: 20px 50px 50px 50px;
+}
+
+.price_tag {
+    color: #DAA520;
+    font-weight: bold;
+    padding-left: 10px;
+}
+
+.price-button-container {
+    display: flex;          /* Enables Flexbox */
+    justify-content: space-between; /* Spaces out the child elements */
+    align-items: center;   /* Aligns items vertically in the center */
+    width: 80%;
+}
+
+.price-button-container h3 {
+    margin-right: auto;  /* Push everything else to the right */
+}
+
+.button_container {
+    margin-left: auto;  /* Ensures the button stays to the right */
+}
+
+
+h3 {
+    color: white;
+    margin: 30px 0px 30px 30px;
+    font-weight: bold;
+}
+
+h2 {
+    color: white;
+    margin: 50px 0px 20px 50px;
+    font-size: x-large;
+    font-weight: bold;
+}
+
 h1 a {
     color: white;             /* Ensures text color is white */
     text-decoration: none;    /* Removes underline */
@@ -33,4 +202,86 @@ h1 a:hover {
     color: white;             /* Keeps text color white on hover */
     text-decoration: none;    /* Ensures no underline appears on hover */
 }
+
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
+}
+
+.modal-content {
+    position: relative; /* Ensures it's positioned relative to the modal */
+    width: 80%; /* Adjust based on your design needs */
+    max-width: 800px; /* Maximum width */
+    margin: auto; /* Vertically and horizontally center */
+    padding: 20px; /* Padding inside the modal content */
+    background-color: #201f1e; /* Background color */
+    border-radius: 20px; /* Rounded corners */
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1); /* Optional shadow for aesthetics */
+}
+
+
+.modal-content img {
+    width: 600px; /* Set to the desired width */
+    height: auto; /* Maintains aspect ratio based on the width */
+    display: block; /* Ensures the image is displayed as a block-level element */
+    margin: auto; /* Centers the image horizontally within its container */
+    object-fit: contain;
+}
+
+.mySlides {
+    display: none;
+}
+
+img.cursor {
+    cursor: pointer;
+}
+
+.close {
+    position: absolute;
+    top: 15px;
+    right: 35px;
+    color: white;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.prev, .next {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    width: auto;
+    padding: 16px;
+    margin-top: -50px;
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+    transition: 0.6s ease;
+    border-radius: 0 3px 3px 0;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.prev {
+    left: 0;
+}
+
+.next {
+    right: 0;
+}
+
+.numbertext {
+    color: white;
+}
+
+
 
