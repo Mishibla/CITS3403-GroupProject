@@ -1,4 +1,6 @@
 from flask_login import UserMixin
+from datetime import datetime
+from zoneinfo import ZoneInfo 
 from app import db
 from werkzeug.security import generate_password_hash, check_password_hash
 from app import login
@@ -31,8 +33,11 @@ class Ad(db.Model):
     skins=db.Column(db.Boolean, default=False, nullable=False)
     exclusive=db.Column(db.Boolean,default=False,nullable=False)
     Extra_Descrip=db.Column(db.String,nullable=True)
+
+    created_at = db.Column(db.DateTime, default=lambda: datetime.now())  # GMT+8
+
     
 
     user_username = db.Column(db.String(100), db.ForeignKey('user.username'), nullable=False)
     def __repr__(self) -> str:
-        return f'<{self.ad_id} {self.ad_title}{self.game_type}{self.game_rank}{self.price}{self.skins}{self.exclusive}{self.Extra_Descrip}>'
+        return f'<{self.ad_id} {self.ad_title} {self.game_type} {self.game_rank} {self.price} {self.skins} {self.exclusive} {self.Extra_Descrip} {self.user_username} {self.created_at}>'

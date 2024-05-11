@@ -15,8 +15,8 @@ class AdForm(FlaskForm):
     price = FloatField('Price (AUD)*', validators=[DataRequired()])
     skin = SelectField('Skins*', choices=[
         ('', 'Select an option'),
-        ('yes', 'Yes'),
-        ('no', 'No')
+        (True, 'Yes'),
+        (False, 'No')
     ], validators=[DataRequired()])
     exclusive_skin = BooleanField('Exclusive Skins?', default=False)
     description = TextAreaField('Extra Description (specify your skins and exact elo)', validators=[Optional(), Length(max=500)])

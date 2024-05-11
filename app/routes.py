@@ -1,5 +1,7 @@
+from datetime import datetime
+from zoneinfo import ZoneInfo
 from flask import flash,redirect, render_template,url_for,request
-from flask_login import login_user, logout_user, login_required
+from flask_login import login_user, logout_user, login_required, current_user
 from app import app,db 
 from app.forms import AdForm,RegisterForm,LoginForm
 from app.models import User,Ad
@@ -100,8 +102,6 @@ def submit_ad():
     type_of_game=form.games.data
     form.rank.choices=get_rank(type_of_game)
     form_data=[form.titlerequest.data,form.games.data,form.rank.data,form.price.data,form.skin.data,form.exclusive_skin.data,form.description.data]
-    #user_count = Ad.query.count()
-    #new_id=user_count+1
     try:
         float(form_data[3])==float
     except:
@@ -114,7 +114,20 @@ def submit_ad():
         flash(f'Description is too long: max 499 characters, current length {length_description} characters')
     if not form.validate_on_submit():
         return render_template("requestpage.html",form=form)
+    if current_user.is_authenticated:
+        user = current_user.username
+        print(user)
+    last_ad_id = Ad.query.with_entities(Ad.ad_id).order_by(Ad.ad_id.desc()).first()[0]+1
+    print(last_ad_id)
+    print(form_data)
+    new_ad=Ad(ad_id=last_ad_id, ad_title=form_data[0],game_type=form_data[1], game_rank=form_data[2], price=form_data[3],skins=form_data[4], exclusive=form_data[5], Extra_Descrip=form_data[6], user_username=user, created_at=datetime.now(ZoneInfo('Asia/Shanghai')))
+
+    print(new_ad)
+    print(f"Ad created at: {new_ad.created_at}")  # This will print the datetime before committing
+    #db.session.add(new_ad)
+    #db.session.commit()
     return redirect(location=url_for("account"))
+    
 
 csranks=['SILVER','GOLD NOVA','MASTER GUARDIAN','LEGENDARY']
 owranks=['BRONZE','SILVER','GOLD','PLATNIUM','DIAMOND','MASTER','GRANDMASTER','CHAMPIONS','TOP500']
