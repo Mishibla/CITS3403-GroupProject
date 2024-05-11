@@ -85,3 +85,35 @@ h1 a:hover {
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;
 }
+
+.profile-picture {
+    flex-shrink: 0; /* Prevents the image container from shrinking */
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background-position: center;
+    background-size: cover;
+    border: 4px solid #ffbade;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin: 20px; /* Adjusted margin */
+}
+
+
+.profile-picture img {
+    width: 100%;  /* Ensures the image spans the full width of the box */
+    height: 100%; /* Sets a fixed height */
+    object-fit: cover; /* Covers the box, cropping the image as needed */
+    display: block; /* Removes extra space below the image */
+    border-radius: 50%;
+}
+
+.profile-info {
+    flex-grow: 1; /* Takes up the remaining space */
+    margin: 50px;
+    color: white;
+    font-weight: bold;
+    font-size: 2em; /* Adjusted to a more scalable unit */
+    overflow: hidden; /* Prevents text from spilling out */
+    text-overflow: ellipsis; /* Adds ellipsis if text is too long */
+    white-space: nowrap; /* Keeps the text on a single line */
+}
