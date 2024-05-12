@@ -1,5 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Homepage</title>
+</head>
 {% extends "base.html" %}
 {% block content %}
-<h1>Homepage</h1>
-<button class="postad" onclick="location.href='/createad'">Post an ad</button>
+<body>
+
+<header>
+    <h1>Homepage</h1>
+    <button class="postad" onclick="location.href='/createad'">Post an ad</button><br>
+    <br>
+    <nav>
+        <label for="sort-dropdown">Sort by:</label>
+        <select id="sort-dropdown">
+            <option value="Popularity">Popularity</option>
+            <option value="Price">Price</option>
+            <option value="Date">Date</option>
+        </select>
+    </nav>
+</header>
+
+<main>
+    <section id="products">
+        <div class="product">
+            <h2>Product 1</h2>
+            <div class="fakeimg" style="height:200px;">Image</div>
+            <p>Date: January 1, 2024</p>
+            <p>Price: $50</p>
+            <p>Popularity: 100</p>
+        </div>
+        <div class="product">
+            <h2>Product 2</h2>
+            <div class="fakeimg" style="height:200px;">Image</div>
+            <p>Date: February 15, 2024</p>
+            <p>Price: $30</p>
+            <p>Popularity: 50</p>
+        </div>
+        <div class="product">
+            <h2>Product 3</h2>
+            <div class="fakeimg" style="height:200px;">Image</div>
+            <p>Date: February 1, 2024</p>
+            <p>Price: $100</p>
+            <p>Popularity: 200</p>
+        </div>
+    </section>
+ 
+</main>
+
+<script>
+document.getElementById('sort-dropdown').addEventListener('change', function() {
+    let sortBy = this.value;
+    sortProducts(sortBy);
+});
+
+function sortProducts(sortBy) {
+    let productsContainer = document.getElementById('products');
+    let products = Array.from(productsContainer.children);
+    
+    products.sort((a, b) => {
+        let aValue = a.querySelector(`[data-${sortBy}]`).getAttribute(`data-${sortBy}`);
+        let bValue = b.querySelector(`[data-${sortBy}]`).getAttribute(`data-${sortBy}`);
+        
+        if (sortBy === 'date') {
+            return new Date(bValue) - new Date(aValue);
+        } else {
+            return parseFloat(bValue) - parseFloat(aValue);
+        }
+    });
+    
+    products.forEach(product => {
+        productsContainer.appendChild(product);
+    });
+}
+</script>
+
+</body>
+</html>
 {% endblock %}
