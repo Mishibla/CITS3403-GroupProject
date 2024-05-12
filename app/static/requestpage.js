@@ -12,6 +12,7 @@ $(document).ready(function() {
   const skin = $("#skins");
   const exclusivity = $('#exclusive');
   const label_exclu = $('#exclusive_label')
+  
   function updateSecondDropdown() {
     const category = firstDropdown.val();
     // Clear existing options
@@ -45,4 +46,13 @@ $(document).ready(function() {
       $(this).val(null); // Clear the file input
     }
   })
+  $(document).ready(function() {
+    var unsuccessfulSubmit = $('body').data('unsuccessful');
+    if (unsuccessfulSubmit) {
+      $('#ranks').show();
+      $('#exclusive').show();
+      $('#exclusive_label').show();
+    }
+  });
+  
 });

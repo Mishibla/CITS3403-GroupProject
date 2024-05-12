@@ -6,13 +6,9 @@ from app import app,db
 from app.forms import AdForm,RegisterForm,LoginForm
 from app.models import User,Ad
 
-#counter will be used for ad_id primary key
-
-
 @app.route('/')
 
 #test root to see if the database is working
-
 #@app.route('/titleofad')
 #def titleofad():
     #ads_of_chris = Ad.query.all() 
@@ -88,7 +84,17 @@ def register_account():
 @app.route('/account')
 @login_required
 def account():
-    return render_template("accountpage.html", title='Account')
+    if current_user.is_authenticated:
+        user = current_user.username
+        print(user)
+        user_details= User.query.get(user)
+        ads=list(user_details.get_ad_ids_str())
+        print(ads)
+        urllist={}
+        for ad in ads:
+            urlstring='/ads/'+ad
+            urllist[ad]=urlstring
+    return render_template("accountpage.html", title='Account', ad=urllist)
 
 @app.route('/createad')
 @login_required
@@ -98,41 +104,38 @@ def create():
 
 @app.route('/submit-ad', methods=['GET', 'POST'])
 def submit_ad():
+    print('yes')
     form = AdForm()
     type_of_game=form.games.data
     form.rank.choices=get_rank(type_of_game)
     form_data=[form.titlerequest.data,form.games.data,form.rank.data,form.price.data,form.skin.data,form.exclusive_skin.data,form.description.data]
+    unsuccessful_submit = False
     try:
         float(form_data[3])==float
     except:
         flash('Enter price in valid format')
     length_title=len(form_data[0])
     length_description=len(form_data[-1])
-    if length_title > 49:
-        flash(f'Title is too long: max 49 characters, current length {length_title} characters')
-    if length_description > 499:
+    if length_description>499:
         flash(f'Description is too long: max 499 characters, current length {length_description} characters')
     if not form.validate_on_submit():
-        return render_template("requestpage.html",form=form)
+        unsuccessful_submit = True
+        return render_template("requestpage.html",form=form, unsuccessful_submit=unsuccessful_submit)
     if current_user.is_authenticated:
         user = current_user.username
-        print(user)
-    last_ad_id = Ad.query.with_entities(Ad.ad_id).order_by(Ad.ad_id.desc()).first()[0]+1
-    print(last_ad_id)
-    print(form_data)
+    try:
+        last_ad_id = Ad.query.with_entities(Ad.ad_id).order_by(Ad.ad_id.desc()).first()[0]+1
+    except:
+        last_ad_id=1
     new_ad=Ad(ad_id=last_ad_id, ad_title=form_data[0],game_type=form_data[1], game_rank=form_data[2], price=form_data[3],skins=bool(form_data[4]), exclusive=form_data[5], Extra_Descrip=form_data[6], user_username=user, created_at=datetime.now(ZoneInfo('Asia/Shanghai')))
-    print(new_ad)
-    print(f"Ad created at: {new_ad.created_at}")  # This will print the datetime before committing
-    #db.session.add(new_ad)
-    #db.session.commit()
-    return redirect(location=url_for("account"))
-    #return redirect(f'/ads/{last_ad_id}')
+    db.session.add(new_ad)
+    db.session.commit()
+    return redirect(f'/ads/{last_ad_id}')
 
 @app.route('/ads/<int:ad_id>')
 def show_ad(ad_id):
-    # Fetch ad details from the database or file using ad_id
     ad_details = Ad.query.get(ad_id)
-    return render_template('ad_template.html', ad=ad_details)
+    return render_template('adtemplate.html', ad=ad_details)
 
 
 csranks=['SILVER','GOLD NOVA','MASTER GUARDIAN','LEGENDARY']
@@ -143,11 +146,5 @@ gamesapp={'CSGO':csranks,'Overwatch':owranks,'League':leagueranks,'Valorant':val
 def get_rank(gametype):
     return(gamesapp.get(gametype))
 
-
-'''        for field, errors in form.errors.items():
-            for error in errors:
-                print(f"Error in {field}: {error}")
-                flash(f"Error in {field}: {error}")
-        form.games.data=None'''
 
 

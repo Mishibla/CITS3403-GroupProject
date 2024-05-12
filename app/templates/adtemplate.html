@@ -1,19 +1,82 @@
 {% extends "base.html" %}
 {% block content %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='adtemplate.css') }}">
 
-<h1>{{ ad.ad_id}}</h1>
-<p>{{ ad.ad_title}} </p>
-<p>{{ ad.game_type}} </p>
-<p>{{ ad.game_rank}} </p>
-<p>{{ ad.price}} </p>
-<p>{{ ad.skins}} </p>
-<p>{{ ad.exclusive}} </p>
-<p>{{ ad.Extra_Descrip}} </p>    
-<p>{{ ad.created_at}} </p>    
-<p>{% if current_user.is_authenticated %}</p>
-<p>Welcome, {{ current_user.name }}</p>
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='custom_button.css') }}">
+
+<div class="content_container">
+    <div class="flex-layout">
+        <div class="container-left">
+            <div class="container2">
+                <div class="title">{{ ad.ad_title}}</div><br>
+                <div class="game"> Game: <span class="database_info">{{ ad.game_type}}</span></div>
+                <div class="rank"> Rank: <span class="database_info">{{ ad.game_rank}}</span></div>
+                <div class="user"> Seller username: <span class="database_info">{{ ad.user_username}}</span></div>
+                <div class="rating"> Seller rating:  <span class="database_info">rating</span></div>
+                <div class="skins"> Skins?:  <span class="database_info">{{ ad.skins}}</span></div>
+                <div class="exclusive_skins"> Exlusive Skins?:  <span class="database_info">{{ ad.exclusive}}</span></div>
+                <div class="date"> Last updated:  <span class="database_info">{{ ad.created_at}}</span></div>
+            </div>
+            <div class="container3">
+                <h2>Description</h2>
+                <hr>
+                <p class="description">
+                    {{ ad.Extra_Descrip}}
+                </p>
+                <div class="horizontal-boxes">
+                    <div class="box"><img alt="Image description" class="box-image" data-image="image1" onclick="openModal();currentSlide(1)" class="hover-shadow cursor"></div>
+                    <div class="box"><img alt="Image description" class="box-image" data-image="image2" onclick="openModal();currentSlide(2)" class="hover-shadow cursor"></div>
+                    <div class="box"><img alt="Image description" class="box-image" data-image="image3" onclick="openModal();currentSlide(3)" class="hover-shadow cursor"></div>
+                </div>
+            </div>
+        </div>
+        <div class="container4">
+            <img alt="Image description" class="box-image" data-image="image4" onclick="openModal();currentSlide(4)" class="hover-shadow cursor">
+            <h3 class="price-button-container">
+                Price:  <span class="price_tag">${{ ad.price}}</span>
+                <span class="button_container">
+                    <button role="button" class="custom_button">Buy</button>
+                </span>
+            </h3>
+            
+        </div>
+    </div>
+</div>   
+
+<div id="myModal" class="modal">
+    <span class="close cursor" onclick="closeModal()">&times;</span>
+    <div class="modal-content">
+
+        <div class="mySlides">
+            <div class="numbertext">1 / 4</div>
+            <img alt="Image description" class="box-image" data-image="image1">
+        </div>
+
+        <div class="mySlides">
+            <div class="numbertext">2 / 4</div>
+            <img alt="Image description" class="box-image" data-image="image2">
+        </div>
+
+        <div class="mySlides">
+            <div class="numbertext">3 / 4</div>
+            <img alt="Image description" class="box-image" data-image="image3">
+        </div>
+
+        <div class="mySlides">
+            <div class="numbertext">4 / 4</div>
+            <img alt="Image description" class="box-image" data-image="image4">
+        </div>
+
+        <!-- Next/previous controls -->
+        <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+        <a class="next" onclick="plusSlides(1)">&#10095;</a>
+    </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="{{ url_for('static', filename='adtemplate.js') }}"></script>
 
 {% endblock %}
+
 
 
 

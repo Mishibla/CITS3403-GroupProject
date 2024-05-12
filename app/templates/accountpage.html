@@ -10,4 +10,18 @@
 <br>
 <br>
 <h1>new header</h1>
+<h1>Ads posted below</h1>
+
+<p>Ad IDs: {{ ad}}</p>
+
+{% for key,value in ad.items() %}
+<div><a href="{{ value }}">Ad:{{key}}</a></div>
+
+{% endfor %}
+
+
+
+
+<h1 style="margin-left: 30px"><a href="/ads/1">AD1</a></h1>
+
 {% endblock %}

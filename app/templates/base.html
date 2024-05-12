@@ -21,7 +21,7 @@
     <div class="container1">   
         <div class="row">
             <div class="col-sm-3">
-                <h1 style="margin-left: 30px"><a href=Homepage.html>Website Name</a></h1>
+                <h1 style="margin-left: 30px"><a href="{{ url_for('homepage') }}">Website Name</a></h1>
             </div>
             <div class="col-sm-3"></div>
             <div class="col-sm-2">
@@ -50,8 +50,7 @@
     </div>
     <br>
     <br>
-    <div class="content_container" style="color:blue; background-color: orange;">
-        testing
+    <div class="content_container">
         {% block content %}
         {% endblock %}
     </div>

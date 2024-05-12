@@ -25,6 +25,8 @@
         {{ form.images.label }} {{ form.images(multiple=True, accept="image/*", id="images") }} <br>
         <p>(*)required fields</p>
         {{ form.submit() }}
+        
+        <body data-unsuccessful="{{ unsuccessful_submit}}">
     </form>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha384-vtXRMe3mGCbOeY7l30aIg8H9p3GdeSe4IFlP6G8JMa7o7lXvnz3GFKzPxzJdPfGK" crossorigin="anonymous"></script>
     <script src="{{ url_for('static', filename='requestpage.js') }}"></script>
