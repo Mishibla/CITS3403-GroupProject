@@ -1,4 +1,6 @@
 from flask_login import UserMixin
+from datetime import datetime
+from zoneinfo import ZoneInfo 
 from app import db
 from werkzeug.security import generate_password_hash, check_password_hash
 from app import login
@@ -8,9 +10,16 @@ class User(db.Model,UserMixin):
     name=db.Column(db.String(100),nullable=False)
     password_hash=db.Column(db.String(100),nullable=False)
     
-    ads = db.relationship('Ad', backref='user', lazy='dynamic')
+    ads = db.relationship('Ad', back_populates='users',lazy='dynamic')
+
     def __repr__(self) -> str:
-        return f'<{self.name} {self.username} {self.password_hash}>'
+        ad_ids = [str(ad.ad_id) for ad in self.ads.all()]
+        return f'<{self.name} {self.username} {self.password_hash} {", ".join(ad_ids)} >'
+    
+    def get_ad_ids_str(self):
+        ad_ids = [str(ad.ad_id) for ad in self.ads.all()]
+        return ad_ids
+    
     def set_password(self, password):
         self.password_hash= generate_password_hash(password)
     def check_password(self, password):
@@ -31,8 +40,11 @@ class Ad(db.Model):
     skins=db.Column(db.Boolean, default=False, nullable=False)
     exclusive=db.Column(db.Boolean,default=False,nullable=False)
     Extra_Descrip=db.Column(db.String,nullable=True)
-    
+
+    created_at = db.Column(db.DateTime, default=lambda: datetime.now(ZoneInfo('Asia/Shanghai')))
 
     user_username = db.Column(db.String(100), db.ForeignKey('user.username'), nullable=False)
+
+    users = db.relationship(User, back_populates='ads')
     def __repr__(self) -> str:
-        return f'<{self.ad_id} {self.ad_title}{self.game_type}{self.game_rank}{self.price}{self.skins}{self.exclusive}{self.Extra_Descrip}>'
+        return f'<{self.ad_id} {self.ad_title} {self.game_type} {self.game_rank} {self.price} {self.skins} {self.exclusive} {self.Extra_Descrip} {self.user_username} {self.created_at}>'
