@@ -145,6 +145,30 @@ def show_ad(ad_id):
     ad_details = Ad.query.get(ad_id)
     return render_template('adtemplate.html', ad=ad_details)
 
+@app.route('/wishlist')
+@login_required
+def wishlist():
+    return ('wishlist.html')
+
+@app.route('/submit-wishlist',  methods=['GET', 'POST'])
+def adlike():
+    button_change=False
+    ad_id = request.form['ad_id']
+    userid=request.form['user']
+    print(ad_id)
+    print(userid)
+    if not current_user.is_authenticated:
+        return redirect(f'/ads/{ad_id}',success=button_change)
+        
+    if current_user.is_authenticated:
+        button_change=True
+        return redirect(f'/ads/{ad_id}',success=button_change)
+
+#maybe flash if they are not allowed to hit like
+
+    return redirect(f'/ads/{ad_id}')
+
+
 
 csranks=['SILVER','GOLD NOVA','MASTER GUARDIAN','LEGENDARY']
 owranks=['BRONZE','SILVER','GOLD','PLATNIUM','DIAMOND','MASTER','GRANDMASTER','CHAMPIONS','TOP500']
