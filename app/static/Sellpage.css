@@ -58,3 +58,19 @@
 .checkbox_label {
   font-size: large;
 }
+
+.accounts_container_display {
+  display: flex;       /* Enables flexbox layout */
+  flex-wrap: wrap;     /* Allows items to wrap onto the next line */
+  justify-content: flex-start; /* Distributes space between and around items */
+  gap: 45px;           /* Space between boxes */
+}
+
+.accounts {
+  flex: 1 1 30%;      /* Grow and shrink, base width */
+  max-width: 30%;     /* Maximum width */
+  border-radius: 20px;
+  background-color: #3a2f46;
+  height: 250px;
+  padding: 20px;
+}
