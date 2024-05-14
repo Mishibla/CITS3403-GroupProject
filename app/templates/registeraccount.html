@@ -10,15 +10,18 @@
     </ul>
     {% endif %}
     {% endwith %}
-
-    <form id="registerform" action="/submit_register" method="post">
-        {{ form.hidden_tag() }}
-        {{ form.username.label }} {{ form.username() }}<br>
-        {{ form.display_name.label }} {{ form.display_name() }}<br>
-        {{ form.password.label }} {{ form.password() }}<br>
-        <p>(*)required fields</p>
-        {{ form.submit() }}
-    </form>
+    <div class="login_container">
+        <div class="form_container">
+            <form id="registerform" action="/submit_register" method="post">
+                {{ form.hidden_tag() }}
+                {{ form.username.label }} {{ form.username() }}<br>
+                {{ form.display_name.label }} {{ form.display_name() }}<br>
+                {{ form.password.label }} {{ form.password() }}<br>
+                <p>(*)required fields</p>
+                {{ form.submit() }}
+            </form>
+        </div>
+    </div>
 {% endblock %}
 
 
