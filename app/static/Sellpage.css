@@ -1,48 +1,7 @@
-@font-face { font-family: Delicious; src: url('Delicious-Roman.otf'); } 
-@font-face { font-family: Delicious; font-weight: bold; src: url('Delicious-Bold.otf');}
 
-* {
+
+body {
     background-color: #201f31;
-}
-
-h1 {
-    background-color: #2b2a3c;
-    color: white;
-    font-weight: bold;
-    font-family: Delicious, sans-serif;
-    text-decoration: none;
-}
-
-a {
-    color: white;
-}
-
-a:hover {
-    color: white;
-    text-decoration: none;
-}
-
-h2 {
-    background-color: #201f31;
-    color: white;
-    font-weight: 500;
-    font-family: Delicious, sans-serif;
-}
-
-.parent1 {
-    display: flex;
-    justify-content: center; /* Center horizontally */
-    align-items: center;     /* Center vertically */
-    height: 25vh;           /* Full height of the viewport */
-    padding-bottom: 20px;
-}
-
-.parent2 {
-    display: flex;
-    justify-content: center; /* Center horizontally */
-    align-items: center;     /* Center vertically */
-    height: 5vh;           /* Full height of the viewport */
-    padding-bottom: 20px;
 }
 
 .container {
@@ -54,8 +13,8 @@ h2 {
 }
 
 .container2 {
-    width: 95%; /* or any specific width */
-    padding: 20px;
+    width: 1000px; /* or any specific width */
+    height: auto;
     justify-content: center; /* Center horizontally */
     align-items: center;     /* Center vertically */
 }
