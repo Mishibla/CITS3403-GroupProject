@@ -23,7 +23,15 @@ def homepage():
 
 @app.route('/buyaccount')
 def buyaccount():
-    return render_template("Sellpage.html")
+    ad_data=Ad.query.all()
+    urllist={}
+    for indvidual_ad in ad_data:
+        ads=indvidual_ad.ad_id
+        urlstring='/ads/'+str(ads)
+        urllist[ads]=urlstring
+    #print(urllist, ad=ads)
+
+    return render_template("Sellpage.html",ad=urllist)
 
 @app.route('/login', methods=['get','post'])
 def login():
@@ -136,6 +144,30 @@ def submit_ad():
 def show_ad(ad_id):
     ad_details = Ad.query.get(ad_id)
     return render_template('adtemplate.html', ad=ad_details)
+
+@app.route('/wishlist')
+@login_required
+def wishlist():
+    return ('wishlist.html')
+
+@app.route('/submit-wishlist',  methods=['GET', 'POST'])
+def adlike():
+    button_change=False
+    ad_id = request.form['ad_id']
+    userid=request.form['user']
+    print(ad_id)
+    print(userid)
+    if not current_user.is_authenticated:
+        return redirect(f'/ads/{ad_id}',success=button_change)
+        
+    if current_user.is_authenticated:
+        button_change=True
+        return redirect(f'/ads/{ad_id}',success=button_change)
+
+#maybe flash if they are not allowed to hit like
+
+    return redirect(f'/ads/{ad_id}')
+
 
 
 csranks=['SILVER','GOLD NOVA','MASTER GUARDIAN','LEGENDARY']

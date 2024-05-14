@@ -1,3 +1,15 @@
+.wishlist-button {
+  background-color: transparent;
+  border: none;
+  color: red !important;
+  cursor: pointer;
+  font-size: 1.5em;
+}
+
+.wishlist-button:hover {
+  color: darkred !important;
+}
+
 .custom_checkbox {
   display: flex;      /* Aligns children (checkbox and label) in a row */
   align-items: center; /* Centers children vertically */
