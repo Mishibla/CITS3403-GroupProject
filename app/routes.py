@@ -23,7 +23,15 @@ def homepage():
 
 @app.route('/buyaccount')
 def buyaccount():
-    return render_template("Sellpage.html")
+    ad_data=Ad.query.all()
+    urllist={}
+    for indvidual_ad in ad_data:
+        ads=indvidual_ad.ad_id
+        urlstring='/ads/'+str(ads)
+        urllist[ads]=urlstring
+    #print(urllist, ad=ads)
+
+    return render_template("Sellpage.html",ad=urllist)
 
 @app.route('/login', methods=['get','post'])
 def login():

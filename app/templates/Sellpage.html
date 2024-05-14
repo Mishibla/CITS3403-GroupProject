@@ -47,5 +47,11 @@
             </div>
         </div>
     </div>
+    <h1>Below are all the url ads</h1>
+
+    {% for value in ad.values() %}
+        <p><b>{{value}}</b></p>
+
+    {% endfor %}
 
 {% endblock %}
