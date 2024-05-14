@@ -4,7 +4,17 @@
 
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='custom_button.css') }}">
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+<form action="/submit-wishlist" method="POST">
+    <input type="hidden" name="ad_id" value="{{ ad.ad_id }}">
+    <input type="hidden" name="user" value="{{ ad.user_username }}">
+    <button type="submit" class="wishlist-button">
+        <i class="fa fa-heart"></i> Add to Wishlist
+    </button>
+</form>
+
 <div class="content_container">
+
     <div class="flex-layout">
         <div class="container-left">
             <div class="container2">
