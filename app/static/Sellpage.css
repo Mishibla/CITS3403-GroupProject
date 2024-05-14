@@ -1,9 +1,60 @@
 .sellpage_container {
-    width: 1000px; /* or any specific width */
-    height: auto;
-    display: flex;
-    justify-content: space-between;
-    align-content: center;
-    margin: auto;
+  width: 1000px; /* or any specific width */
+  height: auto;
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
+  margin: auto;
 }
 
+.display_container {
+  width: 1400px;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.filter_box {
+  width: 300px;
+  max-height: 500px;
+  background-color: #2b2a3c;
+  border-radius: 20px;
+  margin-top: 130px;
+  padding: 30px;
+}
+
+.accounts_container {
+  width: 1000px;
+  height: auto;
+  margin-top: 50px;
+}
+
+.accounts_container_header {
+  width: 1000px;
+  height: auto;
+  color: white;
+  font-size: xx-large;
+}
+
+.accounts_container_display {
+  width: 1000px;
+  height: auto;
+  background-color: #2b2a3c;
+  border-radius: 20px;
+  margin-top: 30px;
+  padding: 30px;
+}
+
+.custom_checkbox {
+  margin-left: 20px;
+  margin-top: 10px;
+}
+
+.custom_checkbox .toggle {
+  margin-right: 10px;  /* Adjust this value as needed */
+}
+
+.checkbox_label {
+  font-size: large;
+}

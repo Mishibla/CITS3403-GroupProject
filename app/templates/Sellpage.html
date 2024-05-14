@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 
 {% block content %}
-
     <div class="sellpage_container">
         <button role="button" class="custom_button">CSGO 2</button>
         <button role="button" class="custom_button">Valorant</button>
@@ -9,6 +8,26 @@
         <button role="button" class="custom_button">OW 2</button>
     </div>
 
-    
-
+    <div class="display_container">
+        <div class="filter_box">
+            <div class="custom_checkbox">
+                <input type="checkbox" id="ELO" />
+                <label for="ELO" class="toggle"><span></span></label>
+                <label for="ELO" class="checkbox_label">ELO</label>
+            </div>
+            <div class="custom_checkbox">
+                <input type="checkbox" id="Price" />
+                <label for="Price" class="toggle"><span></span></label>
+                <label for="Price" class="checkbox_label">Price</label>
+            </div>
+        </div>
+        <div class="accounts_container">
+            <div class="accounts_container_header">
+                Displaying Valorant
+            </div>
+            <div class="accounts_container_display">
+                test
+            </div>
+        </div>
+    </div>
 {% endblock %}
