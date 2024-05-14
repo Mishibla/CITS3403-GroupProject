@@ -10,24 +10,28 @@
     </ul>
     {% endif %}
     {% endwith %}
-    <form id="sendrequests" action="/submit-ad" method="post">
-        {{ form.hidden_tag() }}
+    <div class="login_container">
+        <div class="form_container">
+            <form id="sendrequests" action="/submit-ad" method="post">
+                {{ form.hidden_tag() }}
 
-        {{ form.titlerequest.label }} {{ form.titlerequest() }}<br>
-        {{ form.games.label }} {{ form.games(id='games') }}
-        {{ form.rank.label }} {{ form.rank(id='ranks', style="display:none;")}}<br>
-        
-        {{ form.price.label }} {{ form.price() }}<br>
-        {{ form.skin.label }} {{ form.skin(id='skins') }} 
-        {{ form.exclusive_skin.label(style="display:none;", id='exclusive_label') }} 
-        {{ form.exclusive_skin(style="display:none;", id='exclusive') }} <br>
-        {{ form.description.label }} <br> {{ form.description() }}<br>
-        {{ form.images.label }} {{ form.images(multiple=True, accept="image/*", id="images") }} <br>
-        <p>(*)required fields</p>
-        {{ form.submit() }}
-        
-        <body data-unsuccessful="{{ unsuccessful_submit}}">
-    </form>
+                {{ form.titlerequest.label }} {{ form.titlerequest() }}<br>
+                {{ form.games.label }} {{ form.games(id='games') }}
+                {{ form.rank.label }} {{ form.rank(id='ranks', style="display:none;")}}<br>
+                
+                {{ form.price.label }} {{ form.price() }}<br>
+                {{ form.skin.label }} {{ form.skin(id='skins') }} 
+                {{ form.exclusive_skin.label(style="display:none;", id='exclusive_label') }} 
+                {{ form.exclusive_skin(style="display:none;", id='exclusive') }} <br>
+                {{ form.description.label }} <br> {{ form.description() }}<br>
+                {{ form.images.label }} {{ form.images(multiple=True, accept="image/*", id="images") }} <br>
+                <p>(*)required fields</p>
+                {{ form.submit() }}
+                
+                <body data-unsuccessful="{{ unsuccessful_submit}}">
+            </form>
+        </div>
+    </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha384-vtXRMe3mGCbOeY7l30aIg8H9p3GdeSe4IFlP6G8JMa7o7lXvnz3GFKzPxzJdPfGK" crossorigin="anonymous"></script>
     <script src="{{ url_for('static', filename='requestpage.js') }}"></script>
 {% endblock %}
