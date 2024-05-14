@@ -144,6 +144,8 @@ def submit_ad():
 def show_ad(ad_id):
     button_change=False
     ad_details = Ad.query.get(ad_id)
+    if not current_user.is_authenticated:
+        return render_template('adtemplate.html', ad=ad_details, success=button_change)
     if current_user.is_authenticated:
         userid = current_user.username
     user = User.query.get(userid)
@@ -165,8 +167,8 @@ def wishlist():
     return ('wishlist.html')
 
 @app.route('/submit-wishlist',  methods=['GET', 'POST'])
+@login_required
 def adlike():
-    
     ad_id = request.form['ad_id']
     userid=request.form['user']
     print(ad_id)
