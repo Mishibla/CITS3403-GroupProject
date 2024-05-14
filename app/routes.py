@@ -142,8 +142,22 @@ def submit_ad():
 
 @app.route('/ads/<int:ad_id>')
 def show_ad(ad_id):
+    button_change=False
     ad_details = Ad.query.get(ad_id)
-    return render_template('adtemplate.html', ad=ad_details)
+    if current_user.is_authenticated:
+        userid = current_user.username
+    user = User.query.get(userid)
+    wish=user.wishlist
+    if wish==None:
+        button_change=False
+    elif str(ad_id)==wish:
+        button_change=True
+    else:
+        wishlist_ids = wish.split(',')
+        print(wishlist_ids)
+        if str(ad_id) in wishlist_ids:
+                button_change = True
+    return render_template('adtemplate.html', ad=ad_details, success=button_change)
 
 @app.route('/wishlist')
 @login_required
@@ -152,19 +166,43 @@ def wishlist():
 
 @app.route('/submit-wishlist',  methods=['GET', 'POST'])
 def adlike():
-    button_change=False
+    
     ad_id = request.form['ad_id']
     userid=request.form['user']
     print(ad_id)
     print(userid)
     if not current_user.is_authenticated:
-        return redirect(f'/ads/{ad_id}',success=button_change)
-        
+        flash('You must be logged in to add or remove to wishlist.', 'error')
+        return redirect(f'/ads/{ad_id}')
     if current_user.is_authenticated:
-        button_change=True
-        return redirect(f'/ads/{ad_id}',success=button_change)
+        user = User.query.get(userid)
+        print(user)
+        current_wishlist=user.wishlist
 
-#maybe flash if they are not allowed to hit like
+        if current_wishlist == None:
+            user.wishlist=str(ad_id)
+        elif str(ad_id) in current_wishlist.split(','):
+            numbers_str=str(ad_id)
+            numbers_list = numbers_str.split(',')
+
+            filtered_numbers = [num for num in numbers_list if num != str(ad_id)]
+
+            if filtered_numbers:
+                user.wishlist = ','.join(filtered_numbers)
+            else:
+                user.wishlist = None 
+        else:
+            update_wishlist=current_wishlist+','+str(ad_id)
+            update_wishlist = update_wishlist.replace(" ", "")
+            noduplicate=set(update_wishlist.split(','))
+            my_string = ', '.join(f"{item}" for item in noduplicate)
+            my_string = my_string.replace(" ", "")
+            print(my_string)
+            user.wishlist=my_string
+
+        db.session.commit()
+
+        return redirect(f'/ads/{ad_id}')
 
     return redirect(f'/ads/{ad_id}')
 

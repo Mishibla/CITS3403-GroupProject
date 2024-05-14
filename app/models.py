@@ -12,11 +12,11 @@ class User(db.Model,UserMixin):
     
     ads = db.relationship('Ad', back_populates='users',lazy='dynamic')
 
-    wishlist=db.Column(db.String(100),nullable=True)
+    wishlist=db.Column(db.Integer,nullable=True)
 
     def __repr__(self) -> str:
         ad_ids = [str(ad.ad_id) for ad in self.ads.all()]
-        return f'<{self.name} {self.username} {self.password_hash} {", ".join(ad_ids)} , {self.wishlist} >'
+        return f'<{self.name} {self.username} {self.password_hash} {", ".join(ad_ids)}  {self.wishlist} >'
     
     def get_ad_ids_str(self):
         ad_ids = [str(ad.ad_id) for ad in self.ads.all()]

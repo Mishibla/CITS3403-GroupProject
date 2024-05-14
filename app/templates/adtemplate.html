@@ -1,15 +1,29 @@
 {% extends "base.html" %}
 {% block content %}
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <ul>
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    {% endwith %}
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='adtemplate.css') }}">
 
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='custom_button.css') }}">
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+
 <form action="/submit-wishlist" method="POST">
     <input type="hidden" name="ad_id" value="{{ ad.ad_id }}">
     <input type="hidden" name="user" value="{{ ad.user_username }}">
     <button type="submit" class="wishlist-button">
-        <i class="fa fa-heart"></i> Add to Wishlist
+        {% if success %}
+            <i class="fa fa-heart" style="color: red;"></i> Added to Wishlist
+        {% else %}
+            <i class="far fa-heart"></i> Add to Wishlist
+        {% endif %}
     </button>
 </form>
 
