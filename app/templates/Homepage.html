@@ -1,82 +1,214 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Homepage</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Gamehub homepage</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="custom_buttons.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <style>
+        /* Basic styling */
+        body {
+            background-color: #201f31;
+            color: white;
+        }
+
+        .main {
+            float: left;
+            width: 100%;
+            padding: 50px auto;
+        }
+
+        .ad-container {
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+
+        .ad {
+            background-color: #2b2a3c;
+            border-radius: 20px;
+            padding: 30px;
+            margin: 20px;
+            display: inline-block;
+            text-align: center;
+            cursor: pointer; /* Add cursor pointer */
+        }
+        .ad:hover{
+	        background-color: #3A2D5F;
+            cursor: pointer;
+        }
+        .ad-container h2{
+            margin: 20px;
+        }
+
+        .ad h3 {
+            margin-top: 0;
+            font-weight: bold;
+            text-decoration: underline;
+        }
+        .price_tag {
+            color: #DAA520;
+            font-weight: bold;
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            padding-top: 100px;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .modal-content {
+            background-color: #2b2a3c;
+            margin: auto;
+            padding: 20px;
+            width: 80%;
+            border-radius: 20px;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #fff;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
 </head>
-{% extends "base.html" %}
-{% block content %}
 <body>
 
-<header>
-    <h1>Homepage</h1>
-    <button class="postad" onclick="location.href='/createad'">Post an ad</button><br>
+<div class="main">
+    <hr>
+    <div class="ad-container">
+        <h2>League of Legends account</h2>
+        <div class="ad" onclick="openModal('modal1')">
+            <div class="fakeimg" style="height:300px; background-image: url('https://eloking.com/storage/blog-images/SzgOMhQ5d15wpDQG0ZSa4gjdohh8uRXRdd4mxmYt.jpg'); background-size: cover; background-position: center;"></div>
+            <h3>Master account</h3>
+            <p>Description: Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Price: $10,000</p>
+            <p>blah blah</p>
+            
+        </div>
+        <div class="ad" onclick="openModal('modal2')">
+        <div class="fakeimg" style="height:300px; background-image: url('https://preview.redd.it/ow4ttjbkgne81.png?width=1278&format=png&auto=webp&s=8adf34dac734e83ba5b46001dbb8b1d4e21cc867'); background-size: cover; background-position: center;"></div>
+            <h3>Challenger account</h3>
+            <p>Description: Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Price: $1,000</p>
+            <p>blah blah</p>
+        </div>
+        <div class="ad" onclick="openModal('modal3')">
+            <div class="fakeimg" style="height:300px; background-image: url('https://eloking.com/storage/blog-images/q8HsU6Jo5J27X5OusDUMN26lb68aSHnLieFF3KZb.jpg'); background-size: cover; background-position: center;"></div>
+            <h3>Grandmaster account</h3>
+            <p>Description: Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Price: $50,000</p>
+            <p>blah blah</p>
+        </div>
+    </div>
     <br>
-    <nav>
-        <label for="sort-dropdown">Sort by:</label>
-        <select id="sort-dropdown">
-            <option value="Popularity">Popularity</option>
-            <option value="Price">Price</option>
-            <option value="Date">Date</option>
-        </select>
-    </nav>
-</header>
+    <hr>
+    <br>
+    <div class="ad-container">
+        <h2>Valorant items</h2>
+        <div class="ad" onclick="openModal('modal1')">
+            <div class="fakeimg" style="height:300px; background-image: url('https://files.bo3.gg/uploads/image/14807/image/c11b02e2d42e5f44dc7c25990db23369.png'); background-size: cover; background-position: center;"></div>
+            <h3>Prime skin</h3>
+            <p>Description: Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Price: $10,000</p>
+            <p>blah blah</p>
+        </div>
+        <div class="ad" onclick="openModal('modal2')">
+            <div class="fakeimg" style="height:300px; background-image: url('https://esi.si.com/.image/ar_1.91%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cg_faces:center%2Cq_auto:good%2Cw_1200/MjAwNjI5MjA1MDA3MTQ4NDA4/araxysvandal.jpg'); background-size: cover; background-position: center;"></div>
+            <h3>Araxys skin</h3>
+            <p>Description: Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Price: $1,000</p>
+            <p>ye</p>
+        </div>
+        <div class="ad" onclick="openModal('modal3')">
+            <div class="fakeimg" style="height:300px; background-image: url('https://esi.si.com/.image/t_share/MjAwNjI5MjA1MDA2OTUxODAw/sentinelsoflightvandal.jpg'); background-size: cover; background-position: center;"></div>
+            <h3>Sentinel of light</h3>
+            <p>Description: Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Price: $50,000</p>
+            <p>ye</p>
+        </div>
+    </div>
+</div>
 
-<main>
-    <section id="products">
-        <div class="product">
-            <h2>Product 1</h2>
-            <div class="fakeimg" style="height:200px;">Image</div>
-            <p>Date: January 1, 2024</p>
-            <p>Price: $50</p>
-            <p>Popularity: 100</p>
-        </div>
-        <div class="product">
-            <h2>Product 2</h2>
-            <div class="fakeimg" style="height:200px;">Image</div>
-            <p>Date: February 15, 2024</p>
-            <p>Price: $30</p>
-            <p>Popularity: 50</p>
-        </div>
-        <div class="product">
-            <h2>Product 3</h2>
-            <div class="fakeimg" style="height:200px;">Image</div>
-            <p>Date: February 1, 2024</p>
-            <p>Price: $100</p>
-            <p>Popularity: 200</p>
-        </div>
-    </section>
- 
-</main>
+<!-- Modal 1 -->
+<div id="modal1" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('modal1')">&times;</span>
+        <div class="fakeimg" style="height:300px; background-image: url('https://eloking.com/storage/blog-images/SzgOMhQ5d15wpDQG0ZSa4gjdohh8uRXRdd4mxmYt.jpg'); background-size: cover; background-position: center;"></div>
+        <h3>Master account</h3>
+        <p>Description: Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        <p>Price: $10,000</p>
+        <p>blah blah</p>
+        <button role="button" class="custom_button">Buy</button>
+        <!-- Additional details or actions can be added here -->
+    </div>
+</div>
+
+<!-- Modal 2 -->
+<div id="modal2" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('modal2')">&times;</span>
+        <div class="fakeimg" style="height:300px; background-image: url('https://preview.redd.it/ow4ttjbkgne81.png?width=1278&format=png&auto=webp&s=8adf34dac734e83ba5b46001dbb8b1d4e21cc867'); background-size: cover; background-position: center;"></div>
+            <h3>Challenger account</h3>
+            <p>Description: Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Price: $1,000</p>
+            <p>blah blah</p>
+        <!-- Additional details or actions can be added here -->
+    </div>
+</div>
+
+<!-- Modal 3 -->
+<div id="modal3" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('modal3')">&times;</span>
+        <div class="fakeimg" style="height:300px; background-image: url('https://eloking.com/storage/blog-images/q8HsU6Jo5J27X5OusDUMN26lb68aSHnLieFF3KZb.jpg'); background-size: cover; background-position: center;"></div>
+            <h3>Grandmaster account</h3>
+            <p>Description: Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Salary: $50,000</p>
+            <p>blah blah</p>
+        <!-- Additional details or actions can be added here -->
+    </div>
+</div>
 
 <script>
-document.getElementById('sort-dropdown').addEventListener('change', function() {
-    let sortBy = this.value;
-    sortProducts(sortBy);
-});
+    // Function to open the modal
+    function openModal(id) {
+        document.getElementById(id).style.display = "block";
+    }
 
-function sortProducts(sortBy) {
-    let productsContainer = document.getElementById('products');
-    let products = Array.from(productsContainer.children);
-    
-    products.sort((a, b) => {
-        let aValue = a.querySelector(`[data-${sortBy}]`).getAttribute(`data-${sortBy}`);
-        let bValue = b.querySelector(`[data-${sortBy}]`).getAttribute(`data-${sortBy}`);
-        
-        if (sortBy === 'date') {
-            return new Date(bValue) - new Date(aValue);
-        } else {
-            return parseFloat(bValue) - parseFloat(aValue);
+    // Function to close the modal
+    function closeModal(id) {
+        document.getElementById(id).style.display = "none";
+    }
+
+    // Close modal when clicking outside of it
+    window.onclick = function(event) {
+        var modals = document.getElementsByClassName('modal');
+        for (var i = 0; i < modals.length; i++) {
+            if (event.target == modals[i]) {
+                modals[i].style.display = "none";
+            }
         }
-    });
-    
-    products.forEach(product => {
-        productsContainer.appendChild(product);
-    });
-}
+    }
 </script>
 
 </body>
 </html>
-{% endblock %}
