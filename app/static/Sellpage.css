@@ -72,5 +72,45 @@
   border-radius: 20px;
   background-color: #3a2f46;
   height: 250px;
-  padding: 20px;
+  position: relative; /* Added to position the pseudo-element */
+}
+
+.accounts_image_container {
+  width: 100%;
+  height: auto;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  margin: auto;
+  background-color: white;
+  margin-bottom: 10px;
+  position: relative; /* Needed for absolute positioning of the pseudo-element */
+  overflow: hidden; /* Ensures the pseudo-element does not overflow the container */
+}
+
+.accounts_image_container img{
+  width: 100%;  /* Ensures the image spans the full width of the box */
+  height: 185px; /* Sets a fixed height */
+  object-fit: cover; /* Covers the box, cropping the image as needed */
+  display: block; /* Removes extra space below the image */
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+}
+
+.accounts_image_container::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 50px; /* Adjust height to control the fade effect */
+  background: linear-gradient(transparent, #3a2f46); /* Fades into the container's background color */
+}
+
+.accounts_title {
+  position: absolute; /* Positions the title absolutely within the .accounts container */
+  bottom: 60px;        /* Adjust this value to position the title at the desired location */
+  left: 20px;          /* Provides some spacing from the left edge */
+  font-size: large;
+  font-weight: bold;
+  color: white;
 }

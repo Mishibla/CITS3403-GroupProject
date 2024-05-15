@@ -26,18 +26,17 @@
                 Displaying Valorant
             </div>
             <div class="accounts_container_display">
-                <div class="accounts">test</div>
-                <div class="accounts">test</div>
-                <div class="accounts">test</div>
-                <div class="accounts">test</div>
-                <div class="accounts">test</div>
-                <div class="accounts">test</div>
-                <div class="accounts">test</div>
-                <div class="accounts">test</div>
-                <div class="accounts">test</div>
-                <div class="accounts">test</div>
-                <div class="accounts">test</div>
-                <div class="accounts">test</div>
+                {% for value in ad.values() %}
+                <div class="accounts">
+                    <div class="accounts_image_container">
+                        <img src="https://images.contentstack.io/v3/assets/blt731acb42bb3d1659/bltb05f48b60fe37fe1/647e755646cddd2cfdea098d/Crystalis-Motus---Leona---Final_WEB.jpg">
+                    </div>
+                    <div class="accounts_title">
+                        {{value}}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
             </div>
         </div>
     </div>
