@@ -17,11 +17,18 @@
                 {{ form.username.label }} {{ form.username() }}<br>
                 {{ form.display_name.label }} {{ form.display_name() }}<br>
                 {{ form.password.label }} {{ form.password() }}<br>
+                {{form.email.label}} {{ form.email(class_="black-text") }}<br>
+                {{form.phone.label}} {{form.phone()}}<br>
                 <p>(*)required fields</p>
                 {{ form.submit() }}
             </form>
         </div>
     </div>
+    <style>
+        .black-text {
+    color: black;
+    }
+    </style>
 {% endblock %}
 
 

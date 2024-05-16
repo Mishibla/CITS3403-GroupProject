@@ -30,8 +30,10 @@ def buyaccount():
         urlstring='/ads/'+str(ads)
         urllist[ads]=urlstring
     #print(urllist, ad=ads)
-
-    return render_template("Sellpage.html",ad=urllist)
+    titlelist=[]
+    for title in ad_data:
+        titlelist.append(title.ad_title)
+    return render_template("Sellpage.html",ad=urllist, alltitles=titlelist)
 
 @app.route('/login', methods=['get','post'])
 def login():
