@@ -7,14 +7,10 @@
     <div class="flex-layout">
         <div class="option-container">
             <div class="top-button">
-                <button class="custom_button3" role="button"><span class="text">account</span></button>
+                <button class="custom_button3" role="button" onclick="location.href='/account'"><span class="text">account</span></button>
             </div>
-            <button class="custom_button3" role="button"><span class="text">manage ads</span></button>
-            <button class="custom_button3" role="button"><span class="text">profile settings</span></button>
-            <button class="custom_button3" role="button"><span class="text">option stuff?</span></button>
-            <div class="bottom-button">
-                <button class="custom_button3" role="button"><span class="text">idk a fifth button</span></button>
-            </div>
+            <button class="custom_button3" role="button" onclick="location.href='/manageads'"><span class="text">manage ads</span></button>
+            <button class="custom_button3" role="button" onclick="location.href='/wishlist'"><span class="text">Wishlist</span></button>
         </div>
         <div class="account-container">
             <div class="flex-layout">
@@ -28,27 +24,5 @@
         </div>
     </div>
 </div>
-
-<br>
-<div>
-    <p>AOSidjaoisjdioajdsioasjdio</p>
-    <button class="postad" onclick="location.href='/createad'">Post an ad</button>
-</div>
-<br>
-<br>
-<h1>new header</h1>
-<h1>Ads posted below</h1>
-
-<p>Ad IDs: {{ ad}}</p>
-
-{% for key,value in ad.items() %}
-<div><a href="{{ value }}">Ad:{{key}}</a></div>
-
-{% endfor %}
-
-
-
-
-<h1 style="margin-left: 30px"><a href="/ads/1">AD1</a></h1>
 
 {% endblock %}

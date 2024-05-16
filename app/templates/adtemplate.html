@@ -27,6 +27,19 @@
     </button>
 </form>
 
+    {% if displayedit %}
+    <form action="{{ url_for('edit_ad', ad_id=ad.ad_id) }}">
+        <button type="submit" class="btn btn-primary">Edit Ad</button>
+    </form>
+    {% endif %}
+    {% if displaydelete %}
+    <form action="{{ url_for('deletead') }}" method="POST" style="display:inline;">
+        <input type="hidden" name="ad_id" value="{{ ad.ad_id }}">
+        <input type="hidden" name="user" value="{{ current_user.username }}">
+        <button type="submit" class="btn btn-danger">Delete Ad</button>
+    </form>
+{% endif %}
+
 <div class="content_container">
 
     <div class="flex-layout">
