@@ -83,7 +83,7 @@ def register_account():
         if not form.validate_on_submit():
             return render_template("registeraccount.html", form=form)
         
-        account = User(username=form.username.data, name=form.display_name.data)
+        account = User(username=form.username.data, name=form.display_name.data, email=form.email.data, phone=form.phone.data)
         account.set_password(form.password.data)  
         db.session.add(account)
         db.session.commit()
@@ -94,7 +94,9 @@ def register_account():
 @app.route('/account')
 @login_required
 def account():
-    return render_template("accountpage.html", title='Account')
+    userid = current_user.username
+    user_details=User.query.get(userid)
+    return render_template("accountpage.html", title='Account', user_details=user_details)
 
 @app.route('/createad')
 @login_required
@@ -297,6 +299,48 @@ def manageads():
                 urlstring='/ads/'+ad
                 urllist[ad]=urlstring
     return render_template("manageads.html", title='Manage Ads', ad=urllist)
+
+
+@app.route('/submit-editad/<username>', methods=['GET', 'POST'])
+@login_required
+def edit_account(username):
+    print(username)
+    user_details = User.query.get(username)
+    if not user_details:
+        flash(f'User {username} not found.', 'danger')
+        return redirect(url_for('account'))
+        
+    form = RegisterForm()
+    print(form.data)
+
+    if request.method == 'POST':
+        print('Form has been posted')
+        if len(form.display_name.data) > 29:
+            flash(f'Display name is too long: max 29 characters, current length {len(form.display_name.data)} characters', 'error')
+        if len(form.password.data) > 19:
+            flash(f'Password is too long: max 19 characters, current length {len(form.password.data)} characters', 'error')
+        if form.validate_on_submit():
+            print('Form validated successfully')
+            user_details.name = form.display_name.data
+            user_details.set_password(form.password.data)
+            user_details.email = form.email.data
+            user_details.phone = form.phone.data
+            db.session.commit()
+            flash('Account updated successfully!', 'success')
+            return redirect(url_for('account'))
+        else:
+            print("Form validation failed")
+            print(f"Form errors: {form.errors}")
+            flash(f"Form validation failed: {form.errors}", 'danger')
+    else:
+        form.username.data = user_details.username
+        form.display_name.data = user_details.name
+        form.email.data = user_details.email
+        form.phone.data = user_details.phone
+
+    return render_template("editaccount.html", form=form, title='Edit account', user_details=user_details)
+
+
 
 csranks=['SILVER','GOLD NOVA','MASTER GUARDIAN','LEGENDARY']
 owranks=['BRONZE','SILVER','GOLD','PLATNIUM','DIAMOND','MASTER','GRANDMASTER','CHAMPIONS','TOP500']
