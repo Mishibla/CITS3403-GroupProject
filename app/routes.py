@@ -387,12 +387,7 @@ def messageinbox():
             phone_user= user_deets.phone
 
             combined.append([urlad,title,interestmessage,interestdate, name_user, email_user, phone_user])
-
-            
-
-
     print(combined)
-
     return render_template('messageinbox.html', data=combined)
 
 
@@ -405,6 +400,8 @@ valranks=['IRON','BRONZE','SILVER','GOLD','PLATINUM','DIAMOND','ASCENDANT','IMMO
 gamesapp={'CSGO':csranks,'Overwatch':owranks,'League':leagueranks,'Valorant':valranks}
 def get_rank(gametype):
     return(gamesapp.get(gametype))
+
+
 
 
 
