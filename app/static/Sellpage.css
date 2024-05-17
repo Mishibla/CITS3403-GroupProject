@@ -17,7 +17,7 @@
 
 .filter_box {
   width: 300px;
-  max-height: 500px;
+  max-height: 350px;
   background-color: #2b2a3c;
   border-radius: 20px;
   margin-top: 130px;
@@ -113,4 +113,48 @@
   font-size: large;
   font-weight: bold;
   color: white;
+  white-space: nowrap;  /* Prevents the text from wrapping to the next line */
+  overflow: hidden;     /* Hides any overflowed content */
+  text-overflow: ellipsis; /* Adds ellipsis (...) at the end of the truncated text */
+  max-width: 250px;     /* Set the maximum width for truncation, adjust as needed */
+}
+
+.wishlist_container {
+  position: absolute;
+  bottom: 200px;
+  left: 230px;
+  color: red;
+  font-size: large;
+  font-weight: bold;
+}
+.ad_price_wrapper {
+  position: absolute;
+  bottom: 20px;
+  right: 20px; /* Position the wrapper to the right */
+  width: calc(100% - 40px); /* Ensures the wrapper stays within the parent container */
+}
+
+.price_container {
+  color: #DAA520;
+  font-size: large;
+  font-weight: bold;
+  white-space: nowrap;
+  overflow: hidden;
+  text-align: right; /* Aligns the text to the right within the container */
+  display: inline-block;
+  width: 100%; /* Ensures the price container takes full width of the wrapper */
+}
+
+.accounts_username {
+  position: absolute;
+  color: white;
+  font-size: medium;
+  left: 20px;
+  bottom: 30px;
+}
+
+.filter_box h1 {
+  font-size: large;
+  font-weight: bold;
+  margin-bottom: 20px;
 }

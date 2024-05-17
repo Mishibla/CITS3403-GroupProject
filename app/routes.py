@@ -21,6 +21,12 @@ from app.models import User,Ad
 def homepage():
     return render_template("Homepage.html")
 
+
+@app.route('/ads/<int:ad_id>')
+def ads(ad_id):
+    ad = Ad.query.get(ad_id)
+    return render_template('adtemplate.html', ad=ad)
+
 @app.route('/buyaccount')
 def buyaccount():
     ad_data=Ad.query.all()
@@ -31,7 +37,7 @@ def buyaccount():
         urllist[ads]=urlstring
     #print(urllist, ad=ads)
 
-    return render_template("Sellpage.html",ad=urllist)
+    return render_template("Sellpage.html",ad=urllist, allads=ad_data)
 
 @app.route('/login', methods=['get','post'])
 def login():

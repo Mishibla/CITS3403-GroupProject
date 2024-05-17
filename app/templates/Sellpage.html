@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
     <div class="sellpage_container">
         <button role="button" class="custom_button">CSGO 2</button>
         <button role="button" class="custom_button">Valorant</button>
@@ -10,43 +11,65 @@
 
     <div class="display_container">
         <div class="filter_box">
+            <h1>Filter</h1>
             <div class="custom_checkbox">
-                <input type="checkbox" id="ELO" />
-                <label for="ELO" class="toggle"><span></span></label>
-                <label for="ELO" class="checkbox_label">ELO</label>
+                <input type="checkbox" id="skins" />
+                <label for="skins" class="toggle"><span></span></label>
+                <label for="skins" class="checkbox_label">Skins</label>
             </div>
             <div class="custom_checkbox">
-                <input type="checkbox" id="Price" />
-                <label for="Price" class="toggle"><span></span></label>
-                <label for="Price" class="checkbox_label">Price</label>
+                <input type="checkbox" id="exclusive" />
+                <label for="exclusive" class="toggle"><span></span></label>
+                <label for="exclusive" class="checkbox_label">Exclusive Skins</label>
             </div>
+            <h1>Sort By</h1>
+            <div class="custom_checkbox">
+                <input type="checkbox" id="price" />
+                <label for="price" class="toggle"><span></span></label>
+                <label for="price" class="checkbox_label">Price</label>
+            </div>
+            <div class="custom_checkbox">
+                <input type="checkbox" id="game_rank" />
+                <label for="game_rank" class="toggle"><span></span></label>
+                <label for="game_rank" class="checkbox_label">Rank</label>
+            </div>    
         </div>
         <div class="accounts_container">
             <div class="accounts_container_header">
                 Displaying Valorant
             </div>
             <div class="accounts_container_display">
-                {% for value in ad.values() %}
+                {% for ad in allads %}
                 <div class="accounts">
-                    <div class="accounts_image_container">
-                        <img src="https://images.contentstack.io/v3/assets/blt731acb42bb3d1659/bltb05f48b60fe37fe1/647e755646cddd2cfdea098d/Crystalis-Motus---Leona---Final_WEB.jpg">
-                    </div>
-                    <div class="accounts_title">
-                        {{value}}
-                    </div>
+                    <a href="{{ url_for('ads', ad_id=ad.ad_id) }}">
+                        <div class="accounts_image_container">
+                            <img src="https://images.contentstack.io/v3/assets/blt731acb42bb3d1659/bltb05f48b60fe37fe1/647e755646cddd2cfdea098d/Crystalis-Motus---Leona---Final_WEB.jpg">
+                        </div>
+                        <div class="wishlist_container">
+                            <form action="/submit-wishlist" method="POST">
+                                <input type="hidden" name="ad_id" value="{{ ad.ad_id }}">
+                                <input type="hidden" name="user" value="{{ ad.user_username }}">
+                                <button type="submit" class="wishlist-button">
+                                    <i class="fa fa-heart"></i>
+                                </button>
+                            </form>
+                        </div>
+                        <div class="accounts_title">
+                            {{ad.ad_title}}
+                        </div>
+                        <div class="ad_price_wrapper">
+                            <div class="price_container">
+                                ${{ad.price}}
+                            </div>
+                        </div>
+                        <div class="accounts_username">
+                            {{ad.user_username}}
+                        </div>
+                    </a>
                 </div>
                 {% endfor %}
             </div>
             </div>
         </div>
     </div>
-
-    <h1>Below are all the url ads</h1>
-
-    {% for value in ad.values() %}
-        <p><b>{{value}}</b></p>
-
-    {% endfor %}
-
-
 {% endblock %}
