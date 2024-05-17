@@ -57,6 +57,7 @@ class Message(db.Model):
     id_ad=db.Column(db.String(100), nullable=False)
     user_interested=db.Column(db.String(100), nullable=False)
     message=db.Column(db.String(100),nullable=True)
+    created_message= db.Column(db.DateTime, default=lambda: datetime.now(ZoneInfo('Asia/Shanghai')))
 
     def __repr__(self) -> str:
-        return f'<{self.message_id} {self.id_ad} {self.user_interested} {self.message}>'
+        return f'<{self.message_id} {self.id_ad} {self.user_interested} {self.message} {self.created_message}>'

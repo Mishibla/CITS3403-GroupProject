@@ -170,7 +170,7 @@ def show_ad(ad_id):
 @login_required
 def adlike():
     ad_id = request.form['ad_id']
-    userid=request.form['user']
+    userid=current_user.username
     print(ad_id)
     print(userid)
     if not current_user.is_authenticated:
@@ -211,7 +211,6 @@ def adlike():
 @app.route('/submit-deletead',  methods=['GET', 'POST'])
 def deletead():
     ad_id = request.form['ad_id']
-    print(ad_id)
     userid=request.form['user']
     current_ad=Ad.query.get(ad_id)
     db.session.delete(current_ad)
@@ -276,7 +275,7 @@ def wishlist():
         wish= user_details.wishlist
         urllist={}
         if wish==None:
-            urllist=False
+            urllist={}
         else:
             for ad in str(wish).split(','):
                 urlstring='/ads/'+ad
@@ -340,6 +339,7 @@ def edit_account(username):
     return render_template("editaccount.html", form=form, title='Edit account', user_details=user_details)
 
 @app.route('/submit-message',methods=['GET', 'POST'])
+@login_required
 def submit_message():
     ad_id = request.form['ad_id']
     print(ad_id)
@@ -353,16 +353,50 @@ def submit_message():
     if len(form.message.data)>50:
         flash(f'Message is too long: max 50 characters, current length {len(form.message.data)} characters')
     if form.validate_on_submit():
-        new_message=Message(message_id=last_message_id, id_ad=ad_id, user_interested=userid, message=form.message.data)
+        new_message=Message(message_id=last_message_id, id_ad=ad_id, user_interested=userid, message=form.message.data, created_message=datetime.now(ZoneInfo('Asia/Shanghai')))
+        print(new_message)
         db.session.add(new_message)
         db.session.commit()
     else:
         print("Form validation failed")
         print(f"Form errors: {form.errors}")
         flash(f"Form validation failed: {form.errors}", 'danger')
-
     flash('Message sent successfully')
     return redirect(f'/ads/{ad_id}')
+
+@app.route('/messageinbox')
+@login_required
+def messageinbox():
+    userid = current_user.username
+    userinfo=User.query.get(userid)
+    owner_ad=[str(ad.ad_id) for ad in userinfo.ads.all()]
+    message_data=Message.query.all()
+    combined=[]
+    for mess in message_data:
+        if str(mess.id_ad) in owner_ad:
+            interest_ad=mess.id_ad
+            urlad=f'/ads/{str(interest_ad)}'
+            title= Ad.query.get(interest_ad).ad_title
+            interestmessage=mess.message
+            interestdate= mess.created_message
+
+            userinterest=mess.user_interested
+            user_deets=User.query.get(userinterest)
+            name_user= user_deets.name
+            email_user= user_deets.email
+            phone_user= user_deets.phone
+
+            combined.append([urlad,title,interestmessage,interestdate, name_user, email_user, phone_user])
+
+            
+
+
+    print(combined)
+
+    return render_template('messageinbox.html', data=combined)
+
+
+
 
 csranks=['SILVER','GOLD NOVA','MASTER GUARDIAN','LEGENDARY']
 owranks=['BRONZE','SILVER','GOLD','PLATNIUM','DIAMOND','MASTER','GRANDMASTER','CHAMPIONS','TOP500']
