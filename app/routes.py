@@ -3,8 +3,8 @@ from zoneinfo import ZoneInfo
 from flask import flash,redirect, render_template,url_for,request
 from flask_login import login_user, logout_user, login_required, current_user
 from app import app,db 
-from app.forms import AdForm,RegisterForm,LoginForm
-from app.models import User,Ad
+from app.forms import AdForm,RegisterForm,LoginForm, MessageForm
+from app.models import User,Ad, Message
 
 @app.route('/')
 
@@ -139,6 +139,7 @@ def submit_ad():
 
 @app.route('/ads/<int:ad_id>')
 def show_ad(ad_id):
+    form = MessageForm()
     displayedit=False
     displaydelete=False
     button_change=False
@@ -158,12 +159,10 @@ def show_ad(ad_id):
     elif str(ad_id)==wish:
         button_change=True
     else:
-        wishlist_ids = wish.split(',')
+        wishlist_ids = str(wish).split(',')
         if str(ad_id) in wishlist_ids:
                 button_change = True
-    print(ad_details)
-    print(ad_details.ad_id)
-    return render_template('adtemplate.html', ad=ad_details, success=button_change, displaydelete=displaydelete, displayedit=displayedit)
+    return render_template('adtemplate.html', ad=ad_details, success=button_change, displaydelete=displaydelete, displayedit=displayedit, form=form)
 
 
 
@@ -184,7 +183,7 @@ def adlike():
 
         if current_wishlist == None:
             user.wishlist=str(ad_id)
-        elif str(ad_id) in current_wishlist.split(','):
+        elif str(ad_id) in str(current_wishlist).split(','):
             numbers_str=str(ad_id)
             numbers_list = numbers_str.split(',')
 
@@ -195,7 +194,7 @@ def adlike():
             else:
                 user.wishlist = None 
         else:
-            update_wishlist=current_wishlist+','+str(ad_id)
+            update_wishlist=str(current_wishlist)+','+str(ad_id)
             update_wishlist = update_wishlist.replace(" ", "")
             noduplicate=set(update_wishlist.split(','))
             my_string = ', '.join(f"{item}" for item in noduplicate)
@@ -279,7 +278,7 @@ def wishlist():
         if wish==None:
             urllist=False
         else:
-            for ad in wish.split(','):
+            for ad in str(wish).split(','):
                 urlstring='/ads/'+ad
                 urllist[ad]=urlstring
     return render_template('wishlist.html', wishes=urllist, title='Wishlist')
@@ -340,7 +339,30 @@ def edit_account(username):
 
     return render_template("editaccount.html", form=form, title='Edit account', user_details=user_details)
 
+@app.route('/submit-message',methods=['GET', 'POST'])
+def submit_message():
+    ad_id = request.form['ad_id']
+    print(ad_id)
+    userid=request.form['user']
+    print(userid)
+    try:
+        last_message_id = Message.query.with_entities(Message.message_id).order_by(Message.message_id.desc()).first()[0]+1
+    except:
+        last_message_id=1
+    form = MessageForm()
+    if len(form.message.data)>50:
+        flash(f'Message is too long: max 50 characters, current length {len(form.message.data)} characters')
+    if form.validate_on_submit():
+        new_message=Message(message_id=last_message_id, id_ad=ad_id, user_interested=userid, message=form.message.data)
+        db.session.add(new_message)
+        db.session.commit()
+    else:
+        print("Form validation failed")
+        print(f"Form errors: {form.errors}")
+        flash(f"Form validation failed: {form.errors}", 'danger')
 
+    flash('Message sent successfully')
+    return redirect(f'/ads/{ad_id}')
 
 csranks=['SILVER','GOLD NOVA','MASTER GUARDIAN','LEGENDARY']
 owranks=['BRONZE','SILVER','GOLD','PLATNIUM','DIAMOND','MASTER','GRANDMASTER','CHAMPIONS','TOP500']

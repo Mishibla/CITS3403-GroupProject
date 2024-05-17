@@ -35,3 +35,7 @@ class RegisterForm(FlaskForm):
     email= EmailField('Enter email*', validators=[DataRequired(), Length(max=20)] )
     phone= StringField('Enter phone number (+61)', validators=[Optional(), Length(max=20)])
     submit =SubmitField('Create Account')
+
+class MessageForm(FlaskForm):
+    message=StringField('Enter Message', validators=[Optional(), Length(max=50)])
+    submit= SubmitField('Send Message')

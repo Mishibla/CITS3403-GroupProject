@@ -38,7 +38,18 @@
         <input type="hidden" name="user" value="{{ current_user.username }}">
         <button type="submit" class="btn btn-danger">Delete Ad</button>
     </form>
-{% endif %}
+    <div class="send_container">
+        <form id="sendmessage" action="{{ url_for('submit_message') }}" method="post">
+            {{ form.hidden_tag() }}
+            <input type="hidden" name="ad_id" value="{{ ad.ad_id }}">
+            <input type="hidden" name="user" value="{{ current_user.username }}">
+            {{ form.message.label }} {{ form.message() }}<br>
+            {{ form.submit() }}
+        </form>
+
+    {% endif %}
+
+    </div>
 
 <div class="content_container">
 

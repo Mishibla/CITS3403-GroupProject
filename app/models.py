@@ -51,3 +51,12 @@ class Ad(db.Model):
     users = db.relationship(User, back_populates='ads')
     def __repr__(self) -> str:
         return f'<{self.ad_id} {self.ad_title} {self.game_type} {self.game_rank} {self.price} {self.skins} {self.exclusive} {self.Extra_Descrip} {self.user_username} {self.created_at}>'
+
+class Message(db.Model):
+    message_id=db.Column(db.Integer, primary_key= True)
+    id_ad=db.Column(db.String(100), nullable=False)
+    user_interested=db.Column(db.String(100), nullable=False)
+    message=db.Column(db.String(100),nullable=True)
+
+    def __repr__(self) -> str:
+        return f'<{self.message_id} {self.id_ad} {self.user_interested} {self.message}>'
