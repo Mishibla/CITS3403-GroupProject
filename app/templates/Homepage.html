@@ -1,4 +1,372 @@
-{% extends "base.html" %}
-{% block content %}
-<button class="postad" onclick="location.href='/createad'">Post an ad</button>
-{% endblock %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Gamehub homepage</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="custom_buttons.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <style>
+        /* Basic styling */
+        body {
+            background-color: #201f31;
+            color: white;
+            margin: 0;
+            padding: 0;
+        }
+
+        .main {
+            width: 100%;
+            padding: 50px 0;
+            text-align: center;
+        }
+
+        .rectangle {
+            width: 100%;
+            height: 300px;
+            margin: 20px auto;
+            background-image: url('https://img.goodfon.com/original/1920x1181/0/9a/art-monster-hunter-diablos.jpg');
+            background-size: cover;
+            background-position: top;
+            border-top: 2px solid rgb(165, 151, 66);
+            border-bottom: 2px solid rgb(165, 151, 66);
+            animation: fadein 3s ease-in-out;
+        }
+
+        .squares-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px; /* Add some space between the squares */
+            margin-top: 30px;
+            margin-bottom:30px;
+        }
+
+        .square {
+            width: 100px;
+            height: 100px;
+            background: #2b2a3c;
+            border: 2px solid rgb(165, 151, 66);
+            border-radius: 20px;
+            display: flex;
+            justify-content: center; /* Center align horizontally */
+            align-items: center; /* Center align vertically */
+            position: relative;
+            transition: transform 0.3s ease-in-out; /* Add transition for the hover effect */
+        }
+
+        .square:hover {
+            transform: scale(1.2);
+        }
+
+        .square.league-of-legends {
+            background-image: url('https://i.pinimg.com/736x/d1/b1/1d/d1b11d5e4dbae547ac0d651476cec488.jpg');
+            background-size: cover;
+            background-position: center;
+            animation: mymove1 4s ease-in-out;
+        }
+
+        .square.valorant {
+            background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUcN42BUkYPEBscuyrD5bA-t9mg6isOcpGVg7nIv3qBQ&s');
+            background-size: cover;
+            background-position: center;
+            animation: mymove2 4s ease-in-out;
+        }
+
+        .square.overwatch {
+            background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSz4SsncuoQM4PbwkIEXtBRCIQ_sIXss1x9P4ze-38rnA&s');
+            background-size: cover;
+            background-position: center;
+            animation: mymove3 4s ease-in-out;
+        }
+
+        .square.csgo {
+            background-image: url('https://cdn2.iconfinder.com/data/icons/popular-games-1/50/csgo_squircle-512.png');
+            background-size: cover;
+            background-position: center;
+            animation: mymove4 4s ease-in-out;
+        }
+
+        .square.register, .square.message, .square.purchase {
+            background: #2b2a3c;
+            background-size: cover;
+            background-position: center;
+            animation: mymove5 4s ease-in-out;
+            flex-direction: column; /* Arrange items in a column */
+            justify-content: center; /* Center items vertically */
+            text-align: center;
+        }
+
+        .square.message {
+            animation: mymove6 4.5s ease-in-out;
+        }
+
+        .square.purchase {
+            animation: mymove7 5s ease-in-out;
+        }
+
+        .big-squares-container {
+            display: flex;
+            justify-content: center;
+            gap: 40px; /* Add bigger gap between the squares */
+            margin-top: 30px;
+            margin-bottom:30px;
+        }
+
+        .square.big {
+            width: 200px;
+            height: 250px;
+            display: flex; /* Make it a flex container */
+            align-items: center; /* Center items vertically */
+            justify-content: center; /* Center items horizontally */
+            flex-direction: column; /* Stack children in a column */
+        }
+
+        .square.big:hover {
+            transform: scale(1.2);
+            background-color: #3A2D5F;
+        }
+
+        .ad-container {
+            overflow-x: auto;
+            white-space: nowrap;
+            margin-top: 50px;
+            margin-bottom: 100px;
+        }
+
+        .ad {
+            background-color: #2b2a3c;
+            border-radius: 20px;
+            padding: 30px;
+            margin: 20px;
+            display: inline-block;
+            text-align: center;
+            cursor: pointer; /* Add cursor pointer */
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .ad:hover {
+            background-color: #3A2D5F;
+            cursor: pointer;
+            transform: scale(1.1);
+        }
+
+        .ad h3 {
+            font-weight: bold;
+            text-decoration: underline;
+        }
+
+        .price_tag {
+            color: #DAA520;
+            font-weight: bold;
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            padding-top: 100px;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .modal-content {
+            background-color: #2b2a3c;
+            margin: auto;
+            padding: 20px;
+            width: 80%;
+            border-radius: 20px;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #fff;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        p1{
+            margin-bottom:100px
+        }
+        @keyframes fadein {
+            0% {opacity:0%}
+            30% {opcaity:0%}
+            100% {opcaity:70%}
+        }
+        @keyframes mymove1 {
+            0% { left: -300px;  opacity: 0%}
+            45% {opacity:0%}
+            100% { left: 0px; }
+        }
+
+        @keyframes mymove2 {
+            0% { left: -400px;  opacity: 0%}
+            55% {opacity:0%}
+            100% { left: 0px; }
+        }
+
+        @keyframes mymove3 {
+            0% { left: -500px;  opacity: 0%}
+            65% {opacity:0%}
+            100% { left: 0px; }
+        }
+
+        @keyframes mymove4 {
+            0% { left: -600px;  opacity: 0%}
+            75% {opacity:0%}
+            100% { left: 0px; }
+        }
+
+        @keyframes mymove5 {
+            0% { top: -400px; opacity: 0%}
+            45% {opacity:0%}
+            100% { top: 0px; }
+        }
+
+        @keyframes mymove6 {
+            0% { top: -500px; opacity: 0% }
+            55% {opacity:0%}
+            100% { top: 0px; }
+        }
+
+        @keyframes mymove7 {
+            0% { top: -600px; opacity: 0% }
+            65% {opacity:0%}
+            100% { top: 0px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="main">
+    <h2 class="title">The Gamehub</h2>
+    <p1 class="desc">The marketplace for gamers to trade, sell or buy!</p1><br>
+    <div class="rectangle"></div>
+    
+    <h2 class="title">Games</h2>
+    <div class="squares-container">
+        <div class="square league-of-legends"></div>
+        <div class="square valorant"></div>
+        <div class="square overwatch"></div>
+        <div class="square csgo"></div>
+    </div>
+    <h2 class="title">How it works</h2>
+    <div class="big-squares-container">
+        <div class="square register big">
+            <h3>Register</h3>
+            <p>test</p>
+        </div>
+        <div class="square message big">
+            <h3>Message</h3>
+            <p>test</p>
+        </div>
+        <div class="square purchase big">
+            <h3>Purchase</h3>
+            <p>test</p><br>
+        </div>
+    </div>
+
+    <div class="ad-container">
+        <hr>
+        <h2>Featured ads</h2>
+        <div class="ad" onclick="openModal('modal1')">
+            <div class="fakeimg" style="height:300px; background-image: url('https://eloking.com/storage/blog-images/SzgOMhQ5d15wpDQG0ZSa4gjdohh8uRXRdd4mxmYt.jpg'); background-size: cover; background-position: center;"></div>
+            <h3>Master account</h3>
+            <p>Description: Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Price: $10,000</p>
+            <p>blah blah</p>
+        </div>
+        <div class="ad" onclick="openModal('modal2')">
+            <div class="fakeimg" style="height:300px; background-image: url('https://preview.redd.it/ow4ttjbkgne81.png?width=1278&format=png&auto=webp&s=8adf34dac734e83ba5b46001dbb8b1d4e21cc867'); background-size: cover; background-position: center;"></div>
+            <h3>Challenger account</h3>
+            <p>Description: Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Price: $1,000</p>
+            <p>blah blah</p>
+        </div>
+        <div class="ad" onclick="openModal('modal3')">
+            <div class="fakeimg" style="height:300px; background-image: url('https://eloking.com/storage/blog-images/q8HsU6Jo5J27X5OusDUMN26lb68aSHnLieFF3KZb.jpg'); background-size: cover; background-position: center;"></div>
+            <h3>Grandmaster account</h3>
+            <p>Description: Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Price: $50,000</p>
+            <p>blah blah</p>
+        </div>
+        <hr>
+    </div>
+</div>
+
+<!-- Modal 1 -->
+<div id="modal1" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('modal1')">&times;</span>
+        <div class="fakeimg" style="height:300px; background-image: url('https://eloking.com/storage/blog-images/SzgOMhQ5d15wpDQG0ZSa4gjdohh8uRXRdd4mxmYt.jpg'); background-size: cover; background-position: center;"></div>
+        <h3>Master account</h3>
+        <p>Description: Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        <p>Price: $10,000</p>
+        <p>blah blah</p>
+        <button role="button" class="custom_button">Buy</button>
+        <!-- Additional details or actions can be added here -->
+    </div>
+</div>
+
+<!-- Modal 2 -->
+<div id="modal2" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('modal2')">&times;</span>
+        <div class="fakeimg" style="height:300px; background-image: url('https://preview.redd.it/ow4ttjbkgne81.png?width=1278&format=png&auto=webp&s=8adf34dac734e83ba5b46001dbb8b1d4e21cc867'); background-size: cover; background-position: center;"></div>
+        <h3>Challenger account</h3>
+        <p>Description: Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        <p>Price: $1,000</p>
+        <p>blah blah</p>
+        <!-- Additional details or actions can be added here -->
+    </div>
+</div>
+
+<!-- Modal 3 -->
+<div id="modal3" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('modal3')">&times;</span>
+        <div class="fakeimg" style="height:300px; background-image: url('https://eloking.com/storage/blog-images/q8HsU6Jo5J27X5OusDUMN26lb68aSHnLieFF3KZb.jpg'); background-size: cover; background-position: center;"></div>
+        <h3>Grandmaster account</h3>
+        <p>Description: Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        <p>Salary: $50,000</p>
+        <p>blah blah</p>
+        <!-- Additional details or actions can be added here -->
+    </div>
+</div>
+
+<script>
+    // Function to open the modal
+    function openModal(id) {
+        document.getElementById(id).style.display = "block";
+    }
+
+    // Function to close the modal
+    function closeModal(id) {
+        document.getElementById(id).style.display = "none";
+    }
+
+    // Close modal when clicking outside of it
+    window.onclick = function(event) {
+        var modals = document.getElementsByClassName('modal');
+        for (var i = 0; i < modals.length; i++) {
+            if (event.target == modals[i]) {
+                modals[i].style.display = "none";
+            }
+        }
+    }
+</script>
+
+</body>
+</html>
