@@ -29,15 +29,33 @@ def ads(ad_id):
 
 @app.route('/buyaccount')
 def buyaccount():
-    ad_data=Ad.query.all()
-    urllist={}
-    for indvidual_ad in ad_data:
-        ads=indvidual_ad.ad_id
-        urlstring='/ads/'+str(ads)
-        urllist[ads]=urlstring
-    #print(urllist, ad=ads)
+    skins = request.args.get('skins')
+    exclusive = request.args.get('exclusive')
+    price_asc = request.args.get('price_asc')
+    price_desc = request.args.get('price_desc')
+    game_type = request.args.get('game_type')
+    
+    # Base query
+    query = Ad.query
 
-    return render_template("Sellpage.html",ad=urllist, allads=ad_data)
+    # Apply filters based on checkboxes
+    if skins:
+        query = query.filter(Ad.skins == True)
+    if exclusive:
+        query = query.filter(Ad.exclusive == True)
+    
+    if price_asc and not price_desc:
+        query = query.order_by(Ad.price.asc())
+    if price_desc and not price_asc:
+        query = query.order_by(Ad.price.desc())
+
+    if game_type:
+        query = query.filter(Ad.game_type == game_type)
+
+    # Execute the query
+    ad_data = query.all()
+    
+    return render_template("Sellpage.html", allads=ad_data)
 
 @app.route('/login', methods=['get','post'])
 def login():
