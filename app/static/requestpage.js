@@ -50,9 +50,11 @@ $(document).ready(function() {
     var unsuccessfulSubmit = $('body').data('unsuccessful');
     if (unsuccessfulSubmit) {
       $('#ranks').show();
-      $('#exclusive').show();
-      $('#exclusive_label').show();
+      if (skin.val() === 'True') {
+        label_exclu.show();
+        exclusivity.show();
     }
+  }
   });
   
 });
