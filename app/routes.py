@@ -194,6 +194,32 @@ def submit_ad():
     db.session.commit()
     return redirect(f'/ads/{last_ad_id}')
 
+@app.route('/ad-images/<ad_folder>')
+def get_first_ad_image(ad_folder):
+    UPLOADS_PATH = 'static/uploads'  
+
+    
+    if not ad_folder or '..' in ad_folder:
+        abort(404)
+
+    ad_folder_path = os.path.join(UPLOADS_PATH, ad_folder)
+    if not os.path.isdir(ad_folder_path):
+        abort(404)
+
+    # Get the list of files in the ad folder
+    files = os.listdir(ad_folder_path)
+
+    # Find the first image file 
+    for filename in files:
+        if filename.lower().endswith(('.png', '.jpg', '.jpeg')):
+            return send_from_directory(ad_folder_path, filename)
+
+    # If no image file is found, return a default image or handle the situation as needed
+    abort(404)
+
+#<img src="/ad-images/ad1"> will call on the first image in that folder for use
+
+
 @app.route('/ads/<int:ad_id>')
 def show_ad(ad_id):
     displayedit=False
