@@ -5,7 +5,27 @@ from flask_login import login_user, logout_user, login_required, current_user
 from app import app,db 
 from app.forms import AdForm,RegisterForm,LoginForm
 from app.models import User,Ad
+import os
+from werkzeug.utils import secure_filename
 
+
+UPLOAD_FOLDER = 'static/uploads'
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
+
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+def generate_unique_foldername():
+    i = 1
+    while True:
+        filename = f"ad{i}"
+        filepath = os.path.join(UPLOAD_FOLDER, filename)
+        if not os.path.exists(filepath):
+            return filepath
+        i += 1
 @app.route('/')
 
 #test root to see if the database is working
@@ -107,31 +127,68 @@ def create():
 @app.route('/submit-ad', methods=['GET', 'POST'])
 def submit_ad():
     form = AdForm()
-    type_of_game=form.games.data
-    form.rank.choices=get_rank(type_of_game)
-    form_data=[form.titlerequest.data,form.games.data,form.rank.data,form.price.data,form.skin.data,form.exclusive_skin.data,form.description.data]
+    type_of_game = form.games.data
+    form.rank.choices = get_rank(type_of_game)
+    form_data = [
+        form.titlerequest.data,
+        form.games.data,
+        form.rank.data,
+        form.price.data,
+        form.skin.data,
+        form.exclusive_skin.data,
+        form.description.data
+    ]
     unsuccessful_submit = False
     try:
-        float(form_data[3])==float
+        float(form_data[3]) == float
     except:
         flash('Enter price in valid format')
-    length_title=len(form_data[0])
-    length_description=len(form_data[-1])
-    if length_description>499:
+    length_title = len(form_data[0])
+    length_description = len(form_data[-1])
+    if length_description > 499:
         flash(f'Description is too long: max 499 characters, current length {length_description} characters')
     if not form.validate_on_submit():
         unsuccessful_submit = True
-        if form.skin.data=='No':
-            form.skin.data=False
+        if form.skin.data == 'No':
+            form.skin.data = False
         print(form.skin.data)
-        return render_template("requestpage.html",form=form, unsuccessful_submit=unsuccessful_submit)
+        return render_template("requestpage.html", form=form, unsuccessful_submit=unsuccessful_submit)
+    
+    # Handling file uploads
+    if 'images' in request.files:
+        images = request.files.getlist('images')
+        ad_folder = generate_unique_foldername()
+        os.makedirs(ad_folder, exist_ok=True)
+        for image in images:
+            if image.filename == '':
+             continue
+            if image and allowed_file(image.filename):
+                filename = secure_filename(image.filename)
+                image_path = os.path.join(ad_folder, filename)
+                image.save(image_path)
+                form_data.append(os.path.join(ad_folder.split('/')[-1], filename))  # Storing relative path to the image
+            else:
+                flash('Invalid file type')
+                return redirect(request.url)
+
     if current_user.is_authenticated:
         user = current_user.username
     try:
-        last_ad_id = Ad.query.with_entities(Ad.ad_id).order_by(Ad.ad_id.desc()).first()[0]+1
+        last_ad_id = Ad.query.with_entities(Ad.ad_id).order_by(Ad.ad_id.desc()).first()[0] + 1
     except:
-        last_ad_id=1
-    new_ad=Ad(ad_id=last_ad_id, ad_title=form_data[0],game_type=form_data[1], game_rank=form_data[2], price=form_data[3],skins=bool(form_data[4]), exclusive=form_data[5], Extra_Descrip=form_data[6], user_username=user, created_at=datetime.now(ZoneInfo('Asia/Shanghai')))
+        last_ad_id = 1
+    new_ad = Ad(
+        ad_id=last_ad_id,
+        ad_title=form_data[0],
+        game_type=form_data[1],
+        game_rank=form_data[2],
+        price=form_data[3],
+        skins=bool(form_data[4]),
+        exclusive=form_data[5],
+        Extra_Descrip=form_data[6],
+        user_username=user,
+        created_at=datetime.now(ZoneInfo('Asia/Shanghai'))
+    )
     print(new_ad)
     db.session.add(new_ad)
     db.session.commit()

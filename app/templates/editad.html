@@ -10,7 +10,7 @@
     </ul>
     {% endif %}
     {% endwith %}
-    <form action="{{ url_for('edit_ad', ad_id=ad.ad_id) }}" method="POST">
+    <form action="{{ url_for('edit_ad', ad_id=ad.ad_id) }}" method="POST"enctype="multipart/form-data">
         {{ form.hidden_tag() }}
 
         {{ form.titlerequest.label }} {{ form.titlerequest() }}<br>

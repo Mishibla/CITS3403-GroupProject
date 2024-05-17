@@ -10,7 +10,7 @@
     </ul>
     {% endif %}
     {% endwith %}
-    <form id="sendrequests" action="/submit-ad" method="post">
+    <form id="sendrequests" action="/submit-ad" method="post"enctype="multipart/form-data">
         {{ form.hidden_tag() }}
 
         {{ form.titlerequest.label }} {{ form.titlerequest() }}<br>
