@@ -1,10 +1,27 @@
 from datetime import datetime
 from zoneinfo import ZoneInfo
-from flask import flash,redirect, render_template,url_for,request
+from flask import flash,redirect, render_template,url_for,request, jsonify
 from flask_login import login_user, logout_user, login_required, current_user
 from app import app,db 
 from app.forms import AdForm,RegisterForm,LoginForm, MessageForm
 from app.models import User,Ad, Message
+import os
+from werkzeug.utils import secure_filename
+
+UPLOAD_FOLDER = 'app/uploads'
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
+
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+def get_ad_images(ad_id):
+    ad_folder = os.path.join('app', 'uploads', str(ad_id))
+    if not os.path.exists(ad_folder):
+        return []
+    return os.listdir(ad_folder)
 
 @app.route('/')
 
@@ -141,13 +158,34 @@ def submit_ad():
             form.skin.data=False
         print(form.skin.data)
         return render_template("requestpage.html",form=form, unsuccessful_submit=unsuccessful_submit)
+    if 'images' in request.files:
+        images = request.files.getlist('images')
+        try:
+            last_ad_id = Ad.query.with_entities(Ad.ad_id).order_by(Ad.ad_id.desc()).first()[0] + 1
+        except:
+            last_ad_id = 1
+        ad_folder = os.path.join('app', 'uploads', str(last_ad_id))  # Using last_ad_id as the folder name
+        os.makedirs(ad_folder, exist_ok=True)
+        for image in images:
+            if image.filename == '':
+                continue
+            if image and allowed_file(image.filename):
+                filename = secure_filename(image.filename)
+                image_path = os.path.join(ad_folder, filename)
+                image.save(image_path)
+                form_data.append(os.path.join(str(last_ad_id), filename))  # Storing relative path to the image
+            else:
+                flash('Invalid file type')
+                return redirect(request.url)
+    
+    
     if current_user.is_authenticated:
         user = current_user.username
     try:
         last_ad_id = Ad.query.with_entities(Ad.ad_id).order_by(Ad.ad_id.desc()).first()[0]+1
     except:
         last_ad_id=1
-    new_ad=Ad(ad_id=last_ad_id, ad_title=form_data[0],game_type=form_data[1], game_rank=form_data[2], price=form_data[3],skins=bool(form_data[4]), exclusive=form_data[5], Extra_Descrip=form_data[6], user_username=user, created_at=datetime.now(ZoneInfo('Asia/Shanghai')))
+    new_ad=Ad(ad_id=last_ad_id, ad_title=form_data[0],game_type=form_data[1], game_rank=form_data[2], price=form_data[3],skins=bool(form_data[4]), exclusive=form_data[5], Extra_Descrip=form_data[6], user_username=user, created_at=datetime.now(), image_folder=str(last_ad_id))
     print(new_ad)
     db.session.add(new_ad)
     db.session.commit()
@@ -161,6 +199,7 @@ def show_ad(ad_id):
     displaydelete=False
     button_change=False
     ad_details = Ad.query.get(ad_id)
+    ad_images = get_ad_images(ad_id)
     ownerid= ad_details.user_username
     if not current_user.is_authenticated:
         return render_template('adtemplate.html', ad=ad_details, success=button_change)
@@ -179,9 +218,24 @@ def show_ad(ad_id):
         wishlist_ids = str(wish).split(',')
         if str(ad_id) in wishlist_ids:
                 button_change = True
-    return render_template('adtemplate.html', ad=ad_details, success=button_change, displaydelete=displaydelete, displayedit=displayedit, form=form)
+    return render_template('adtemplate.html', ad=ad_details, success=button_change, displaydelete=displaydelete, displayedit=displayedit, form=form, ad_images=ad_images, ad_id=ad_id)
 
+@app.route('/get_image_urls', methods=['GET'])
+def get_image_urls(ad_id):
+    ad_images = get_ad_images(ad_id)
+    if not ad_images:
+        return jsonify(error="No images found for the given ad ID"), 404
 
+    base_url = f'/app/uploads/{ad_id}/'
+    main_image_url = base_url + ad_images[0]
+    secondary_image_urls = [base_url + image for image in ad_images[1:]]
+
+    return jsonify(
+        image1=main_image_url,
+        image2=secondary_image_urls[0] if secondary_image_urls else "",
+        image3=secondary_image_urls[1] if len(secondary_image_urls) > 1 else "",
+        image4=secondary_image_urls[2] if len(secondary_image_urls) > 2 else ""
+    )
 
 @app.route('/submit-wishlist',  methods=['GET', 'POST'])
 @login_required

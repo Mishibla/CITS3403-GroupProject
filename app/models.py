@@ -56,6 +56,7 @@ class Ad(db.Model):
     skins=db.Column(db.Boolean, default=False, nullable=False)
     exclusive=db.Column(db.Boolean,default=False,nullable=False)
     Extra_Descrip=db.Column(db.String,nullable=True)
+    image_folder=db.Column(db.String(100), nullable=True)
 
     created_at = db.Column(db.DateTime, default=lambda: datetime.now(ZoneInfo('Asia/Shanghai')))
 
