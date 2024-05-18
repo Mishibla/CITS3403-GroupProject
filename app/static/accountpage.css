@@ -82,7 +82,7 @@ h2 {
 
 .profile-info {
     flex-grow: 1; /* Takes up the remaining space */
-    margin: 50px;
+    margin: 40px;
 }
 
 .profile-name {
@@ -112,10 +112,8 @@ h2 {
     margin-top: 15px;
 }
 
-.edit_account_container {
-    position:absolute;
-    left: 980px;
-    top: 225px;
+.edit-account-button {
+    margin: 10px;
 }
 
 .manage_ads_container {

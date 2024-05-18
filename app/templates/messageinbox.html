@@ -10,6 +10,7 @@
     {% endif %}
     {% endwith %}
 {% block content %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='messageinbox.css') }}">
 <div class="content_container">
     <div class="flex-layout">
         <div class="option-container">
@@ -22,29 +23,30 @@
                 <button class="custom_button3" role="button" onclick="location.href='/messageinbox'"><span class="text">Interested Buyers</span></button>
             </div>
         </div>
+        <table>
+            <tr>
+                <th>Buyer Name</th>
+                <th>Interested Ad</th>
+                <th>Message</th>
+                <th>Buyer's Email</th>
+                <th>Buyer's Phone</th>
+                <th>Message Sent</th>
+            </tr>
+            {% for info in data %}
+                <tr>
+                    <td>{{ info[4] }}</td>
+                    <td>{{ info[1] }}</td>
+                    <td>{{ info[2] }}</td>
+                    <td>{{ info[5] }}</td>
+                    <td>{{ info[6] }}</td>
+                    <td>{{ info[3] }}</td>
+                </tr>
+            {% endfor %}
+        </table>
     </div>
 </div>
 
-<table>
-    <tr>
-        <th>Buyer Name</th>
-        <th>Interested Ad</th>
-        <th>Message</th>
-        <th>Buyer's Email</th>
-        <th>Buyer's Phone</th>
-        <th>Message Sent</th>
-    </tr>
-    {% for info in data %}
-        <tr>
-            <td>{{ info[4] }}</td>
-            <td>{{ info[1] }}</td>
-            <td>{{ info[2] }}</td>
-            <td>{{ info[5] }}</td>
-            <td>{{ info[6] }}</td>
-            <td>{{ info[3] }}</td>
-        </tr>
-    {% endfor %}
-</table>
+
 
 
 {% endblock %}
