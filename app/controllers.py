@@ -1,5 +1,7 @@
 
 
+from datetime import datetime
+from zoneinfo import ZoneInfo
 from app.models import User, Ad
 from app import db
 
@@ -23,6 +25,40 @@ def create_account(all_data):
     db.session.add(account)
     db.session.commit()
 
+class AdCreationError(Exception):
+    pass
+
+def create_ad(data, user):
+    try:
+        price = float(data[3])
+    except ValueError:
+        raise AdCreationError('Enter price in valid format')
+
+    length_description = len(data[-1])
+    if length_description > 499:
+        raise AdCreationError(f'Description is too long: max 499 characters, current length {length_description} characters')
+
+    last_ad_id = db.session.query(db.func.max(Ad.ad_id)).scalar()
+    if last_ad_id is None:
+        last_ad_id = 1
+    else:
+        last_ad_id += 1
+
+    new_ad = Ad(
+        ad_id=last_ad_id, 
+        ad_title=data[0],
+        game_type=data[1], 
+        game_rank=data[2], 
+        price=price,
+        skins=bool(data[4]), 
+        exclusive=bool(data[5]), 
+        Extra_Descrip=data[6], 
+        user_username=user, 
+        created_at=datetime.now(ZoneInfo('Asia/Shanghai'))
+    )
+    db.session.add(new_ad)
+    db.session.commit()
+    return last_ad_id
 
 
 def create_user(username, name, password, email):

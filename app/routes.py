@@ -3,22 +3,12 @@ from zoneinfo import ZoneInfo
 from flask import flash,redirect, render_template,url_for,request
 from flask_login import login_user, logout_user, login_required, current_user
 from app.blueprints import main
-from app.controllers import AccountCreationError,create_account
+from app.controllers import AccountCreationError,create_account,AdCreationError,create_ad
 from app.forms import AdForm,RegisterForm,LoginForm, MessageForm
 from app.models import User,Ad, Message
 from app import db
 
 @main.route('/')
-
-#test root to see if the database is working
-#@main.route('/titleofad')
-#def titleofad():
-    #ads_of_chris = Ad.query.all() 
-    #print("Hello World")
-    #print(ads_of_chris)
-    #tests=ads_of_chris)
-    #return render_template("adtemplate.html",ad=ads_of_chris)
-
 @main.route('/homepage')
 def homepage():
     return render_template("Homepage.html")
@@ -68,7 +58,6 @@ def login():
             flash('Invalid password. Please try again.', 'error')
             return render_template('loginpage.html', form=form)
         login_user(user)
-        print(login_user(user))
         return redirect(url_for('main.account'))
     return render_template('loginpage.html', form=form, title='login')
 
@@ -93,6 +82,8 @@ def register_account():
             flash(e, 'error')
             return render_template("registeraccount.html", form=form)
         return redirect(url_for("main.login"))
+    else:
+        print(form.errors)
     return render_template("registeraccount.html", form=form)
 
     
@@ -113,33 +104,32 @@ def create():
 @login_required
 def submit_ad():
     form = AdForm()
-    type_of_game=form.games.data
-    form.rank.choices=get_rank(type_of_game)
-    form_data=[form.titlerequest.data,form.games.data,form.rank.data,form.price.data,form.skin.data,form.exclusive_skin.data,form.description.data]
-    unsuccessful_submit = False
-    try:
-        float(form_data[3])==float
-    except:
-        flash('Enter price in valid format')
-    length_description=len(form_data[-1])
-    if length_description>499:
-        flash(f'Description is too long: max 499 characters, current length {length_description} characters')
-    if not form.validate_on_submit():
-        unsuccessful_submit = True
-        if form.skin.data=='No':
-            form.skin.data=False
-        print(form.skin.data)
-        return render_template("requestpage.html",form=form, unsuccessful_submit=unsuccessful_submit)
-    if current_user.is_authenticated:
+    
+    if request.method == 'POST' and form.validate_on_submit():
+        type_of_game = form.games.data
+        form.rank.choices = get_rank(type_of_game)
+        form_data = [
+            form.titlerequest.data,
+            form.games.data,
+            form.rank.data,
+            form.price.data,
+            form.skin.data,
+            form.exclusive_skin.data,
+            form.description.data
+        ]
         user = current_user.username
-    try:
-        last_ad_id = Ad.query.with_entities(Ad.ad_id).order_by(Ad.ad_id.desc()).first()[0]+1
-    except:
-        last_ad_id=1
-    new_ad=Ad(ad_id=last_ad_id, ad_title=form_data[0],game_type=form_data[1], game_rank=form_data[2], price=form_data[3],skins=bool(form_data[4]), exclusive=form_data[5], Extra_Descrip=form_data[6], user_username=user, created_at=datetime.now(ZoneInfo('Asia/Shanghai')))
-    db.session.add(new_ad)
-    db.session.commit()
-    return redirect(f'/ads/{last_ad_id}')
+
+        print(form_data, user)  # Debugging output
+        try:
+            last_ad_id = create_ad(form_data, user)
+        except AdCreationError as e:
+            flash(str(e), 'error')
+            return render_template("requestpage.html", form=form, unsuccessful_submit=True)
+        
+        return redirect(url_for("main.show_ad", ad_id=last_ad_id))
+
+    return render_template("requestpage.html", form=form, unsuccessful_submit=False)
+
 
 @main.route('/ads/<int:ad_id>')
 def show_ad(ad_id):
