@@ -37,79 +37,33 @@ class BasicUnitTests(TestCase):
     def test_register_account_duplicate_username(self):
         with self.assertRaisesRegex(AccountCreationError, 'testuser has already been created, please enter a unique username'):
             with self.app_context:
-                form_data = MultiDict({
-                    'username': 'testuser',
-                    'display_name': 'Test User',
-                    'password': 'testpassword',
-                    'email': 'test@example.com',
-                    'phone': '1234567890'
-                })
-                form = RegisterForm(form_data)
-                create_account(form)
+                _data =['testuser','Test User', 'testpassword', 'test@example.com', '1234567890']
+                create_account(_data)
+                dupli=['testuser','Another User', '123testpassword', '123test@example.com', '002100545']
+                create_account(dupli)
 
-                duplicate_form_data = MultiDict({
-                    'username': 'testuser',
-                    'display_name': 'Another User',
-                    'password': 'anotherpassword',
-                    'email': 'another@example.com',
-                    'phone': '0987654321'
-                })
-                duplicate_form = RegisterForm(duplicate_form_data)
-                create_account(duplicate_form)
-'''
     def test_register_account_long_username(self):
-        with self.client:
-            response = self.client.post(url_for('main.register_account'), data=dict(
-                username='a'*30,  # Too long
-                display_name='Test User',
-                password='testpassword',
-                email='test@example.com',
-                phone='1234567890',
-                submit=True
-            ), follow_redirects=True)
-
-            self.assertEqual(response.status_code, 200)
-            self.assertIn(b'Username is too long', response.data)
+        with self.assertRaisesRegex(AccountCreationError, 'Username is too long: max 29 characters, current length 30 characters'):
+            with self.app_context:
+                _data=['a'*30, 'Test User','testpassword', 'test@example.com', '1234567890']
+                create_account(_data)
 
     def test_register_account_long_display_name(self):
-        with self.client:
-            response = self.client.post(url_for('main.register_account'), data=dict(
-                username='testuser',
-                display_name='a'*30,  # Too long
-                password='testpassword',
-                email='test@example.com',
-                phone='1234567890',
-                submit=True
-            ), follow_redirects=True)
-
-            self.assertEqual(response.status_code, 200)
-            self.assertIn(b'Display name is too long', response.data)
+        with self.assertRaisesRegex(AccountCreationError, 'Display name is too long: max 29 characters, current length 30 characters'):
+            with self.app_context:
+                _data=['a', 'a'*30,'testpassword', 'test@example.com', '1234567890']
+                create_account(_data)
 
     def test_register_account_long_password(self):
-        with self.client:
-            response = self.client.post(url_for('main.register_account'), data=dict(
-                username='testuser',
-                display_name='Test User',
-                password='a'*20,  # Too long
-                email='test@example.com',
-                phone='1234567890',
-                submit=True
-            ), follow_redirects=True)
-
-            self.assertEqual(response.status_code, 200)
-            self.assertIn(b'Password is too long', response.data)
+        with self.assertRaisesRegex(AccountCreationError, 'Password is too long: max 19 characters, current length 20 characters'):
+            with self.app_context:
+                _data=['a', 'a','a'*20, 'test@example.com', '1234567890']
+                create_account(_data)
+            
     def test_register_account_success(self):
         with self.client:
-            response = self.client.post(url_for('main.register_account'), data=dict(
-                username='testuser',
-                display_name='Test User',
-                password='testpassword',
-                email='test@example.com',
-                phone='1234567890',
-                submit=True
-            ), follow_redirects=True)
-
-            self.assertEqual(response.status_code, 200)
+            _data=['testuser', 'Test User','testpassword', 'test@example.com', '1234567890']
+            create_account(_data)
             user = User.query.filter_by(username='testuser').first()
             self.assertIsNotNone(user)
             self.assertEqual(user.name, 'Test User')
@@ -117,4 +71,4 @@ class BasicUnitTests(TestCase):
             self.assertEqual(user.email, 'test@example.com')
             self.assertEqual(user.phone, '1234567890')
 
-            '''
+        

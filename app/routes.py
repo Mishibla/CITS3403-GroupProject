@@ -85,14 +85,14 @@ def register():
 @main.route('/submit_register', methods=['GET', 'POST'])
 def register_account():
     form = RegisterForm()
+    all_data=[form.username.data,form.display_name.data, form.password.data,form.email.data,form.phone.data]
     if request.method == 'POST' and form.validate_on_submit():
         try:
-            create_account(form)
+            create_account(all_data)
         except AccountCreationError as e:
             flash(e, 'error')
             return render_template("registeraccount.html", form=form)
         return redirect(url_for("main.login"))
-
     return render_template("registeraccount.html", form=form)
 
     
@@ -110,6 +110,7 @@ def create():
     return render_template("requestpage.html",form=form, title='Create ad')
 
 @main.route('/submit-ad', methods=['GET', 'POST'])
+@login_required
 def submit_ad():
     form = AdForm()
     type_of_game=form.games.data
@@ -120,7 +121,6 @@ def submit_ad():
         float(form_data[3])==float
     except:
         flash('Enter price in valid format')
-    length_title=len(form_data[0])
     length_description=len(form_data[-1])
     if length_description>499:
         flash(f'Description is too long: max 499 characters, current length {length_description} characters')
@@ -137,7 +137,6 @@ def submit_ad():
     except:
         last_ad_id=1
     new_ad=Ad(ad_id=last_ad_id, ad_title=form_data[0],game_type=form_data[1], game_rank=form_data[2], price=form_data[3],skins=bool(form_data[4]), exclusive=form_data[5], Extra_Descrip=form_data[6], user_username=user, created_at=datetime.now(ZoneInfo('Asia/Shanghai')))
-    print(new_ad)
     db.session.add(new_ad)
     db.session.commit()
     return redirect(f'/ads/{last_ad_id}')
