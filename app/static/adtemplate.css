@@ -1,28 +1,6 @@
 @font-face { font-family: Delicious; src: url('Delicious-Roman.otf'); } 
 @font-face { font-family: Delicious; font-weight: bold; src: url('Delicious-Bold.otf');}
 
-body {
-    background-color: #201f31;
-}
-
-.container1 {
-    background-color: #2b2a3c;
-    width: 1400px;
-    height: 120px;
-    margin: 30px auto;  /* Center the container horizontally in the body */
-    border-radius: 20px;
-    display: flex;      /* Use Flexbox */
-    justify-content: center; /* Center horizontally */
-    align-items: center;     /* Center vertically */
-    text-align: center; /* Center the text inside the div */
-}
-
-.container1 .row {
-    margin-right: 0;
-    margin-left: 0;
-    width: 100%; /* Ensure it takes full width */
-}
-
 .content_container {
     width: 1400px;
     height: auto;
@@ -33,7 +11,7 @@ body {
     background-color: #2b2a3c;
     width: 900px;
     height: auto; /* Removed 'auto' to correct the height property */
-    margin: 50px 10px 10px 40px; /*top right bottom left */
+    margin: 10px 10px 5px 40px; /*top right bottom left */
     border-radius: 20px;
     display: flex;      /* Use Flexbox */
     justify-content: flex-start; /* Align content to the start of the flex-direction row */
@@ -95,9 +73,9 @@ body {
 
 .container4 {
     background-color: #2b2a3c;
-    width: 500px; /* Adjust this width based on the available space */
-    height: auto; /* Adjust height as content requires */
-    margin: 50px 40px 30px 30px; /* Top, right, bottom, left margins */
+    width: 400px; 
+    height: auto; 
+    margin: 10px 40px 30px 30px; 
     border-radius: 20px;
     display: flex;
     flex-direction: column;
@@ -114,6 +92,15 @@ body {
     border-top-right-radius: 20px; /* Rounds the top-right corner */
 }
 
+.container4-message {
+    background-color: #2b2a3c;
+    width: 400px; 
+    height: auto; 
+    padding:20px;
+    border-radius: 20px;
+    margin-left: 30px;
+}
+
 .flex-layout {
     display: flex;
     justify-content: space-between; /* This will place container4 to the right */
@@ -123,6 +110,11 @@ body {
 
 .container-left {
     flex-grow: 1; /* Takes up the remaining space left by container4 */
+    display: flex;
+    flex-direction: column;
+}
+
+.container-right {
     display: flex;
     flex-direction: column;
 }
@@ -159,7 +151,6 @@ body {
 
 .price-button-container {
     display: flex;          /* Enables Flexbox */
-    justify-content: space-between; /* Spaces out the child elements */
     align-items: center;   /* Aligns items vertically in the center */
     width: 80%;
 }
@@ -168,10 +159,11 @@ body {
     margin-right: auto;  /* Push everything else to the right */
 }
 
-.button_container {
-    margin-left: auto;  /* Ensures the button stays to the right */
+.sellpage_wishlist {
+    margin-left: 20px;
+    margin-bottom: 20px;
+    font-size: medium;
 }
-
 
 h3 {
     color: white;
@@ -281,4 +273,12 @@ img.cursor {
     margin-bottom: 50px;
 }
 
+.edit-delete {
+    display: flex;
+    gap: 10px; /* Add some space between the buttons */
+    margin-left: 40px;
+}
 
+.edit-delete form {
+    margin: 0;
+}

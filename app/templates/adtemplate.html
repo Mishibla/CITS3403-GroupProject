@@ -15,46 +15,22 @@
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
 
-<form action="/submit-wishlist" method="POST">
-    <input type="hidden" name="ad_id" value="{{ ad.ad_id }}">
-    <input type="hidden" name="user" value="{{ ad.user_username }}">
-    <button type="submit" class="wishlist-button">
-        {% if success %}
-            <i class="fa fa-heart" style="color: red;"></i> Added to Wishlist
-        {% else %}
-            <i class="far fa-heart"></i> Add to Wishlist
-        {% endif %}
-    </button>
-</form>
-
+<div class="edit-delete">
     {% if displayedit %}
-    <form action="{{ url_for('edit_ad', ad_id=ad.ad_id) }}">
+    <span>
+        <form action="{{ url_for('edit_ad', ad_id=ad.ad_id) }}">
         <button type="submit" class="btn btn-primary">Edit Ad</button>
     </form>
-    <form action="{{ url_for('deletead') }}" method="POST" style="display:inline;">
-        <input type="hidden" name="ad_id" value="{{ ad.ad_id }}">
-        <input type="hidden" name="user" value="{{ current_user.username }}">
-        <button type="submit" class="btn btn-danger">Delete Ad</button>
-
+    </span>
+    <span>
+        <form action="{{ url_for('deletead') }}" method="POST">
+            <input type="hidden" name="ad_id" value="{{ ad.ad_id }}">
+            <input type="hidden" name="user" value="{{ current_user.username }}">
+            <button type="submit" class="btn btn-danger">Delete Ad</button>
+        </form>
+    </span>
     {% endif %}
-
-    {% if current_user.is_authenticated %}
-</form>
-<div class="send_container">
-    <form id="sendmessage" action="{{ url_for('submit_message') }}" method="post">
-        {{ form.hidden_tag() }}
-        <input type="hidden" name="ad_id" value="{{ ad.ad_id }}">
-        <input type="hidden" name="user" value="{{ current_user.username }}">
-        {{ form.message.label }} {{ form.message() }}<br>
-        {{ form.submit() }}
-    </form>
 </div>
-{% endif %}
-
-
-
-
-
 <div class="content_container">
 
     <div class="flex-layout">
@@ -82,15 +58,40 @@
                 </div>
             </div>
         </div>
-        <div class="container4">
-            <img alt="Image description" class="box-image" data-image="image4" onclick="openModal();currentSlide(4)" class="hover-shadow cursor">
-            <h3 class="price-button-container">
-                Price:  <span class="price_tag">${{ ad.price}}</span>
-                <span class="button_container">
-                    <button role="button" class="custom_button">Buy</button>
-                </span>
-            </h3>
-            
+        <div class="right-container">
+            <div class="container4">
+                <img alt="Image description" class="box-image" data-image="image4" onclick="openModal();currentSlide(4)" class="hover-shadow cursor">
+                <h3 class="price-button-container">
+                    Price:  <span class="price_tag">${{ad.price}}</span>
+                </h3>
+                <div class="sellpage_wishlist">
+                    <form action="/submit-wishlist" method="POST">
+                        <input type="hidden" name="ad_id" value="{{ ad.ad_id }}">
+                        <input type="hidden" name="user" value="{{ ad.user_username }}">
+                        <button type="submit" class="wishlist-button">
+                            {% if success %}
+                                <i class="fa fa-heart" style="color: red;"></i> Added to Wishlist
+                            {% else %}
+                                <i class="far fa-heart"></i> Add to Wishlist
+                            {% endif %}
+                        </button>
+                    </form>
+                </div>
+            </div>
+            <div class="container4-message">
+                {% if current_user.is_authenticated %}
+                </form>
+                <div class="send_container">
+                    <form id="sendmessage" action="{{ url_for('submit_message') }}" method="post">
+                        {{ form.hidden_tag() }}
+                        <input type="hidden" name="ad_id" value="{{ ad.ad_id }}">
+                        <input type="hidden" name="user" value="{{ current_user.username }}">
+                        {{ form.message.label }} {{ form.message() }}<br>
+                        {{ form.submit() }}
+                    </form>
+                </div>
+                {% endif %}
+            </div>
         </div>
     </div>
 </div>   
