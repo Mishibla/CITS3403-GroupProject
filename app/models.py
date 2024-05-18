@@ -63,7 +63,7 @@ class Ad(db.Model):
 
     users = db.relationship(User, back_populates='ads')
 
-    rankid= db.Column(db.Integer, nullable= True)
+    _rankid= db.Column(db.Integer, nullable= True)
 
     @property
     def rankid(self):
@@ -71,7 +71,7 @@ class Ad(db.Model):
             return rank_id(self.game_type, self.game_rank)
         return None
     def __repr__(self) -> str:
-        return f'<{self.ad_id} {self.ad_title} {self.game_type} {self.game_rank} {self.price} {self.skins} {self.exclusive} {self.Extra_Descrip} {self.user_username} {self.created_at} {self.rankid}>'
+        return f'<{self.ad_id} {self.ad_title} {self.game_type} {self.game_rank} {self.price} {self.skins} {self.exclusive} {self.Extra_Descrip} {self.user_username} {self.created_at} {self._rankid}>'
 
 class Message(db.Model):
     message_id=db.Column(db.Integer, primary_key= True)
