@@ -35,7 +35,7 @@ $(document).ready(function() {
     var ad_id = 16; // This will get the ad ID from the rendered template
     console.log("Ad ID:", ad_id); // Log the ad ID to the console for debugging
     get_image_urls(ad_id).then(function(imageURLs) {
-        $('img[data-image="image1"]').attr('src', imageURLs.image1);
+        $('img[data-image="image1"]').attr('src', 'uploads/16/imagetask5_.jpg');
         $('img[data-image="image2"]').attr('src', imageURLs.image2);
         $('img[data-image="image3"]').attr('src', imageURLs.image3);
         $('img[data-image="image4"]').attr('src', imageURLs.image4);

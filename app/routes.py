@@ -1,6 +1,6 @@
 from datetime import datetime
 from zoneinfo import ZoneInfo
-from flask import flash,redirect, render_template,url_for,request, jsonify
+from flask import flash,redirect, render_template, send_from_directory,url_for,request, jsonify
 from flask_login import login_user, logout_user, login_required, current_user
 from app import app,db 
 from app.forms import AdForm,RegisterForm,LoginForm, MessageForm
@@ -462,7 +462,9 @@ def messageinbox():
     return render_template('messageinbox.html', data=combined)
 
 
-
+@app.route('/uploads/<path:filename>')
+def serve_uploads(filename):
+    return send_from_directory('uploads', filename)
 
 csranks=['SILVER','GOLD NOVA','MASTER GUARDIAN','LEGENDARY']
 owranks=['BRONZE','SILVER','GOLD','PLATNIUM','DIAMOND','MASTER','GRANDMASTER','CHAMPIONS','TOP500']

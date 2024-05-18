@@ -124,9 +124,19 @@
         <a class="next" onclick="plusSlides(1)">&#10095;</a>
     </div>
 </div>
+<image src="uploads/16/imagetask5_.jpg"></image>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="{{ url_for('static', filename='adtemplate.js') }}"></script>
 
+<script>
+    $(document).ready(function() {
+    const ad_id = 16; // Replace with the actual ad_id you want to use
+    const imageFileName = 'imagetask5_.jpg'; // Replace with the actual image file name
+
+    // Set the src attribute of the image element
+    $('img[data-image="image1"]').attr('src', `/uploads/${ad_id}/${imageFileName}`);
+});
+</script>
 {% endblock %}
 
 
