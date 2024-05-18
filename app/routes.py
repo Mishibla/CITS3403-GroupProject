@@ -21,10 +21,6 @@ from app.models import User,Ad, Message
 def homepage():
     return render_template("Homepage.html")
 
-@app.route('/ads/<int:ad_id>')
-def ads(ad_id):
-    ad = Ad.query.get(ad_id)
-    return render_template('adtemplate.html', ad=ad)
 
 @app.route('/buyaccount')
 def buyaccount():
@@ -159,6 +155,7 @@ def submit_ad():
 
 @app.route('/ads/<int:ad_id>')
 def show_ad(ad_id):
+    print('Entering show_ad function', flush=True)
     form = MessageForm()
     displayedit=False
     displaydelete=False
