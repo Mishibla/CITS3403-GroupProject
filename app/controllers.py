@@ -8,7 +8,8 @@ class AccountCreationError(Exception):
 
 def create_account(form):
     unique_username = form.username.data
-    if User.query.get(unique_username):
+    existing_user = User.query.filter_by(username=unique_username).first()
+    if existing_user:
         raise AccountCreationError(f'{unique_username} has already been created, please enter a unique username')
     if len(form.username.data) > 29:
         raise AccountCreationError(f'Username is too long: max 29 characters, current length {len(form.username.data)} characters')
@@ -21,6 +22,7 @@ def create_account(form):
     account.set_password(form.password.data)
     db.session.add(account)
     db.session.commit()
+
 
 
 def create_user(username, name, password, email):
