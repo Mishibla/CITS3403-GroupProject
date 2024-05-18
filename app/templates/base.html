@@ -35,15 +35,15 @@
             <div class="col-sm-2">
 
                 {% if current_user.is_authenticated %}
-                <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                        Welcome, {{ current_user.name }}
-                    </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <li><a class="dropdown-item" href="{{ url_for('account') }}">My Account</a></li>
-                        <li><a class="dropdown-item" href="{{ url_for('logout') }}">Sign Out</a></li>
-                    </ul>
+                <div class="parent-container">
+                <input class="dropdown" type="checkbox" id="dropdown" name="dropdown"/>
+                <label class="for-dropdown" for="dropdown">Welcome, {{ current_user.name }} <i class="uil--arrow-down"></i></label>
+                <div class="section-dropdown"> 
+                    <a href="{{ url_for('account') }}">My Account <i class="uil--arrow-right"></i></a>
+                    <a href="{{ url_for('logout') }}">Sign Out <i class="uil--arrow-right"></i></a>
                 </div>
+                </div>
+
                 {% else %}
                 <button role="button" class="custom_button2" id="sign_in" data-url="{{ url_for('login') }}" >Sign in / Register</button>
                 {% endif %}

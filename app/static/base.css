@@ -43,7 +43,3 @@ h1 a:hover {
     color: white;             /* Keeps text color white on hover */
     text-decoration: none;    /* Ensures no underline appears on hover */
 }
-
-.col-sm-2 .dropdown {
-    margin-top: 15px;
-}
