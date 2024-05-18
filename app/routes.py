@@ -244,9 +244,14 @@ def show_ad(ad_id):
         wishlist_ids = wish.split(',')
         if str(ad_id) in wishlist_ids:
                 button_change = True
+     # Fetching image filenames from the ad folder
+    image_folder = ad_details.image_folder
+    image_path = os.path.join(app.config['UPLOAD_FOLDER'], image_folder)
+    ad_images = os.listdir(image_path)
+    
     print(ad_details)
     print(ad_details.ad_id)
-    return render_template('adtemplate.html', ad=ad_details, success=button_change, displaydelete=displaydelete, displayedit=displayedit)
+    return render_template('adtemplate.html', ad=ad_details, success=button_change, displaydelete=displaydelete, displayedit=displayedit, ad_images=ad_images)
 
 
 

@@ -61,14 +61,17 @@
                     {{ ad.Extra_Descrip}}
                 </p>
                 <div class="horizontal-boxes">
-                    <div class="box"><img alt="Image description" class="box-image" data-image="image1" onclick="openModal();currentSlide(1)" class="hover-shadow cursor"></div>
-                    <div class="box"><img alt="Image description" class="box-image" data-image="image2" onclick="openModal();currentSlide(2)" class="hover-shadow cursor"></div>
-                    <div class="box"><img alt="Image description" class="box-image" data-image="image3" onclick="openModal();currentSlide(3)" class="hover-shadow cursor"></div>
+                    {% for image in ad_images %}
+                    <div class="box">
+                        <img src="{{ url_for('static', filename='uploads/' + ad.image_folder + '/' + image) }}" alt="Image description" class="box-image" data-image="{{ loop.index }}" onclick="openModal();currentSlide('{{ loop.index }}')" class="hover-shadow cursor">
+                    </div>
+                    {% endfor %}
                 </div>
-            </div>
-        </div>
-        <div class="container4">
-            <img alt="Image description" class="box-image" data-image="image4" onclick="openModal();currentSlide(4)" class="hover-shadow cursor">
+                </div>
+                </div>
+                <div class="container4">
+                    <img src="{{ url_for('static', filename='uploads/' + ad.image_folder + '/' + main_image) }}" alt="Image description" class="box-image" data-image="image4" onclick="openModal();currentSlide(4)" class="hover-shadow cursor">
+                    <h3 class="price-button-container">
             <h3 class="price-button-container">
                 Price:  <span class="price_tag">${{ ad.price}}</span>
                 <span class="button_container">
@@ -80,29 +83,18 @@
     </div>
 </div>   
 
-<div id="myModal" class="modal">
-    <span class="close cursor" onclick="closeModal()">&times;</span>
-    <div class="modal-content">
-
-        <div class="mySlides">
-            <div class="numbertext">1 / 4</div>
-            <img alt="Image description" class="box-image" data-image="image1">
-        </div>
-
-        <div class="mySlides">
-            <div class="numbertext">2 / 4</div>
-            <img alt="Image description" class="box-image" data-image="image2">
-        </div>
-
-        <div class="mySlides">
-            <div class="numbertext">3 / 4</div>
-            <img alt="Image description" class="box-image" data-image="image3">
-        </div>
-
-        <div class="mySlides">
-            <div class="numbertext">4 / 4</div>
-            <img alt="Image description" class="box-image" data-image="image4">
-        </div>
+<<div class="horizontal-boxes">
+    {% for image in ad_images %}
+    <div class="box">
+        <img src="{{ url_for('static', filename='uploads/' + ad.image_folder + '/' + image) }}" alt="Image description" class="box-image" data-image="{{ loop.index }}" onclick="openModal();currentSlide('{{ loop.index }}')" class="hover-shadow cursor">
+    </div>
+    {% endfor %}
+</div>
+</div>
+</div>
+<div class="container4">
+    <img src="{{ url_for('static', filename='uploads/' + ad.image_folder + '/' + main_image) }}" alt="Image description" class="box-image" data-image="image4" onclick="openModal();currentSlide(4)" class="hover-shadow cursor">
+    <h3 class="price-button-container">
 
         <!-- Next/previous controls -->
         <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
