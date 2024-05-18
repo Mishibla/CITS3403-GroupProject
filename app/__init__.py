@@ -4,8 +4,8 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager, current_user
 
-db = SQLAlchemy(app)
-login = LoginManager(app)
+db = SQLAlchemy()
+login = LoginManager()
 login.login_view = 'login'
 
 
@@ -20,4 +20,4 @@ def create_app(config):
 
     return app
 
-from app import routes,models
+from app import models

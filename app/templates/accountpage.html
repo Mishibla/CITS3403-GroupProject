@@ -22,7 +22,7 @@
         </div>
         <div class="account-container">
             <div class="flex-layout">
-                <form action="{{ url_for('edit_account', username=user_details.username) }}" method="GET">
+                <form action="{{ url_for('main.edit_account', username=user_details.username) }}" method="GET">
                     <button type="submit" class="btn btn-primary">Edit Account Details</button>
                 </form>
                 <div class="profile-picture"><img src="https://oyster.ignimgs.com/mediawiki/apis.ign.com/avatar-the-last-airbender/b/b0/Aang_img.jpg?width=325"></div>

@@ -28,10 +28,10 @@
 </form>
 
     {% if displayedit %}
-    <form action="{{ url_for('edit_ad', ad_id=ad.ad_id) }}">
+    <form action="{{ url_for('main.edit_ad', ad_id=ad.ad_id) }}">
         <button type="submit" class="btn btn-primary">Edit Ad</button>
     </form>
-    <form action="{{ url_for('deletead') }}" method="POST" style="display:inline;">
+    <form action="{{ url_for('main.deletead') }}" method="POST" style="display:inline;">
         <input type="hidden" name="ad_id" value="{{ ad.ad_id }}">
         <input type="hidden" name="user" value="{{ current_user.username }}">
         <button type="submit" class="btn btn-danger">Delete Ad</button>
@@ -41,7 +41,7 @@
     {% if current_user.is_authenticated %}
 </form>
 <div class="send_container">
-    <form id="sendmessage" action="{{ url_for('submit_message') }}" method="post">
+    <form id="sendmessage" action="{{ url_for('main.submit_message') }}" method="post">
         {{ form.hidden_tag() }}
         <input type="hidden" name="ad_id" value="{{ ad.ad_id }}">
         <input type="hidden" name="user" value="{{ current_user.username }}">

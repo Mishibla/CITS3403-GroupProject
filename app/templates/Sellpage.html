@@ -6,19 +6,19 @@
     <script src="{{ url_for('static', filename='Sellpage.js') }}"></script>
 
     <div class="sellpage_container">
-        <form method="GET" action="{{ url_for('buyaccount')}}">
+        <form method="GET" action="{{ url_for('main.buyaccount')}}">
             <input type="hidden" name="game_type" value="CSGO">
             <button role="button" class="custom_button" type="submit">CSGO</button>
         </form>
-        <form method="GET" action="{{ url_for('buyaccount')}}">
+        <form method="GET" action="{{ url_for('main.buyaccount')}}">
             <input type="hidden" name="game_type" value="Valorant">
             <button role="button" class="custom_button" type="submit">Valorant</button>
         </form>
-        <form method="GET" action="{{ url_for('buyaccount')}}">
+        <form method="GET" action="{{ url_for('main.buyaccount')}}">
             <input type="hidden" name="game_type" value="League">
             <button role="button" class="custom_button" type="submit">League</button>
         </form>
-        <form method="GET" action="{{ url_for('buyaccount')}}">
+        <form method="GET" action="{{ url_for('main.buyaccount')}}">
             <input type="hidden" name="game_type" value="Overwatch">
             <button role="button" class="custom_button" type="submit">Overwatch</button>
         </form>
@@ -27,7 +27,7 @@
     <div class="display_container">
         <div class="filter_box">
             <h1>Filter</h1>
-            <form method="GET" action="{{ url_for('buyaccount') }}">
+            <form method="GET" action="{{ url_for('main.buyaccount') }}">
                 <div class="custom_checkbox">
                     <input type="checkbox" id="skins" name="skins" {% if request.args.get( 'skins' )%}checked{% endif %}/>
                     <label for="skins" class="toggle"><span></span></label>
@@ -60,7 +60,7 @@
             <div class="accounts_container_display">
                 {% for ad in allads %}
                 <div class="accounts">
-                    <a href="{{ url_for('show_ad', ad_id=ad.ad_id) }}">
+                    <a href="{{ url_for('main.show_ad', ad_id=ad.ad_id) }}">
                         <div class="accounts_image_container">
                             <img src="https://images.contentstack.io/v3/assets/blt731acb42bb3d1659/bltb05f48b60fe37fe1/647e755646cddd2cfdea098d/Crystalis-Motus---Leona---Final_WEB.jpg">
                         </div>

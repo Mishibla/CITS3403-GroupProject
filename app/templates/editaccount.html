@@ -12,7 +12,7 @@
     {% endwith %}
     <div class="login_container">
         <div class="form_container">
-            <form id="registerform" action="{{ url_for('edit_account', username=form.username.data) }}" method="post">
+            <form id="registerform" action="{{ url_for('main.edit_account', username=form.username.data) }}" method="post">
                 {{ form.hidden_tag() }}
                 {{ form.username(id='user', style="display:none;") }}<br>
                 {{ form.display_name.label }} {{ form.display_name() }}<br>

@@ -1,4 +1,4 @@
-import os 
+import os
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
@@ -10,5 +10,4 @@ class DeploymentConfig(Config):
     SQLALCHEMY_DATABASE_URI = "sqlite:///" + os.path.join(basedir, 'app.db')
 
 class TestConfig(Config):
-    SQLALCHEMY_DATABASE_URI="sqlite:///:memory"
-    TESTING= True
+    SQLALCHEMY_DATABASE_URI = "sqlite:///:memory"
