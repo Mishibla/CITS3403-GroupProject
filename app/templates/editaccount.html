@@ -1,24 +1,24 @@
 {% extends "base.html" %}
 
 {% block content %}
-    {% with messages = get_flashed_messages() %}
+    {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
     <ul>
-        {% for message in messages %}
-        <li>{{ message }}</li>
+        {% for category, message in messages %}
+        <li class="{{ category }}">{{ message }}</li>
         {% endfor %}
     </ul>
     {% endif %}
     {% endwith %}
     <div class="login_container">
         <div class="form_container">
-            <form id="registerform" action="/submit_register" method="post">
+            <form id="registerform" action="{{ url_for('edit_account', username=form.username.data) }}" method="post">
                 {{ form.hidden_tag() }}
-                {{ form.username.label }} {{ form.username() }}<br>
+                {{ form.username(id='user', style="display:none;") }}<br>
                 {{ form.display_name.label }} {{ form.display_name() }}<br>
                 {{ form.password.label }} {{ form.password() }}<br>
-                {{form.email.label}} {{ form.email(class_="black-text") }}<br>
-                {{form.phone.label}} {{form.phone()}}<br>
+                {{ form.email.label }} {{ form.email(class_="black-text") }}<br>
+                {{ form.phone.label }} {{ form.phone() }}<br>
                 <p>(*)required fields</p>
                 {{ form.submit() }}
             </form>
@@ -26,9 +26,7 @@
     </div>
     <style>
         .black-text {
-    color: black;
-    }
+            color: black;
+        }
     </style>
 {% endblock %}
-
-

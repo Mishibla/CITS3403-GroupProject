@@ -12,11 +12,12 @@ class User(db.Model,UserMixin):
     
     ads = db.relationship('Ad', back_populates='users',lazy='dynamic')
 
-    wishlist=db.Column(db.String(100),nullable=True)
-
+    wishlist=db.Column(db.Integer,nullable=True)
+    email=db.Column(db.String(100),nullable=False)
+    phone=db.Column(db.String(100),nullable=True)
     def __repr__(self) -> str:
         ad_ids = [str(ad.ad_id) for ad in self.ads.all()]
-        return f'<{self.name} {self.username} {self.password_hash} {", ".join(ad_ids)} , {self.wishlist} >'
+        return f'<{self.name} {self.username} {self.password_hash} {", ".join(ad_ids)}  {self.wishlist} {self.email} {self.phone}>'
     
     def get_ad_ids_str(self):
         ad_ids = [str(ad.ad_id) for ad in self.ads.all()]
@@ -33,6 +34,19 @@ class User(db.Model,UserMixin):
 def get_user(id):
     return User.query.get(id)
 
+csranks=['SILVER','GOLD NOVA','MASTER GUARDIAN','LEGENDARY']
+owranks=['BRONZE','SILVER','GOLD','PLATNIUM','DIAMOND','MASTER','GRANDMASTER','CHAMPIONS','TOP500']
+leagueranks=['IRON','BRONZE','SILVER','GOLD','PLATINUM','EMERALD','DIAMOND','MASTER','GRANDMASTER','CHALLENGER']
+valranks=['IRON','BRONZE','SILVER','GOLD','PLATINUM','DIAMOND','ASCENDANT','IMMORTAL','RADIANT']
+gamesapp={'CSGO':csranks,'Overwatch':owranks,'League':leagueranks,'Valorant':valranks}
+def get_rank(gametype):
+    return(gamesapp.get(gametype))
+def rank_id(game,rankgiven):
+    ranks=gamesapp.get(game)
+    list_index=ranks.index(rankgiven)
+    rank_id=list_index+1
+    return rank_id
+
 class Ad(db.Model):
     ad_id=db.Column(db.Integer, primary_key=True)
     ad_title=db.Column(db.String(100),nullable=False)
@@ -48,5 +62,24 @@ class Ad(db.Model):
     user_username = db.Column(db.String(100), db.ForeignKey('user.username'), nullable=False)
 
     users = db.relationship(User, back_populates='ads')
+
+    rankid= db.Column(db.Integer, nullable= True)
+
+    @property
+    def rankid(self):
+        if self.game_type and self.game_rank:
+            return rank_id(self.game_type, self.game_rank)
+        return None
     def __repr__(self) -> str:
-        return f'<{self.ad_id} {self.ad_title} {self.game_type} {self.game_rank} {self.price} {self.skins} {self.exclusive} {self.Extra_Descrip} {self.user_username} {self.created_at}>'
+        return f'<{self.ad_id} {self.ad_title} {self.game_type} {self.game_rank} {self.price} {self.skins} {self.exclusive} {self.Extra_Descrip} {self.user_username} {self.created_at} {self.rankid}>'
+
+class Message(db.Model):
+    message_id=db.Column(db.Integer, primary_key= True)
+    id_ad=db.Column(db.String(100), nullable=False)
+    user_interested=db.Column(db.String(100), nullable=False)
+    message=db.Column(db.String(100),nullable=True)
+    created_message= db.Column(db.DateTime, default=lambda: datetime.now(ZoneInfo('Asia/Shanghai')))
+
+    def __repr__(self) -> str:
+        return f'<{self.message_id} {self.id_ad} {self.user_interested} {self.message} {self.created_message}>'
+    

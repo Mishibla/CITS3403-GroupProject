@@ -1,0 +1,140 @@
+body {
+    background-color: #201f31;
+}
+
+.content_container {
+    width: 1400px;
+    height: auto;
+    margin: 30px auto;
+}
+
+/*THE HEADER BAR*/
+.container1 {
+    background-color: #2b2a3c;
+    width: 1400px;
+    height: 120px;
+    margin: 30px auto;  /* Center the container horizontally in the body */
+    border-radius: 20px;
+    display: flex;      /* Use Flexbox */
+    justify-content: center; /* Center horizontally */
+    align-items: center;     /* Center vertically */
+    text-align: center; /* Center the text inside the div */
+}
+
+.container1 .row {
+    margin-right: 0;
+    margin-left: 0;
+    width: 100%; /* Ensure it takes full width */
+}
+
+h1 a {
+    color: white;             /* Ensures text color is white */
+    text-decoration: none;    /* Removes underline */
+    font-weight: bold;
+}
+
+h1 a:hover {
+    color: white;             /* Keeps text color white on hover */
+    text-decoration: none;    /* Ensures no underline appears on hover */
+}
+
+.flex-layout {
+    display: flex;
+    justify-content: space-between; /* This will place container4 to the right */
+    align-items: start; /* Aligns containers to the top */
+    width: 100%; /* Full width to use all available space */
+}
+
+.option-container {
+    background-color: #2b2a3c;
+    width: 300px; /* Adjust this width based on the available space */
+    height: auto; /* Adjust height as content requires */
+    margin: 30px 40px 30px 30px; /* Top, right, bottom, left margins */
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    text-align: left;
+}
+
+.account-container {
+    flex-grow: 1; /* Takes up the remaining space left by container4 */
+    display: flex;
+    flex-direction: column;
+    background-color: #2b2a3c;
+    margin: 30px 300px 50px 0px;
+    height: auto;
+    border-radius: 20px;
+}
+
+.top-button {
+    width: 100%;
+}
+
+.bottom-button {
+    width: 100%;
+}
+
+.top-button .custom_button3:before {
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+
+.bottom-button .custom_button3:before {
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
+.profile-picture {
+    flex-shrink: 0; /* Prevents the image container from shrinking */
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background-position: center;
+    background-size: cover;
+    border: 4px solid #ffbade;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin: 20px; /* Adjusted margin */
+}
+
+
+.profile-picture img {
+    width: 100%;  /* Ensures the image spans the full width of the box */
+    height: 100%; /* Sets a fixed height */
+    object-fit: cover; /* Covers the box, cropping the image as needed */
+    display: block; /* Removes extra space below the image */
+    border-radius: 50%;
+}
+
+.profile-info {
+    flex-grow: 1; /* Takes up the remaining space */
+    margin: 50px;
+}
+
+.profile-name {
+    color: white;
+    font-weight: bold;
+    font-size: 2.3em; /* Adjusted to a more scalable unit */
+    overflow: hidden; /* Prevents text from spilling out */
+    text-overflow: ellipsis; /* Adds ellipsis if text is too long */
+    white-space: nowrap; /* Keeps the text on a single line */
+}
+
+.email {
+    color: white;
+    font-size: 1.1em;
+    margin-top: 10px;
+}
+
+.phone-number {
+    color: white;
+    font-size: 1.1em;
+    margin-top: 15px;
+}
+
+.username {
+    color: white;
+    font-size: 1.1em;
+    margin-top: 15px;
+}

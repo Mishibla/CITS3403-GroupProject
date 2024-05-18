@@ -1,15 +1,17 @@
 {% extends "base.html" %}
 
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+<ul>
+    {% for message in messages %}
+    <li>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+{% endwith %}
+
 {% block content %}
-    {% with messages = get_flashed_messages() %}
-    {% if messages %}
-    <ul>
-        {% for message in messages %}
-        <li>{{ message }}</li>
-        {% endfor %}
-    </ul>
-    {% endif %}
-    {% endwith %}
+
 <div class="content_container">
     <div class="flex-layout">
         <div class="option-container">
@@ -27,11 +29,11 @@
     <div class="accounts_container">
         <div class="accounts_container_header">
             {% if current_user.is_authenticated %}
-                {{ current_user.name }}'s Wishlist
+                {{ current_user.name }}'s Ads
             {% endif %}
         </div>
         <div class="accounts_container_display">
-            {% for key,value in wishes.items() %}
+            {% for key,value in ad.items() %}
             <button class="accounts"onclick="location.href='{{value}}'">{{key}}</button>
             {% endfor %}
         </div>

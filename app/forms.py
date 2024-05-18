@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SelectField, BooleanField, FloatField, FileField, TextAreaField, SubmitField, PasswordField
+from wtforms import StringField, SelectField, BooleanField, FloatField, FileField, TextAreaField, SubmitField, PasswordField, EmailField, IntegerField
 from wtforms.validators import DataRequired, Length, Optional, NumberRange
 
 class AdForm(FlaskForm):
@@ -32,4 +32,10 @@ class RegisterForm(FlaskForm):
     username = StringField('Enter Username*', validators=[DataRequired(), Length(max=30)])
     display_name = StringField('Enter Display Name*', validators=[DataRequired(), Length(max=30)])
     password = PasswordField('Enter password*', validators=[DataRequired(), Length(max=20)])
+    email= EmailField('Enter email*', validators=[DataRequired(), Length(max=20)] )
+    phone= StringField('Enter phone number (+61)', validators=[Optional(), Length(max=20)])
     submit =SubmitField('Create Account')
+
+class MessageForm(FlaskForm):
+    message=StringField('Enter Message', validators=[Optional(), Length(max=50)])
+    submit= SubmitField('Send Message')
