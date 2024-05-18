@@ -11,6 +11,7 @@
     {% endif %}
     {% endwith %}
 <div class="content_container">
+    <h2>Wishlist</h2>
     <div class="flex-layout">
         <div class="option-container">
             <div class="top-button">
@@ -22,21 +23,32 @@
                 <button class="custom_button3" role="button" onclick="location.href='/messageinbox'"><span class="text">Interested Buyers</span></button>
             </div>
         </div>
-    </div>
-</div>
-
-<div class="display_container">
-    <div class="accounts_container">
-        <div class="accounts_container_header">
-            {% if current_user.is_authenticated %}
-                {{ current_user.name }}'s Wishlist
-            {% endif %}
-        </div>
-        <div class="accounts_container_display">
-            {% for key,value in wishes.items() %}
-            <button class="accounts"onclick="location.href='{{value}}'">{{key}}</button>
-            {% endfor %}
-        </div>
+        <div class="display_container2">
+            <div class="manage_ads_container">
+                <div class="accounts_container_display">
+                    {% for ad in ad_data %}
+                    <div class="accounts">
+                        <a href="{{ url_for('show_ad', ad_id=ad.ad_id) }}">
+                            <div class="accounts_image_container">
+                                <img src="https://images.contentstack.io/v3/assets/blt731acb42bb3d1659/bltb05f48b60fe37fe1/647e755646cddd2cfdea098d/Crystalis-Motus---Leona---Final_WEB.jpg">
+                            </div>
+                            <div class="accounts_title">
+                                {{ad.ad_title}}
+                            </div>
+                            <div class="ad_price_wrapper">
+                                <div class="price_container">
+                                    ${{ad.price}}
+                                </div>
+                            </div>
+                            <div class="accounts_username">
+                                {{ad.user_username}}
+                            </div>
+                        </a>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>        
     </div>
 </div>
 

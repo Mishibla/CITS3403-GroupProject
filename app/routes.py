@@ -289,16 +289,24 @@ def edit_ad(ad_id):
 def wishlist():
     if current_user.is_authenticated:
         user = current_user.username
-        user_details= User.query.get(user)
-        wish= user_details.wishlist
-        urllist={}
-        if wish==None:
-            urllist={}
+        user_details = User.query.get(user)
+        wish = user_details.wishlist
+
+        if wish:
+            # Ensure wish is a string before splitting
+            if isinstance(wish, int):
+                wish = str(wish)
+
+            # Convert the comma-separated string to a list of ad_ids
+            ad_ids = wish.split(',')
+
+            # Query the Ad table to get ads with those ad_ids
+            ad_data = Ad.query.filter(Ad.ad_id.in_(ad_ids)).all()
         else:
-            for ad in str(wish).split(','):
-                urlstring='/ads/'+ad
-                urllist[ad]=urlstring
-    return render_template('wishlist.html', wishes=urllist, title='Wishlist')
+            ad_data = []
+
+        return render_template('wishlist.html', title='Wishlist', ad_data=ad_data)
+    return redirect(url_for('login'))
 
 @app.route('/manageads')
 @login_required
