@@ -2,8 +2,9 @@ from unittest import TestCase
 
 from app import create_app, db
 from app.config import TestConfig
-from app.controllers import create_user, get_user
+from app.controllers import create_user, get_user,create_account
 from app.models import User
+from app.forms import RegisterForm
 
 class BasicUnitTests(TestCase):
 

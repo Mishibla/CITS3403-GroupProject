@@ -186,7 +186,6 @@ def adlike():
         user = User.query.get(userid)
         print(user)
         current_wishlist=user.wishlist
-
         if current_wishlist == None:
             user.wishlist=str(ad_id)
         elif str(ad_id) in str(current_wishlist).split(','):
