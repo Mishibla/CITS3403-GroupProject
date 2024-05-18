@@ -51,6 +51,7 @@ def buyaccount():
     ad_data = query.all()
 
     return render_template("Sellpage.html", allads=ad_data)
+
 @app.route('/login', methods=['get','post'])
 def login():
     form = LoginForm()
@@ -303,18 +304,14 @@ def wishlist():
 @login_required
 def manageads():
     if current_user.is_authenticated:
-        urllist={}
         user = current_user.username
-        user_details= User.query.get(user)
-        ads=user_details.get_ad_ids_str()
-        if ads==None:
-            urllist=False
-        else:
-            for ad in list(ads):
-                urlstring='/ads/'+ad
-                urllist[ad]=urlstring
-    return render_template("manageads.html", title='Manage Ads', ad=urllist)
 
+        query = Ad.query
+        query = query.filter(Ad.user_username == user)
+
+        ad_data = query.all()
+        return render_template("manageads.html", title='Manage Ads', ad_data=ad_data)
+    return redirect(url_for('login'))
 
 @app.route('/submit-editad/<username>', methods=['GET', 'POST'])
 @login_required

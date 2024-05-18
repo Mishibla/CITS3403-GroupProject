@@ -1,41 +1,14 @@
-body {
-    background-color: #201f31;
-}
-
 .content_container {
     width: 1400px;
     height: auto;
     margin: 30px auto;
 }
 
-/*THE HEADER BAR*/
-.container1 {
-    background-color: #2b2a3c;
-    width: 1400px;
-    height: 120px;
-    margin: 30px auto;  /* Center the container horizontally in the body */
-    border-radius: 20px;
-    display: flex;      /* Use Flexbox */
-    justify-content: center; /* Center horizontally */
-    align-items: center;     /* Center vertically */
-    text-align: center; /* Center the text inside the div */
-}
-
-.container1 .row {
-    margin-right: 0;
-    margin-left: 0;
-    width: 100%; /* Ensure it takes full width */
-}
-
-h1 a {
-    color: white;             /* Ensures text color is white */
-    text-decoration: none;    /* Removes underline */
+h2 {
+    font-size: x-large;
+    margin-left: 330px;
+    margin-top: 80px;
     font-weight: bold;
-}
-
-h1 a:hover {
-    color: white;             /* Keeps text color white on hover */
-    text-decoration: none;    /* Ensures no underline appears on hover */
 }
 
 .flex-layout {
@@ -143,4 +116,9 @@ h1 a:hover {
     position:absolute;
     left: 980px;
     top: 225px;
+}
+
+.manage_ads_container {
+    width: 1000px;
+    height: auto;
 }
