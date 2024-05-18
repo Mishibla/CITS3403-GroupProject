@@ -21,20 +21,40 @@ from app.models import User,Ad, Message
 def homepage():
     return render_template("Homepage.html")
 
+@app.route('/ads/<int:ad_id>')
+def ads(ad_id):
+    ad = Ad.query.get(ad_id)
+    return render_template('adtemplate.html', ad=ad)
+
 @app.route('/buyaccount')
 def buyaccount():
-    ad_data=Ad.query.all()
-    urllist={}
-    for indvidual_ad in ad_data:
-        ads=indvidual_ad.ad_id
-        urlstring='/ads/'+str(ads)
-        urllist[ads]=urlstring
-    #print(urllist, ad=ads)
-    titlelist=[]
-    for title in ad_data:
-        titlelist.append(title.ad_title)
-    return render_template("Sellpage.html",ad=urllist, alltitles=titlelist)
+    skins = request.args.get('skins')
+    exclusive = request.args.get('exclusive')
+    price_asc = request.args.get('price_asc')
+    price_desc = request.args.get('price_desc')
+    game_type = request.args.get('game_type')
 
+    # Base query
+    query = Ad.query
+
+    # Apply filters based on checkboxes
+    if skins:
+        query = query.filter(Ad.skins == True)
+    if exclusive:
+        query = query.filter(Ad.exclusive == True)
+
+    if price_asc and not price_desc:
+        query = query.order_by(Ad.price.asc())
+    if price_desc and not price_asc:
+        query = query.order_by(Ad.price.desc())
+
+    if game_type:
+        query = query.filter(Ad.game_type == game_type)
+
+    # Execute the query
+    ad_data = query.all()
+
+    return render_template("Sellpage.html", allads=ad_data)
 @app.route('/login', methods=['get','post'])
 def login():
     form = LoginForm()

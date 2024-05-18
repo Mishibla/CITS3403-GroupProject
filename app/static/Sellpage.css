@@ -17,7 +17,7 @@
 
 .filter_box {
   width: 300px;
-  max-height: 500px;
+  max-height: 400px;
   background-color: #2b2a3c;
   border-radius: 20px;
   margin-top: 130px;
@@ -72,5 +72,89 @@
   border-radius: 20px;
   background-color: #3a2f46;
   height: 250px;
-  padding: 20px;
+  position: relative;
+}
+
+.accounts_image_container {
+  width: 100%;
+  height: auto;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  margin: auto;
+  background-color: white;
+  margin-bottom: 10px;
+  position: relative; /* Needed for absolute positioning of the pseudo-element */
+  overflow: hidden; /* Ensures the pseudo-element does not overflow the container */
+}
+
+.accounts_image_container img{
+  width: 100%;  /* Ensures the image spans the full width of the box */
+  height: 185px; /* Sets a fixed height */
+  object-fit: cover; /* Covers the box, cropping the image as needed */
+  display: block; /* Removes extra space below the image */
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+}
+
+.accounts_image_container::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 50px; /* Adjust height to control the fade effect */
+  background: linear-gradient(transparent, #3a2f46); /* Fades into the container's background color */
+}
+
+.accounts_title {
+  position: absolute; /* Positions the title absolutely within the .accounts container */
+  bottom: 60px;        /* Adjust this value to position the title at the desired location */
+  left: 20px;          /* Provides some spacing from the left edge */
+  font-size: large;
+  font-weight: bold;
+  color: white;
+  white-space: nowrap;  /* Prevents the text from wrapping to the next line */
+  overflow: hidden;     /* Hides any overflowed content */
+  text-overflow: ellipsis; /* Adds ellipsis (...) at the end of the truncated text */
+  max-width: 250px;     /* Set the maximum width for truncation, adjust as needed */
+}
+
+.wishlist_container {
+  position: absolute;
+  bottom: 200px;
+  left: 230px;
+  color: red;
+  font-size: large;
+  font-weight: bold;
+}
+.ad_price_wrapper {
+  position: absolute;
+  bottom: 20px;
+  right: 20px; /* Position the wrapper to the right */
+  width: calc(100% - 40px); /* Ensures the wrapper stays within the parent container */
+}
+
+.price_container {
+  color: #DAA520;
+  font-size: large;
+  font-weight: bold;
+  white-space: nowrap;
+  overflow: hidden;
+  text-align: right; /* Aligns the text to the right within the container */
+  display: inline-block;
+  width: 100%; /* Ensures the price container takes full width of the wrapper */
+}
+
+.accounts_username {
+  position: absolute;
+  color: white;
+  font-size: medium;
+  left: 20px;
+  bottom: 30px;
+}
+
+.filter_box h1 {
+  font-size: large;
+  font-weight: bold;
+  margin-bottom: 20px;
 }
