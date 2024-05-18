@@ -18,13 +18,12 @@
             </div>
             <button class="custom_button3" role="button" onclick="location.href='/manageads'"><span class="text">Manage Ads</span></button>
             <button class="custom_button3" role="button" onclick="location.href='/wishlist'"><span class="text">Wishlist</span></button>
-            <button class="custom_button3" role="button" onclick="location.href='/messageinbox'"><span class="text">Interested Buyers</span></button>
+            <div class="bottom-button">
+                <button class="custom_button3" role="button" onclick="location.href='/messageinbox'"><span class="text">Interested Buyers</span></button>
+            </div>
         </div>
         <div class="account-container">
             <div class="flex-layout">
-                <form action="{{ url_for('edit_account', username=user_details.username) }}" method="GET">
-                    <button type="submit" class="btn btn-primary">Edit Account Details</button>
-                </form>
                 <div class="profile-picture"><img src="https://oyster.ignimgs.com/mediawiki/apis.ign.com/avatar-the-last-airbender/b/b0/Aang_img.jpg?width=325"></div>
                 <div class="profile-info">
                     <div class="profile-name">{{ user_details.name }}</div>
@@ -32,6 +31,11 @@
                     <div class="email">Email: {{ user_details.email }}</div>
                     <div class="phone-number">Phone Number: {{ user_details.phone }}</div>
                 </div>
+            </div>
+            <div class="edit_account_container">
+                <form action="{{ url_for('edit_account', username=user_details.username) }}" method="GET">
+                    <button type="submit" class="btn btn-primary">Edit Account Details</button>
+                </form>
             </div>
         </div>
     </div>
