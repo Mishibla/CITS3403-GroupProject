@@ -41,3 +41,26 @@ a {
     color: #fff;
     text-decoration: none;
 }
+
+select {
+    color: black; /* Font color of the selected option */
+    background-color: white; /* Background color of the dropdown */
+    border: 1px solid #ccc; /* Border color */
+    border-radius: 2px; /* Border radius */
+  }
+
+  /* Style the options */
+  option {
+    color: black; /* Font color of the dropdown options */
+    background-color: white; /* Background color of the dropdown options */
+  }
+
+  textarea {
+    color: black; /* Font color of the text inside the textarea */
+    background-color: white; /* Background color of the textarea */
+    border: 1px solid #ccc; /* Border color */
+    border-radius: 4px; /* Border radius */
+    padding: 10px; /* Padding */
+    width: 100%; /* Full width */
+    box-sizing: border-box; /* Include padding and border in element's total width and height */
+  }

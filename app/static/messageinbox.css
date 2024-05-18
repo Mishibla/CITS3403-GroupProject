@@ -1,0 +1,30 @@
+/* Style the table */
+table {
+    width: 75%;
+    border-collapse: collapse;
+    margin: 40px 0;
+    font-size: 1em;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    min-width: 400px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Style the table header */
+th {
+    background-color: #009879;
+    color: white;
+    text-align: left;
+    padding: 12px 15px;
+}
+
+/* Style the table rows */
+tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+/* Style the table cells */
+td {
+    padding: 5px 15px;
+}
+
+
