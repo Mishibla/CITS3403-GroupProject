@@ -1,17 +1,15 @@
+
 {% extends "base.html" %}
-
-{% with messages = get_flashed_messages() %}
-{% if messages %}
-<ul>
-    {% for message in messages %}
-    <li>{{ message }}</li>
-    {% endfor %}
-</ul>
-{% endif %}
-{% endwith %}
-
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <ul>
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    {% endwith %}
 {% block content %}
-
 <div class="content_container">
     <div class="flex-layout">
         <div class="option-container">
@@ -25,19 +23,26 @@
     </div>
 </div>
 
-<div class="display_container">
-    <div class="accounts_container">
-        <div class="accounts_container_header">
-            {% if current_user.is_authenticated %}
-                {{ current_user.name }}'s Ads
-            {% endif %}
-        </div>
-        <div class="accounts_container_display">
-            {% for key,value in ad.items() %}
-            <button class="accounts"onclick="location.href='{{value}}'">{{key}}</button>
-            {% endfor %}
-        </div>
-    </div>
-</div>
+<table>
+    <tr>
+        <th>Buyer Name</th>
+        <th>Interested Ad</th>
+        <th>Message</th>
+        <th>Buyer's Email</th>
+        <th>Buyer's Phone</th>
+        <th>Message Sent</th>
+    </tr>
+    {% for info in data %}
+        <tr>
+            <td>{{ info[4] }}</td>
+            <td>{{ info[1] }}</td>
+            <td>{{ info[2] }}</td>
+            <td>{{ info[5] }}</td>
+            <td>{{ info[6] }}</td>
+            <td>{{ info[3] }}</td>
+        </tr>
+    {% endfor %}
+</table>
+
 
 {% endblock %}
