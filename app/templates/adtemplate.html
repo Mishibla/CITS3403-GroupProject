@@ -127,7 +127,39 @@
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="{{ url_for('static', filename='adtemplate.js') }}"></script>
-
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+       const adId = window.location.pathname.split('/')[2]; // Extract ad ID from URL
+   
+       // List of possible file extensions
+       const fileExtensions = ['jpg', 'jpeg', 'png'];
+   
+       // Function to construct image URL with the correct file extension
+       const getImageUrl = async (adId, imageNumber) => {
+           for (const extension of fileExtensions) {
+               const imageUrl = `/static/uploads/${adId}/${adId}_${imageNumber}.${extension}`;
+               // Check if the image exists
+               const response = await fetch(imageUrl);
+               if (response.ok) {
+                   return imageUrl; // Return the URL if the image exists
+               }
+           }
+           // If no matching image found, return a placeholder or default image URL
+           return '/static/default_image.jpg'; // Change this to your default image URL
+       };
+   
+       // Update image sources
+       const updateImageSource = async (imageNumber) => {
+           const imageUrl = await getImageUrl(adId, imageNumber);
+           document.querySelector(`img[data-image="image${imageNumber}"]`).src = imageUrl;
+       };
+   
+       updateImageSource(1);
+       updateImageSource(2);
+       updateImageSource(3);
+       updateImageSource(4);
+   });
+   </script>
 {% endblock %}
 
 

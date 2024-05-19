@@ -1,10 +1,24 @@
 from datetime import datetime
 from zoneinfo import ZoneInfo
-from flask import flash,redirect, render_template,url_for,request
+from flask import flash,redirect, render_template,url_for,request,send_from_directory, jsonify, Flask
 from flask_login import login_user, logout_user, login_required, current_user
 from app import app,db 
 from app.forms import AdForm,RegisterForm,LoginForm, MessageForm
 from app.models import User,Ad, Message
+
+
+import os
+from werkzeug.utils import secure_filename
+
+UPLOAD_FOLDER = 'app/static/uploads'
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
+
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
 
 @app.route('/')
 
@@ -151,17 +165,34 @@ def submit_ad():
             form.skin.data=False
         print(form.skin.data)
         return render_template("requestpage.html",form=form, unsuccessful_submit=unsuccessful_submit)
+    if 'images' in request.files:
+        print('yes')
+        images = request.files.getlist('images')
+    try:
+        last_ad_id = Ad.query.with_entities(Ad.ad_id).order_by(Ad.ad_id.desc()).first()[0] + 1
+    except:
+        last_ad_id = 1
+    ad_folder = os.path.join('app', 'static', 'uploads', str(last_ad_id))  # Using last_ad_id as the folder name
+    os.makedirs(ad_folder, exist_ok=True)
+    for i, image in enumerate(images):
+            if image.filename == '':
+                continue
+            if image and allowed_file(image.filename):
+                extension = image.filename.rsplit('.', 1)[1].lower()
+                filename = f'{last_ad_id}_{i + 1}.{extension}'
+                image_path = os.path.join(ad_folder, filename)
+                image.save(image_path)
     if current_user.is_authenticated:
         user = current_user.username
     try:
         last_ad_id = Ad.query.with_entities(Ad.ad_id).order_by(Ad.ad_id.desc()).first()[0]+1
     except:
         last_ad_id=1
-    new_ad=Ad(ad_id=last_ad_id, ad_title=form_data[0],game_type=form_data[1], game_rank=form_data[2], price=form_data[3],skins=bool(form_data[4]), exclusive=form_data[5], Extra_Descrip=form_data[6], user_username=user, created_at=datetime.now(ZoneInfo('Asia/Shanghai')))
-    print(new_ad)
+    new_ad=Ad(ad_id=last_ad_id, ad_title=form_data[0],game_type=form_data[1], game_rank=form_data[2], price=form_data[3],skins=bool(form_data[4]), exclusive=form_data[5], Extra_Descrip=form_data[6], user_username=user, created_at=datetime.now(ZoneInfo('Asia/Shanghai')), image_folder=str(last_ad_id))
     db.session.add(new_ad)
     db.session.commit()
     return redirect(f'/ads/{last_ad_id}')
+
 
 @app.route('/ads/<int:ad_id>')
 def show_ad(ad_id):
