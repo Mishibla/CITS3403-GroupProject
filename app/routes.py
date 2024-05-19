@@ -47,9 +47,10 @@ def buyaccount():
         query = query.order_by(Ad.price.desc())
 
     if rank_asc and not rank_desc:
-        query = query.order_by(Ad.rankid.asc())
+        print(query)
+        query = query.order_by(Ad._rankid.asc())
     if rank_desc and not rank_asc:
-        query = query.order_by(Ad.rankid.desc())
+        query = query.order_by(Ad._rankid.desc())
 
     if game_type:
         query = query.filter(Ad.game_type == game_type)
