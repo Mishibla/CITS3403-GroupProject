@@ -2,17 +2,18 @@ from datetime import datetime
 from zoneinfo import ZoneInfo
 from flask import flash,redirect, render_template,url_for,request,send_from_directory, jsonify, Flask
 from flask_login import login_user, logout_user, login_required, current_user
-from app import app,db 
+from app import db 
 from app.forms import AdForm,RegisterForm,LoginForm, MessageForm
 from app.models import User,Ad, Message
 
-
+from app.blueprints import main
 import os
 from werkzeug.utils import secure_filename
 
 UPLOAD_FOLDER = 'app/static/uploads'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 
+app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 def allowed_file(filename):
@@ -20,23 +21,14 @@ def allowed_file(filename):
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
-@app.route('/')
+@main.route('/')
 
-#test root to see if the database is working
-#@app.route('/titleofad')
-#def titleofad():
-    #ads_of_chris = Ad.query.all() 
-    #print("Hello World")
-    #print(ads_of_chris)
-    #tests=ads_of_chris)
-    #return render_template("adtemplate.html",ad=ads_of_chris)
-
-@app.route('/homepage')
+@main.route('/homepage')
 def homepage():
     return render_template("Homepage.html")
 
 
-@app.route('/buyaccount')
+@main.route('/buyaccount')
 def buyaccount():
     skins = request.args.get('skins')
     exclusive = request.args.get('exclusive')
@@ -75,7 +67,7 @@ def buyaccount():
 
     return render_template("Sellpage.html", allads=ad_data)
 
-@app.route('/login', methods=['get','post'])
+@main.route('/login', methods=['get','post'])
 def login():
     form = LoginForm()
     if request.method == 'GET':
@@ -91,20 +83,20 @@ def login():
             return render_template('loginpage.html', form=form)
         login_user(user)
         print(login_user(user))
-        return redirect(url_for('account'))
+        return redirect(url_for('main.account'))
     return render_template('loginpage.html', form=form, title='login')
 
-@app.route('/logout')
+@main.route('/logout')
 def logout():
     logout_user()
-    return redirect(url_for("homepage"))
+    return redirect(url_for("main.homepage"))
 
-@app.route('/register')
+@main.route('/register')
 def register(): 
     form=RegisterForm()
     return render_template('registeraccount.html',form=form, title='register')
 
-@app.route('/submit_register', methods=['GET', 'POST'])
+@main.route('/submit_register', methods=['GET', 'POST'])
 def register_account():
     form = RegisterForm()
     if request.method == 'POST':
@@ -127,24 +119,24 @@ def register_account():
         account.set_password(form.password.data)  
         db.session.add(account)
         db.session.commit()
-        return redirect(url_for("login"))
+        return redirect(url_for("main.login"))
 
     return render_template("registeraccount.html", form=form)
     
-@app.route('/account')
+@main.route('/account')
 @login_required
 def account():
     userid = current_user.username
     user_details=User.query.get(userid)
     return render_template("accountpage.html", title='Account', user_details=user_details)
 
-@app.route('/createad')
+@main.route('/createad')
 @login_required
 def create():
     form = AdForm()
     return render_template("requestpage.html",form=form, title='Create ad')
 
-@app.route('/submit-ad', methods=['GET', 'POST'])
+@main.route('/submit-ad', methods=['GET', 'POST'])
 def submit_ad():
     form = AdForm()
     type_of_game=form.games.data
@@ -194,7 +186,7 @@ def submit_ad():
     return redirect(f'/ads/{last_ad_id}')
 
 
-@app.route('/ads/<int:ad_id>')
+@main.route('/ads/<int:ad_id>')
 def show_ad(ad_id):
     print('Entering show_ad function', flush=True)
     form = MessageForm()
@@ -224,7 +216,7 @@ def show_ad(ad_id):
 
 
 
-@app.route('/submit-wishlist',  methods=['GET', 'POST'])
+@main.route('/submit-wishlist',  methods=['GET', 'POST'])
 @login_required
 def adlike():
     ad_id = request.form['ad_id']
@@ -266,7 +258,7 @@ def adlike():
 
     return redirect(f'/ads/{ad_id}')
 
-@app.route('/submit-deletead',  methods=['GET', 'POST'])
+@main.route('/submit-deletead',  methods=['GET', 'POST'])
 def deletead():
     ad_id = request.form['ad_id']
     userid=request.form['user']
@@ -274,9 +266,9 @@ def deletead():
     db.session.delete(current_ad)
     db.session.commit()
     flash('Ad deleted successfully!', 'success')
-    return redirect(url_for('manageads'))
+    return redirect(url_for('main.manageads'))
 
-@app.route('/submit-editad/<int:ad_id>', methods=['GET', 'POST'])
+@main.route('/submit-editad/<int:ad_id>', methods=['GET', 'POST'])
 @login_required
 def edit_ad(ad_id):
     print(ad_id)
@@ -306,7 +298,7 @@ def edit_ad(ad_id):
             print(ad.price)
             db.session.commit()
             flash('Ad updated successfully!', 'success')
-            return redirect(url_for('show_ad', ad_id=ad.ad_id))
+            return redirect(url_for('main.show_ad', ad_id=ad.ad_id))
         else:
             print("Form validation failed")
             print(f"Form errors: {form.errors}")
@@ -324,7 +316,7 @@ def edit_ad(ad_id):
     
     return render_template("editad.html", form=form, title='Edit Ad', ad=ad, unsuccessful_submit=True)
 
-@app.route('/wishlist')
+@main.route('/wishlist')
 @login_required
 def wishlist():
     if current_user.is_authenticated:
@@ -346,9 +338,9 @@ def wishlist():
             ad_data = []
 
         return render_template('wishlist.html', title='Wishlist', ad_data=ad_data)
-    return redirect(url_for('login'))
+    return redirect(url_for('main.login'))
 
-@app.route('/manageads')
+@main.route('/manageads')
 @login_required
 def manageads():
     if current_user.is_authenticated:
@@ -359,16 +351,16 @@ def manageads():
 
         ad_data = query.all()
         return render_template("manageads.html", title='Manage Ads', ad_data=ad_data)
-    return redirect(url_for('login'))
+    return redirect(url_for('main.login'))
 
-@app.route('/submit-editad/<username>', methods=['GET', 'POST'])
+@main.route('/submit-editad/<username>', methods=['GET', 'POST'])
 @login_required
 def edit_account(username):
     print(username)
     user_details = User.query.get(username)
     if not user_details:
         flash(f'User {username} not found.', 'danger')
-        return redirect(url_for('account'))
+        return redirect(url_for('main.account'))
         
     form = RegisterForm()
     print(form.data)
@@ -387,7 +379,7 @@ def edit_account(username):
             user_details.phone = form.phone.data
             db.session.commit()
             flash('Account updated successfully!', 'success')
-            return redirect(url_for('account'))
+            return redirect(url_for('main.account'))
         else:
             print("Form validation failed")
             print(f"Form errors: {form.errors}")
@@ -400,7 +392,7 @@ def edit_account(username):
 
     return render_template("editaccount.html", form=form, title='Edit account', user_details=user_details)
 
-@app.route('/submit-message',methods=['GET', 'POST'])
+@main.route('/submit-message',methods=['GET', 'POST'])
 @login_required
 def submit_message():
     ad_id = request.form['ad_id']
@@ -426,7 +418,7 @@ def submit_message():
     flash('Message sent successfully')
     return redirect(f'/ads/{ad_id}')
 
-@app.route('/messageinbox')
+@main.route('/messageinbox')
 @login_required
 def messageinbox():
     userid = current_user.username

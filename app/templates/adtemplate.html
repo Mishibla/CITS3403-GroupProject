@@ -18,12 +18,12 @@
 <div class="edit-delete">
     {% if displayedit %}
     <span>
-        <form action="{{ url_for('edit_ad', ad_id=ad.ad_id) }}">
+        <form action="{{ url_for('main.edit_ad', ad_id=ad.ad_id) }}">
         <button type="submit" class="btn btn-primary">Edit Ad</button>
     </form>
     </span>
     <span>
-        <form action="{{ url_for('deletead') }}" method="POST">
+        <form action="{{ url_for('main.deletead') }}" method="POST">
             <input type="hidden" name="ad_id" value="{{ ad.ad_id }}">
             <input type="hidden" name="user" value="{{ current_user.username }}">
             <button type="submit" class="btn btn-danger">Delete Ad</button>
@@ -42,7 +42,7 @@
                 <div class="user"> Seller username: <span class="database_info">{{ ad.user_username}}</span></div>
                 <div class="rating"> Seller rating:  <span class="database_info">rating</span></div>
                 <div class="skins"> Skins?:  <span class="database_info">{{ ad.skins}}</span></div>
-                <div class="exclusive_skins"> Exlusive Skins?:  <span class="database_info">{{ ad.exclusive}}</span></div>
+                <div class="exclusive_skins"> Exclusive Skins?:  <span class="database_info">{{ ad.exclusive}}</span></div>
                 <div class="date"> Last updated:  <span class="database_info">{{ ad.created_at}}</span></div>
             </div>
             <div class="container3">
@@ -82,7 +82,7 @@
                 {% if current_user.is_authenticated %}
                 </form>
                 <div class="send_container">
-                    <form id="sendmessage" action="{{ url_for('submit_message') }}" method="post">
+                    <form id="sendmessage" action="{{ url_for('main.submit_message') }}" method="post">
                         {{ form.hidden_tag() }}
                         <input type="hidden" name="ad_id" value="{{ ad.ad_id }}">
                         <input type="hidden" name="user" value="{{ current_user.username }}">
@@ -128,7 +128,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="{{ url_for('static', filename='adtemplate.js') }}"></script>
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', async function () {
        const adId = window.location.pathname.split('/')[2]; // Extract ad ID from URL
    
        // List of possible file extensions
@@ -154,11 +154,37 @@
            document.querySelector(`img[data-image="image${imageNumber}"]`).src = imageUrl;
        };
    
-       updateImageSource(1);
-       updateImageSource(2);
-       updateImageSource(3);
-       updateImageSource(4);
+       // Fetch image URLs and update image sources
+       const imageUrls = {}; // Object to store image URLs
+       for (let i = 1; i <= 4; i++) {
+           imageUrls[`image${i}`] = await getImageUrl(adId, i);
+           document.querySelector(`img[data-image="image${i}"]`).src = imageUrls[`image${i}`];
+       }
+   
+       // Define image URLs for each slide
+       const slideImageUrls = {
+           1: imageUrls['image1'],
+           2: imageUrls['image2'],
+           3: imageUrls['image3'],
+           4: imageUrls['image4']
+       };
+   
+       // Update slideshow image sources
+       const updateSlideImageSource = (slideNumber) => {
+           const imageUrl = slideImageUrls[slideNumber];
+           document.querySelector(`.mySlides:nth-child(${slideNumber}) img`).src = imageUrl;
+       };
+   
+       // Number of slides in the slideshow
+       const numSlides = 4;
+   
+       // Update image sources for each slide
+       for (let i = 1; i <= numSlides; i++) {
+           updateSlideImageSource(i);
+       }
    });
+   
+   
    </script>
 {% endblock %}
 
