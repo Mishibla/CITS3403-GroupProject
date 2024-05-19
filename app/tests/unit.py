@@ -5,7 +5,7 @@ from flask import url_for
 from app import create_app, db
 from app.config import TestConfig
 from app.controllers import AccountCreationError, create_user, get_user,create_account
-from app.models import User
+from app.models import Ad, User
 from app.forms import RegisterForm
 
 from werkzeug.datastructures import MultiDict
@@ -70,5 +70,11 @@ class BasicUnitTests(TestCase):
             self.assertTrue(user.check_password('testpassword'))
             self.assertEqual(user.email, 'test@example.com')
             self.assertEqual(user.phone, '1234567890')
+
+    def test_submit_ad(self):
+        with self.client:
+            chris = create_user('Mishibla', 'chris', 'cat', 'random@gmail.com')
+            ad1 = Ad(ad_id=1, ad_title='First ad on page',game_type='Valorant', game_rank='BRONZE', price=20.50,skins=True, users=chris)
+            print (ad1)
 
         
