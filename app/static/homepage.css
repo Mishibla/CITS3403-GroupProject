@@ -3,6 +3,10 @@
             padding: 50px 0;
             text-align: center;
         }
+        .title {
+            text-align: center;
+            margin: 20px 0;
+}
 
         .rectangle {
             width: 100%;
