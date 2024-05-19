@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-    
+
     <div class="main">
         <h2 class="title">The Gamehub</h2>
         <p class="desc">The marketplace for gamers to trade, sell or buy!</p><br>
@@ -18,20 +18,20 @@
         <h2 class="title">How it works</h2>
         <div class="big-squares-container">
             <div class="square register big">
-                <h3><strong>Sign in</strong></h3>
-                <p>Create an account or sign into an existing account</p>
+                <h3>Sign in</h3>
+                <p>Create an account or log in to your existing account.</p>
             </div>
             <div class="square browse big">
-                <h3><strong>Browse</strong></h3>
-                <p>Find an item that interests you</p>
+                <h3>Browse</h3>
+                <p>Explore items that interest you.</p>
             </div>
             <div class="square message big">
-                <h3><strong>Contact the seller</strong></h3>
-                <p>Send a message to the seller about the item</p>
+                <h3>Contact the seller</h3>
+                <p>Send a message to the seller about the item.</p>
             </div>
             <div class="square purchase big">
-                <h3><strong>Purchase</strong></h3>
-                <p>Buy the item and have fun</p>
+                <h3>Purchase</h3>
+                <p>Buy the item and enjoy your new purchase.</p>
             </div>
         </div>
         <hr>
@@ -46,7 +46,6 @@
                 <div class="game"> Game: <span class="database_info">{{ ad.game_type }}</span></div>
                 <div class="rank"> Rank: <span class="database_info">{{ ad.game_rank }}</span></div>
                 <div class="user"> Seller username: <span class="database_info">{{ ad.user_username }}</span></div>
-                <div class="rating"> Seller rating: <span class="database_info">rating</span></div>
                 <div class="skins"> Skins: <span class="database_info">{{ ad.skins }}</span></div>
                 <div class="exclusive_skins"> Exlusive Skins: <span class="database_info">{{ ad.exclusive }}</span></div>
                 <div class="price"> Price: <span class="price_tag">${{ ad.price }}</span></div>
@@ -64,16 +63,16 @@
         <div class="dropdown-center-wrapper">
             <div id="dropdownContent">
                 <div class="dropdown-rectangle">
-                    <p><strong>Bold Text 1</strong></p>
-                    <p>Regular text 1</p>
+                    <p><strong>How do I create an account?</strong></p>
+                    <p>You can create an account by clicking the "Sign Up" button on the homepage and filling out the registration form.</p>
                 </div>
                 <div class="dropdown-rectangle">
-                    <p><strong>Bold Text 2</strong></p>
-                    <p>Regular text 2</p>
+                    <p><strong>How do I buy an item?</strong></p>
+                    <p>To buy an item, browse the marketplace, select the item you want to purchase, and message the seller and set a price where both of you are happy with.</p>
                 </div>
                 <div class="dropdown-rectangle">
-                    <p><strong>Bold Text 3</strong></p>
-                    <p>Regular text 3</p>
+                    <p><strong>How do I list an item for sale?</strong></p>
+                    <p>To list an item for sale, you can press the post ad button and fill in the required details regarding the item and post it.</p>
                 </div>
             </div>
         </div>
@@ -89,7 +88,6 @@
         <div class="game"> Game: <span class="database_info">{{ ad.game_type }}</span></div>
         <div class="rank"> Rank: <span class="database_info">{{ ad.game_rank }}</span></div>
         <div class="user"> Seller username: <span class="database_info">{{ ad.user_username }}</span></div>
-        <div class="rating"> Seller rating: <span class="database_info">rating</span></div>
         <div class="skins"> Skins: <span class="database_info">{{ ad.skins }}</span></div>
         <div class="exclusive_skins"> Exlusive Skins: <span class="database_info">{{ ad.exclusive }}</span></div>
         <div class="price"> Price: <span class="price_tag">${{ ad.price }}</span><br>
