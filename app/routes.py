@@ -16,11 +16,21 @@ from app.models import User,Ad
     #print(ads_of_chris)
     #tests=ads_of_chris)
     #return render_template("adtemplate.html",ad=ads_of_chris)
+    
+@main.route('/')
 
-@app.route('/homepage')
+@main.route('/homepage')
 def homepage():
-    return render_template("Homepage.html")
-
+    # Fetch all ads from the database
+    all_ads = Ad.query.all()
+    
+    # Shuffle the ads
+    random.shuffle(all_ads)
+    
+    # Get the first three ads after shuffling
+    ads_to_display = all_ads[:3]
+    
+    return render_template("Homepage.html", ads=ads_to_display)
 @app.route('/buyaccount')
 def buyaccount():
     ad_data=Ad.query.all()
