@@ -37,6 +37,67 @@
         <hr>
         <div class="ad-wrapper"></div>
         <h2>Featured ads</h2>
+        <div class="ad-container">
+            {% for ad in ads %}
+            {% if loop.index <= 3 %}
+            <div class="ad" onclick="openModal('modal{{ loop.index }}')">
+                <div class="fakeimg" style="height:300px; background-image: url('{{ ad.image_url }}'); background-size: cover; background-position: center;"></div>
+                <div class="title">{{ ad.ad_title }}</div><br>
+                <div class="game"> Game: <span class="database_info">{{ ad.game_type }}</span></div>
+                <div class="rank"> Rank: <span class="database_info">{{ ad.game_rank }}</span></div>
+                <div class="user"> Seller username: <span class="database_info">{{ ad.user_username }}</span></div>
+                <div class="skins"> Skins: <span class="database_info">{{ ad.skins }}</span></div>
+                <div class="exclusive_skins"> Exlusive Skins: <span class="database_info">{{ ad.exclusive }}</span></div>
+                <div class="price"> Price: <span class="price_tag">${{ ad.price }}</span></div>
+            </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+        <div class="below-ads-rectangle">
+            <a href="{{ url_for('main.buyaccount') }}" class="custom_button">Browse all</a>
+        </div>
+        <hr>
+        <div class="center-wrapper">
+            <button id="expandButton"><strong>FAQ</strong></button>
+        </div>
+        <div class="dropdown-center-wrapper">
+            <div id="dropdownContent">
+                <div class="dropdown-rectangle">
+                    <p><strong>How do I create an account?</strong></p>
+                    <p>You can create an account by clicking the "Sign Up" button on the homepage and filling out the registration form.</p>
+                </div>
+                <div class="dropdown-rectangle">
+                    <p><strong>How do I buy an item?</strong></p>
+                    <p>To buy an item, browse the marketplace, select the item you want to purchase, and message the seller and set a price where both of you are happy with.</p>
+                </div>
+                <div class="dropdown-rectangle">
+                    <p><strong>How do I list an item for sale?</strong></p>
+                    <p>To list an item for sale, you can press the post ad button and fill in the required details regarding the item and post it.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!-- Modals -->
+{% for ad in ads %}
+<div id="modal{{ loop.index }}" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('modal{{ loop.index }}')">&times;</span>
+        <div class="adimg" style="height:300px; background-image: url('{{ ad.image_url }}'); background-size: cover; background-position: center;"></div>
+        <div class="title">{{ ad.ad_title }}</div><br>
+        <div class="game"> Game: <span class="database_info">{{ ad.game_type }}</span></div>
+        <div class="rank"> Rank: <span class="database_info">{{ ad.game_rank }}</span></div>
+        <div class="user"> Seller username: <span class="database_info">{{ ad.user_username }}</span></div>
+        <div class="skins"> Skins: <span class="database_info">{{ ad.skins }}</span></div>
+        <div class="exclusive_skins"> Exlusive Skins: <span class="database_info">{{ ad.exclusive }}</span></div>
+        <div class="price"> Price: <span class="price_tag">${{ ad.price }}</span><br>
+        <span class="button_container">
+            <button role="button" class="custom_button">Buy</button>
+        </span>
+    </div>
+</div>
+{% endfor %}
 
 
-        {% endblock %}
+<script src="{{ url_for('static', filename='js/homepage.js') }}"></script>
+{% endblock %}

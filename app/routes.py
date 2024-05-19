@@ -26,7 +26,15 @@ def allowed_file(filename):
 
 @main.route('/homepage')
 def homepage():
-    return render_template("Homepage.html")
+    all_ads = Ad.query.all()
+    
+
+    
+    # Get the first three ads after shuffling
+    ads_to_display = all_ads[:3]
+    
+    return render_template("Homepage.html", ads=ads_to_display)
+
 
 
 @main.route('/buyaccount')
