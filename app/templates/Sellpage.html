@@ -48,14 +48,24 @@
                     <input type="checkbox" id="price_desc" name="price_desc" class="sort_checkbox" onclick="toggleCheckboxes(this)" {% if request.args.get( 'price_desc' )%}checked{% endif %}/>
                     <label for="price_desc" class="toggle"><span></span></label>
                     <label for="price_desc" class="checkbox_label">Price Descending</label>
-                </div>  
+                </div>
+                <div class="custom_checkbox">
+                    <input type="checkbox" id="rank_asc" name="rank_asc" class="sort_checkbox" onclick="toggleCheckboxes(this)" {% if request.args.get( 'rank_asc' )%}checked{% endif %}/>
+                    <label for="rank_asc" class="toggle"><span></span></label>
+                    <label for="rank_asc" class="checkbox_label">Rank Ascending</label>
+                </div>   
+                <div class="custom_checkbox">
+                    <input type="checkbox" id="rank_desc" name="rank_desc" class="sort_checkbox" onclick="toggleCheckboxes(this)" {% if request.args.get( 'rank_desc' )%}checked{% endif %}/>
+                    <label for="rank_desc" class="toggle"><span></span></label>
+                    <label for="rank_desc" class="checkbox_label">Rank Descending</label>
+                </div> 
                 <input type="hidden" name="game_type" id="gameTypeInput" value="{% if request.args.get('game_type') %}{{ request.args.get('game_type') }}{% endif %}">
                 <button role="button" class="custom_button2" type="submit">Apply</button>  
             </form>
         </div>
         <div class="accounts_container">
             <div class="accounts_container_header">
-                Displaying Valorant
+                Displaying {% if request.args.get('game_type') %}{{ request.args.get('game_type') }}{% else %}All{% endif %}
             </div>
             <div class="accounts_container_display">
                 {% for ad in allads %}
@@ -78,7 +88,7 @@
                         </div>
                         <div class="ad_price_wrapper">
                             <div class="price_container">
-                                ${{ad.price}}
+                                ${{ad.price}}#{{ad.rankid}}
                             </div>
                         </div>
                         <div class="accounts_username">

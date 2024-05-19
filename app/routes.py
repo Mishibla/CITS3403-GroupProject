@@ -28,6 +28,8 @@ def buyaccount():
     exclusive = request.args.get('exclusive')
     price_asc = request.args.get('price_asc')
     price_desc = request.args.get('price_desc')
+    rank_asc = request.args.get('rank_asc')
+    rank_desc = request.args.get('rank_desc')
     game_type = request.args.get('game_type')
 
     # Base query
@@ -44,9 +46,15 @@ def buyaccount():
     if price_desc and not price_asc:
         query = query.order_by(Ad.price.desc())
 
+    if rank_asc and not rank_desc:
+        query = query.order_by(Ad.rankid.asc())
+    if rank_desc and not rank_asc:
+        query = query.order_by(Ad.rankid.desc())
+
     if game_type:
         query = query.filter(Ad.game_type == game_type)
 
+    print(query)  # Debugging statement
     # Execute the query
     ad_data = query.all()
 
