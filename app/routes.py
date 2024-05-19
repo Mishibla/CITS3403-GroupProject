@@ -66,19 +66,19 @@ def buyaccount():
     # Execute the query
     ad_data = query.all()
 
-    return render_template("Sellpage.html", allads=ad_data)
+    return render_template("Sellpage.html", allads=ad_data, title='Buypage')
 
 @main.route('/login', methods=['get','post'])
 def login():
     form = LoginForm()
     if request.method == 'GET':
-        return render_template('loginpage.html', form=form)
+        return render_template('loginpage.html', form=form, title='login')
     if form.validate_on_submit():
         unique_username = form.log_username.data
         user = User.query.get(unique_username)
         if not user:
             flash(f'No user found with username {unique_username}', 'error')
-            return render_template('loginpage.html', form=form)
+            return render_template('loginpage.html', form=form, title='login')
         if not user.check_password(form.log_password.data):
             flash('Invalid password. Please try again.', 'error')
             return render_template('loginpage.html', form=form)
@@ -106,11 +106,11 @@ def register_account():
             create_account(all_data)
         except AccountCreationError as e:
             flash(e, 'error')
-            return render_template("registeraccount.html", form=form)
+            return render_template("registeraccount.html", form=form, title='Register Account')
         return redirect(url_for("main.login"))
     else:
         print(form.errors)
-    return render_template("registeraccount.html", form=form)
+    return render_template("registeraccount.html", form=form, title='Register Account')
     
 @main.route('/account')
 @login_required
@@ -145,9 +145,8 @@ def submit_ad():
         if form.skin.data=='No':
             form.skin.data=False
         print(form.skin.data)
-        return render_template("requestpage.html",form=form, unsuccessful_submit=unsuccessful_submit)
+        return render_template("requestpage.html",form=form, unsuccessful_submit=unsuccessful_submit, title='Requestpage')
     if 'images' in request.files:
-        print('yes')
         images = request.files.getlist('images')
     try:
         last_ad_id = Ad.query.with_entities(Ad.ad_id).order_by(Ad.ad_id.desc()).first()[0] + 1
@@ -185,7 +184,7 @@ def show_ad(ad_id):
     ad_details = Ad.query.get(ad_id)
     ownerid= ad_details.user_username
     if not current_user.is_authenticated:
-        return render_template('adtemplate.html', ad=ad_details, success=button_change)
+        return render_template('adtemplate.html', ad=ad_details, success=button_change, title='Ad')
     if current_user.is_authenticated:
         userid = current_user.username
     user = User.query.get(userid)
@@ -201,7 +200,7 @@ def show_ad(ad_id):
         wishlist_ids = str(wish).split(',')
         if str(ad_id) in wishlist_ids:
                 button_change = True
-    return render_template('adtemplate.html', ad=ad_details, success=button_change, displaydelete=displaydelete, displayedit=displayedit, form=form)
+    return render_template('adtemplate.html', ad=ad_details, success=button_change, displaydelete=displaydelete, displayedit=displayedit, form=form, title='Ad')
 
 
 
@@ -431,7 +430,7 @@ def messageinbox():
 
             combined.append([urlad,title,interestmessage,interestdate, name_user, email_user, phone_user])
     print(combined)
-    return render_template('messageinbox.html', data=combined)
+    return render_template('messageinbox.html', data=combined,title='Messages')
 
 
 

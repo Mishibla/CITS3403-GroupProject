@@ -23,6 +23,16 @@ def create_account(all_data):
     db.session.add(account)
     db.session.commit()
 
+
+
+
+
+
+
+
+
+    
+
 def create_user(username, name, password, email):
     user = User(username=username, name=name, email=email)
     user.set_password(password)

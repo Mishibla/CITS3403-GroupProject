@@ -18,11 +18,13 @@
                 {{ form.titlerequest.label }} {{ form.titlerequest() }}<br>
                 {{ form.games.label }} {{ form.games(id='games') }}
                 {{ form.rank.label }} {{ form.rank(id='ranks', style="display:none;")}}<br>
-                
                 {{ form.price.label }} {{ form.price() }}<br>
                 {{ form.skin.label }} {{ form.skin(id='skins') }} 
                 {{ form.exclusive_skin.label(style="display:none;", id='exclusive_label') }} 
                 {{ form.exclusive_skin(style="display:none;", id='exclusive') }} <br>
+
+                {{form.exclusive_skin}}><br>
+
                 {{ form.description.label }} <br> {{ form.description() }}<br>
                 {{ form.images.label }} {{ form.images(multiple=True, accept="image/*", id="images") }} <br>
                 <p>(*)required fields</p>

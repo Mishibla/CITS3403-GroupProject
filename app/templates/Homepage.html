@@ -1,4 +1,42 @@
 {% extends "base.html" %}
 {% block content %}
-<button class="postad" onclick="location.href='/createad'">Post an ad</button>
-{% endblock %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='homepage.css') }}">
+
+    <div class="main">
+        <h2 class="title">The Gamehub</h2>
+        <p class="desc">The marketplace for gamers to trade, sell or buy!</p><br>
+        <div class="rectangle"></div>
+    
+        <h2 class="title">Games</h2>
+        <div class="squares-container">
+            <div class="square league-of-legends"></div>
+            <div class="square valorant"></div>
+            <div class="square overwatch"></div>
+            <div class="square csgo"></div><br>
+        </div>
+        <hr>
+        <h2 class="title">How it works</h2>
+        <div class="big-squares-container">
+            <div class="square register big">
+                <h3>Sign in</h3>
+                <p>Create an account or log in to your existing account.</p>
+            </div>
+            <div class="square browse big">
+                <h3>Browse</h3>
+                <p>Explore items that interest you.</p>
+            </div>
+            <div class="square message big">
+                <h3>Contact the seller</h3>
+                <p>Send a message to the seller about the item.</p>
+            </div>
+            <div class="square purchase big">
+                <h3>Purchase</h3>
+                <p>Buy the item and enjoy your new purchase.</p>
+            </div>
+        </div>
+        <hr>
+        <div class="ad-wrapper"></div>
+        <h2>Featured ads</h2>
+
+
+        {% endblock %}
