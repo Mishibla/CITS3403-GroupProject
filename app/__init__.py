@@ -6,7 +6,7 @@ from flask_login import LoginManager, current_user
 
 db = SQLAlchemy()
 login = LoginManager()
-login.login_view = 'login'
+login.login_view = 'main.login'
 
 
 def create_app(config):
