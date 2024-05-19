@@ -1,6 +1,7 @@
 import multiprocessing
 import time
 from selenium import webdriver
+from selenium.webdriver.common.by import By
 from unittest import TestCase
 
 from app import create_app, db
@@ -31,3 +32,17 @@ class SeleniumTestCase(TestCase):
 
         self.server_process.terminate()
         self.driver.close()
+
+    def test_login_page(self):
+
+        login_button = self.driver.find_element(By.ID, "sign_in")  # Replace with the actual ID of the login button
+        login_button.click()
+
+        time.sleep(2)
+
+        loginElement = self.driver.find_element(By.ID,"log_username")
+        loginElement.send_keys("matt")
+
+        loginElement = self.driver.find_element(By.ID, "log_password")
+        loginElement.send_keys("fish")
+        time.sleep(10)
