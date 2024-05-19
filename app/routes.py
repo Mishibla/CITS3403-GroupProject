@@ -5,6 +5,7 @@ from flask_login import login_user, logout_user, login_required, current_user
 from app import db 
 from app.forms import AdForm,RegisterForm,LoginForm, MessageForm
 from app.models import User,Ad, Message
+from app.controllers import AccountCreationError,create_account
 
 from app.blueprints import main
 import os
@@ -99,28 +100,16 @@ def register():
 @main.route('/submit_register', methods=['GET', 'POST'])
 def register_account():
     form = RegisterForm()
-    if request.method == 'POST':
-        unique_username = form.username.data
-        if User.query.get(unique_username):
-            flash(f'{unique_username} has already been created, please enter a unique username', 'error')
-            return render_template('registeraccount.html', form=form)
-
-        if len(form.username.data) > 29:
-            flash(f'Username is too long: max 29 characters, current length {len(form.username.data)} characters', 'error')
-        if len(form.display_name.data) > 29:
-            flash(f'Display name is too long: max 29 characters, current length {len(form.display_name.data)} characters', 'error')
-        if len(form.password.data) > 19:
-            flash(f'Password is too long: max 19 characters, current length {len(form.password.data)} characters', 'error')
-        
-        if not form.validate_on_submit():
+    all_data=[form.username.data,form.display_name.data, form.password.data,form.email.data,form.phone.data]
+    if request.method == 'POST' and form.validate_on_submit():
+        try:
+            create_account(all_data)
+        except AccountCreationError as e:
+            flash(e, 'error')
             return render_template("registeraccount.html", form=form)
-        
-        account = User(username=form.username.data, name=form.display_name.data, email=form.email.data, phone=form.phone.data)
-        account.set_password(form.password.data)  
-        db.session.add(account)
-        db.session.commit()
         return redirect(url_for("main.login"))
-
+    else:
+        print(form.errors)
     return render_template("registeraccount.html", form=form)
     
 @main.route('/account')
