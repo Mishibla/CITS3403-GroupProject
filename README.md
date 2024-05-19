@@ -31,8 +31,12 @@ enter flask run in the wsl terminal
 cntrl click on the server URL to see the homepage
 
 5)Instructions for how to run the tests for the application.
+
 enter python3 -m unittest tests/unit.py
-Began writing the code for selenium, havent' fixed it in time
+
+Go to powershell
+Type python seleniumtest.py
+
 
 
 Issues not solved:
