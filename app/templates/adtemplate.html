@@ -129,7 +129,7 @@
 <script src="{{ url_for('static', filename='adtemplate.js') }}"></script>
 
 <script>
- document.addEventListener('DOMContentLoaded', function () {
+ document.addEventListener('DOMContentLoaded', async function () {
     const adId = window.location.pathname.split('/')[2]; // Extract ad ID from URL
 
     // List of possible file extensions
@@ -155,11 +155,37 @@
         document.querySelector(`img[data-image="image${imageNumber}"]`).src = imageUrl;
     };
 
-    updateImageSource(1);
-    updateImageSource(2);
-    updateImageSource(3);
-    updateImageSource(4);
+    // Fetch image URLs and update image sources
+    const imageUrls = {}; // Object to store image URLs
+    for (let i = 1; i <= 4; i++) {
+        imageUrls[`image${i}`] = await getImageUrl(adId, i);
+        document.querySelector(`img[data-image="image${i}"]`).src = imageUrls[`image${i}`];
+    }
+
+    // Define image URLs for each slide
+    const slideImageUrls = {
+        1: imageUrls['image1'],
+        2: imageUrls['image2'],
+        3: imageUrls['image3'],
+        4: imageUrls['image4']
+    };
+
+    // Update slideshow image sources
+    const updateSlideImageSource = (slideNumber) => {
+        const imageUrl = slideImageUrls[slideNumber];
+        document.querySelector(`.mySlides:nth-child(${slideNumber}) img`).src = imageUrl;
+    };
+
+    // Number of slides in the slideshow
+    const numSlides = 4;
+
+    // Update image sources for each slide
+    for (let i = 1; i <= numSlides; i++) {
+        updateSlideImageSource(i);
+    }
 });
+
+
 </script>
 {% endblock %}
 
