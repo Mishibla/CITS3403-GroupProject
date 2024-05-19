@@ -123,6 +123,7 @@ def account():
 @login_required
 def create():
     form = AdForm()
+    print(form.exclusive_skin)
     return render_template("requestpage.html",form=form, title='Create ad')
 
 @main.route('/submit-ad', methods=['GET', 'POST'])

@@ -31,3 +31,10 @@ enter flask run in the wsl terminal
 cntrl click on the server URL to see the homepage
 
 5)Instructions for how to run the tests for the application.
+enter python3 -m unittest tests/unit.py
+Began writing the code for selenium, havent' fixed it in time
+
+
+Issues not solved:
+checkbox for exclusive skins not working
+sorting by rank id
