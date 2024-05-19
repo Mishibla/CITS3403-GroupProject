@@ -76,14 +76,14 @@
                     {{ ad.Extra_Descrip}}
                 </p>
                 <div class="horizontal-boxes">
-                    <div class="box"><img alt="Image description" class="box-image" data-image="image1" onclick="openModal();currentSlide(1)" class="hover-shadow cursor"></div>
-                    <div class="box"><img alt="Image description" class="box-image" data-image="image2" onclick="openModal();currentSlide(2)" class="hover-shadow cursor"></div>
-                    <div class="box"><img alt="Image description" class="box-image" data-image="image3" onclick="openModal();currentSlide(3)" class="hover-shadow cursor"></div>
+                    <div class="box"><img  alt="Image description" class="box-image" data-image="image1" onclick="openModal();currentSlide(1)" class="hover-shadow cursor"></div>
+                    <div class="box"><img  alt="Image description" class="box-image" data-image="image2" onclick="openModal();currentSlide(2)" class="hover-shadow cursor"></div>
+                    <div class="box"><img  alt="Image description" class="box-image" data-image="image3" onclick="openModal();currentSlide(3)" class="hover-shadow cursor"></div>
                 </div>
             </div>
         </div>
         <div class="container4">
-            <img alt="Image description" class="box-image" data-image="image4" onclick="openModal();currentSlide(4)" class="hover-shadow cursor">
+            <img  alt="Image description" class="box-image" data-image="image4" onclick="openModal();currentSlide(4)" class="hover-shadow cursor">
             <h3 class="price-button-container">
                 Price:  <span class="price_tag">${{ ad.price}}</span>
                 <span class="button_container">
@@ -124,17 +124,41 @@
         <a class="next" onclick="plusSlides(1)">&#10095;</a>
     </div>
 </div>
-<image src="uploads/16/imagetask5_.jpg"></image>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="{{ url_for('static', filename='adtemplate.js') }}"></script>
 
 <script>
-    $(document).ready(function() {
-    const ad_id = 16; // Replace with the actual ad_id you want to use
-    const imageFileName = 'imagetask5_.jpg'; // Replace with the actual image file name
+ document.addEventListener('DOMContentLoaded', function () {
+    const adId = window.location.pathname.split('/')[2]; // Extract ad ID from URL
 
-    // Set the src attribute of the image element
-    $('img[data-image="image1"]').attr('src', `/uploads/${ad_id}/${imageFileName}`);
+    // List of possible file extensions
+    const fileExtensions = ['jpg', 'jpeg', 'png'];
+
+    // Function to construct image URL with the correct file extension
+    const getImageUrl = async (adId, imageNumber) => {
+        for (const extension of fileExtensions) {
+            const imageUrl = `/static/uploads/${adId}/${adId}_${imageNumber}.${extension}`;
+            // Check if the image exists
+            const response = await fetch(imageUrl);
+            if (response.ok) {
+                return imageUrl; // Return the URL if the image exists
+            }
+        }
+        // If no matching image found, return a placeholder or default image URL
+        return '/static/default_image.jpg'; // Change this to your default image URL
+    };
+
+    // Update image sources
+    const updateImageSource = async (imageNumber) => {
+        const imageUrl = await getImageUrl(adId, imageNumber);
+        document.querySelector(`img[data-image="image${imageNumber}"]`).src = imageUrl;
+    };
+
+    updateImageSource(1);
+    updateImageSource(2);
+    updateImageSource(3);
+    updateImageSource(4);
 });
 </script>
 {% endblock %}

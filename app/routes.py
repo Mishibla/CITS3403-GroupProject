@@ -1,6 +1,6 @@
 from datetime import datetime
 from zoneinfo import ZoneInfo
-from flask import flash,redirect, render_template, send_from_directory,url_for,request, jsonify
+from flask import flash,redirect, render_template, send_from_directory,url_for,request, jsonify, Flask
 from flask_login import login_user, logout_user, login_required, current_user
 from app import app,db 
 from app.forms import AdForm,RegisterForm,LoginForm, MessageForm
@@ -8,7 +8,7 @@ from app.models import User,Ad, Message
 import os
 from werkzeug.utils import secure_filename
 
-UPLOAD_FOLDER = 'app/uploads'
+UPLOAD_FOLDER = 'app/static/uploads'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -17,11 +17,7 @@ def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-def get_ad_images(ad_id):
-    ad_folder = os.path.join('app', 'uploads', str(ad_id))
-    if not os.path.exists(ad_folder):
-        return []
-    return os.listdir(ad_folder)
+
 
 @app.route('/')
 
@@ -164,19 +160,16 @@ def submit_ad():
             last_ad_id = Ad.query.with_entities(Ad.ad_id).order_by(Ad.ad_id.desc()).first()[0] + 1
         except:
             last_ad_id = 1
-        ad_folder = os.path.join('app', 'uploads', str(last_ad_id))  # Using last_ad_id as the folder name
+        ad_folder = os.path.join('app', 'static', 'uploads', str(last_ad_id))  # Using last_ad_id as the folder name
         os.makedirs(ad_folder, exist_ok=True)
-        for image in images:
-            if image.filename == '':
-                continue
-            if image and allowed_file(image.filename):
-                filename = secure_filename(image.filename)
-                image_path = os.path.join(ad_folder, filename)
-                image.save(image_path)
-                form_data.append(os.path.join(str(last_ad_id), filename))  # Storing relative path to the image
-            else:
-                flash('Invalid file type')
-                return redirect(request.url)
+        for i, image in enumerate(images):
+                if image.filename == '':
+                    continue
+                if image and allowed_file(image.filename):
+                    extension = image.filename.rsplit('.', 1)[1].lower()
+                    filename = f'{last_ad_id}_{i + 1}.{extension}'
+                    image_path = os.path.join(ad_folder, filename)
+                    image.save(image_path)
     
     
     if current_user.is_authenticated:
@@ -199,7 +192,7 @@ def show_ad(ad_id):
     displaydelete=False
     button_change=False
     ad_details = Ad.query.get(ad_id)
-    ad_images = get_ad_images(ad_id)
+    #ad_images = get_ad_images(ad_id)
     ownerid= ad_details.user_username
     if not current_user.is_authenticated:
         return render_template('adtemplate.html', ad=ad_details, success=button_change)
@@ -218,10 +211,10 @@ def show_ad(ad_id):
         wishlist_ids = str(wish).split(',')
         if str(ad_id) in wishlist_ids:
                 button_change = True
-    return render_template('adtemplate.html', ad=ad_details, success=button_change, displaydelete=displaydelete, displayedit=displayedit, form=form, ad_images=ad_images, ad_id=ad_id)
+    return render_template('adtemplate.html', ad=ad_details, success=button_change, displaydelete=displaydelete, displayedit=displayedit, form=form)
 
-@app.route('/get_image_urls', methods=['GET'])
-def get_image_urls(ad_id):
+#@app.route('/get_image_urls', methods=['GET'])
+#def get_image_urls(ad_id):
     ad_images = get_ad_images(ad_id)
     if not ad_images:
         return jsonify(error="No images found for the given ad ID"), 404
@@ -462,9 +455,9 @@ def messageinbox():
     return render_template('messageinbox.html', data=combined)
 
 
-@app.route('/uploads/<path:filename>')
-def serve_uploads(filename):
-    return send_from_directory('uploads', filename)
+
+
+
 
 csranks=['SILVER','GOLD NOVA','MASTER GUARDIAN','LEGENDARY']
 owranks=['BRONZE','SILVER','GOLD','PLATNIUM','DIAMOND','MASTER','GRANDMASTER','CHAMPIONS','TOP500']
